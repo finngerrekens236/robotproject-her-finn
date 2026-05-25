@@ -9,7 +9,7 @@ Sorting pick-and-place robotcel | OAK-D RGB camera + YOLOv5 + ROS Noetic
 | `scripts/vision_node.py` | ROS node (draait op Linux VM) |
 | `test/test_detection.py` | Standalone testscript (draait op Windows, geen ROS) |
 | `config/vision_config.yaml` | Alle instellingen (model pad, klassen, kalibratie) |
-| `models/best.pt` | Getraind YOLOv5 model (hier kopiëren na training) |
+| `models/model.pt` | Getraind YOLOv5 model (hier kopiëren na training) |
 | `srv/DetectObject.srv` | Custom ROS service definitie |
 | `launch/vision.launch` | ROS launch file |
 
@@ -25,9 +25,9 @@ pip install depthai opencv-python torch torchvision pyyaml
 
 ### Model kopiëren
 
-Kopieer je getrainde `best.pt` uit Google Drive naar:
+Kopieer je getrainde `model.pt` uit Google Drive naar:
 ```
-ufactory_ws/src/my_depthai/models/best.pt
+ufactory_ws/src/my_depthai/models/model.pt
 ```
 
 ### Draaien
@@ -36,16 +36,13 @@ ufactory_ws/src/my_depthai/models/best.pt
 cd ufactory_ws/src/my_depthai/test
 
 # Met OAK-D camera (automatisch gevonden)
-python test_detection.py --model ../models/best.pt
-
-# Met webcam als fallback
-python test_detection.py --model ../models/best.pt --webcam 0
+python test_detection.py --model ../models/model.pt
 
 # Met een testafbeelding (geen camera nodig)
-python test_detection.py --model ../models/best.pt --image mijn_foto.jpg
+python test_detection.py --model ../models/model.pt --image mijn_foto.jpg
 
 # Confidence threshold aanpassen
-python test_detection.py --model ../models/best.pt --conf 0.6
+python test_detection.py --model ../models/model.pt --conf 0.6
 ```
 
 ### Wat je ziet
@@ -79,7 +76,7 @@ source devel/setup.bash
 ### Model kopiëren
 
 ```bash
-cp best.pt ~/ufactory_ws/src/my_depthai/models/best.pt
+cp model.pt ~/ufactory_ws/src/my_depthai/models/model.pt
 ```
 
 ### Vision node starten

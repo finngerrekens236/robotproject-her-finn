@@ -1,8 +1,8 @@
 """
 Gebruik:
-    python test_main.py --model ../models/dataset.pt
-    python test_main.py --model ../models/dataset.pt --image pad/naar/foto.jpg
-    python test_main.py --model ../models/dataset.pt --conf 0.2
+    python test_main.py --model ../models/model.pt
+    python test_main.py --model ../models/model.pt --image pad/naar/foto.jpg
+    python test_main.py --model ../models/model.pt --conf 0.2
 
 Zonder --image: pakt de eerste afbeelding uit test_main_input/.
 Output (lokalisatie afbeelding) wordt opgeslagen in test_main_output/.
@@ -25,7 +25,7 @@ OUTPUT_DIR = os.path.join(os.path.dirname(__file__), "test_main_output")
 
 def main():
     parser = argparse.ArgumentParser(description="test_main — detectie + lokalisatie")
-    parser.add_argument("--model", default="../models/dataset.pt", help="Pad naar .pt model")
+    parser.add_argument("--model", default="../models/model.pt", help="Pad naar .pt model")
     parser.add_argument("--conf",  type=float, default=0.5,        help="Confidence threshold")
     parser.add_argument("--image", default=None,                   help="Pad naar invoer afbeelding")
     args = parser.parse_args()

@@ -31,7 +31,7 @@ CALIBRATION_FILE = os.path.join(os.path.dirname(__file__), "calibration.json")
 
 # ── YOLO model ────────────────────────────────────────────────────────────────
 
-DEFAULT_MODEL_PATH = "../models/dataset.pt"
+DEFAULT_MODEL_PATH = "../models/model.pt"
 DEFAULT_CONF       = 0.5
 
 DEFAULT_CLASSES = ["vork", "schroevendraaier", "lepel", "tandenborstel"]

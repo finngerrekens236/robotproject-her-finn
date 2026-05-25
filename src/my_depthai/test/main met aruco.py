@@ -2,8 +2,8 @@
 Volledige pipeline: YOLO detectie + lokalisatie + ArUco pixel→robot transformatie.
 
 Gebruik:
-    python "main met aruco.py" --model ../models/dataset.pt
-    python "main met aruco.py" --model ../models/dataset.pt --image test_main_met_arucu_input/ma.jpeg
+    python "main met aruco.py" --model ../models/model.pt
+    python "main met aruco.py" --model ../models/model.pt --image test_main_met_arucu_input/ma.jpeg
     python "main met aruco.py" --test-aruco --image test_main_met_arucu_input/ma.jpeg
 
 --test-aruco: sla YOLO over, test alleen of de ArUco markers gevonden worden.

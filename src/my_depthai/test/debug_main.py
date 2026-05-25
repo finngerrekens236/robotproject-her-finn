@@ -12,8 +12,8 @@ Stappen die worden opgeslagen:
   07_resultaat       — eindsresultaat van lokaliseer
 
 Gebruik:
-    python debug_main.py --model ../models/dataset.pt
-    python debug_main.py --model ../models/dataset.pt --image test_main_input/h.JPG
+    python debug_main.py --model ../models/model.pt
+    python debug_main.py --model ../models/model.pt --image test_main_input/h.JPG
 """
 
 import argparse
@@ -159,7 +159,7 @@ def debug_image(image_path, model):
 
 def main():
     parser = argparse.ArgumentParser(description="Debug-versie van test_main")
-    parser.add_argument("--model", default="../models/dataset.pt")
+    parser.add_argument("--model", default="../models/model.pt")
     parser.add_argument("--conf",  type=float, default=0.5)
     parser.add_argument("--image", default=None)
     args = parser.parse_args()

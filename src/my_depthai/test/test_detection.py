@@ -2,9 +2,9 @@
 Standalone testscript voor Windows — GEEN ROS vereist.
 
 Gebruik:
-    python test_detection.py --model ../models/dataset.pt
-    python test_detection.py --model ../models/dataset.pt --image foto.jpg
-    python test_detection.py --model ../models/dataset.pt --conf 0.2
+    python test_detection.py --model ../models/model.pt
+    python test_detection.py --model ../models/model.pt --image foto.jpg
+    python test_detection.py --model ../models/model.pt --conf 0.2
 """
 
 import os

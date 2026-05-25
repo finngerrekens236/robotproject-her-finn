@@ -1,7 +1,7 @@
 # Vision node configuratie
 
 model:
-  path: "models/best.pt"           # relatief t.o.v. het package root
+  path: "models/model.pt"           # relatief t.o.v. het package root
   confidence_threshold: 0.5
   iou_threshold: 0.45
   device: "cpu"                    # "cpu" of "cuda" als GPU beschikbaar is
