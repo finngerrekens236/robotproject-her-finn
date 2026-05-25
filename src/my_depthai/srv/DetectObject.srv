@@ -1,0 +1,7 @@
+# Request: leeg — gewoon triggeren is genoeg
+---
+# Response
+bool success
+string object_class
+string message
+geometry_msgs/PoseStamped pick_pose

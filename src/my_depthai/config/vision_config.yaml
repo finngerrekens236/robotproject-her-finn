@@ -1,0 +1,37 @@
+# Vision node configuratie
+
+model:
+  path: "models/best.pt"           # relatief t.o.v. het package root
+  confidence_threshold: 0.5
+  iou_threshold: 0.45
+  device: "cpu"                    # "cpu" of "cuda" als GPU beschikbaar is
+
+classes:
+  - lepel
+  - vork
+  - schroevendraaier
+  - tandenborstel
+
+camera:
+  width: 1280
+  height: 720
+  fps: 30
+  # OAK-D device id (leeg = automatisch eerste OAK-D)
+  device_id: ""
+
+# Pixel -> robot coördinaten transformatie
+# 3x3 homografie matrix H zodat [Xr, Yr, 1]^T = H * [px, py, 1]^T
+# Vul deze in na de kalibratieprocedure (zie README.md)
+calibration:
+  homography:
+    - [1.0, 0.0, 0.0]   # rij 0
+    - [0.0, 1.0, 0.0]   # rij 1
+    - [0.0, 0.0, 1.0]   # rij 2
+  # Vaste Z-hoogte van de conveyor belt t.o.v. robot base (meter)
+  z_conveyor: 0.05
+
+# ROS topics / service namen
+ros:
+  service_name: "/vision/detect_object"
+  image_topic: "/vision/image_raw"
+  debug_image_topic: "/vision/debug_image"

@@ -1,0 +1,13 @@
+<launch>
+  <node name="vision_node"
+        pkg="my_depthai"
+        type="vision_node.py"
+        output="screen"
+        respawn="false">
+
+    <!-- Pad naar config file (absoluut of via $(find ...) ) -->
+    <param name="config"
+           value="$(find my_depthai)/config/vision_config.yaml" />
+
+  </node>
+</launch>
