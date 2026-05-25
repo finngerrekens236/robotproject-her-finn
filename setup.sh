@@ -14,7 +14,7 @@ echo "     Vrije ruimte: $(numfmt --to=iec-i --suffix=B $DISK_FREE 2>/dev/null |
 echo "[1/6] System updaten..."
 sudo apt update -qq 2>/dev/null || true
 sudo apt install -y -qq build-essential python3.8 python3.8-dev python3.8-venv 2>/dev/null || true
-sudo apt install -y -qq python3-rospy python3-rospkg python3-catkin-pkg 2>/dev/null || true
+sudo apt install -y -qq python3-rospy python3-rospkg python3-catkin-pkg python3-sensor-msgs python3-geometry-msgs 2>/dev/null || true
 
 # 2. Set Python 3.8 as default
 echo "[2/6] Python 3.8 als default instellen..."
@@ -31,6 +31,7 @@ python3 -m pip install --upgrade pip setuptools wheel --quiet
 # 4. Installeer Python packages uit requirements.txt
 echo "[4/6] Python packages installeren (dit kan ~3-5 minuten duren)..."
 python3 -m pip install --user -r requirements.txt --quiet
+python3 -m pip install --user rospy rospkg catkin-pkg --quiet
 
 # 4b. Installeer depthai met pre-built binary (geen source compile)
 echo "[4b/6] depthai installeren (pre-built)..."
