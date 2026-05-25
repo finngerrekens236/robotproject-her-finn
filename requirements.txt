@@ -1,0 +1,29 @@
+# Vision package dependencies voor ROS1 (OAK-D + YOLOv5)
+#
+# Installatie op Linux VM:
+#   pip3 install -r requirements.txt
+#
+# Controleren of alles geïnstalleerd is:
+#   pip3 list | grep -E "depthai|torch|torchvision|opencv|pyyaml"
+#
+# Individueel controleren:
+#   python3 -c "import depthai; print(depthai.__version__)"
+#   python3 -c "import torch; print(torch.__version__)"
+#   python3 -c "import cv2; print(cv2.__version__)"
+#   python3 -c "import yaml; print(yaml.__version__)"
+
+# Camera SDK
+depthai>=2.20.0
+
+# Deep Learning framework
+torch>=2.0.0
+torchvision>=0.15.0
+
+# Computer Vision
+opencv-python>=4.8.0
+
+# Config parsing
+pyyaml>=6.0
+
+# Optional: voor GPU ondersteuning (als beschikbaar op VM)
+# torch-cuda-runtime  # Automatisch met torch op GPU machines
