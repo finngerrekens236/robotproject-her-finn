@@ -2,15 +2,13 @@
 # Setup script voor ROS vision node dependencies (Python 3.8 + packages)
 # Gebruik: bash setup.sh
 
-set -e  # Stop bij elke fout
-
 echo "=== ROS Vision Package Setup ==="
 echo ""
 
-# 1. Update system
+# 1. Update system (errors negeren)
 echo "[1/5] System updaten..."
-sudo apt update -qq
-sudo apt install -y -qq build-essential python3.8 python3.8-dev python3.8-venv > /dev/null 2>&1
+sudo apt update -qq 2>/dev/null || true
+sudo apt install -y -qq build-essential python3.8 python3.8-dev python3.8-venv 2>/dev/null || true
 
 # 2. Set Python 3.8 as default
 echo "[2/5] Python 3.8 als default instellen..."
