@@ -1,35 +1,44 @@
 #!/bin/bash
-# Setup script voor ROS vision node dependencies
+# Setup script voor ROS vision node dependencies (Python 3.8 + packages)
 # Gebruik: bash setup.sh
 
+set -e  # Stop bij elke fout
+
 echo "=== ROS Vision Package Setup ==="
+echo ""
 
-# Check Python version
+# 1. Update system
+echo "[1/5] System updaten..."
+sudo apt update -qq
+sudo apt install -y -qq build-essential python3.8 python3.8-dev python3.8-venv > /dev/null 2>&1
+
+# 2. Set Python 3.8 as default
+echo "[2/5] Python 3.8 als default instellen..."
+sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 1 > /dev/null 2>&1
 PYTHON_VERSION=$(python3 --version 2>&1 | awk '{print $2}')
-echo "Huidige Python versie: $PYTHON_VERSION"
+echo "     Python versie: $PYTHON_VERSION"
 
-# Als Python < 3.8, upgrade naar 3.8
-MAJOR=$(echo $PYTHON_VERSION | cut -d. -f1)
-MINOR=$(echo $PYTHON_VERSION | cut -d. -f2)
+# 3. Repareer pip3 volledig
+echo "[3/5] pip3 repareren en upgraden..."
+sudo apt install --reinstall -y python3-pip > /dev/null 2>&1
+rm -rf ~/.local/bin/pip* ~/.local/lib/python*/site-packages/pip* 2>/dev/null || true
+python3 -m pip install --upgrade pip setuptools wheel --quiet
 
-if [ "$MAJOR" -lt 3 ] || ([ "$MAJOR" -eq 3 ] && [ "$MINOR" -lt 8 ]); then
-    echo "Python < 3.8 gedetecteerd, upgraden naar 3.8..."
-    sudo apt update
-    sudo apt install -y python3.8 python3.8-venv python3.8-dev
-    sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 1
-    echo "Python upgraded naar 3.8"
-fi
+# 4. Installeer Python packages uit requirements.txt
+echo "[4/5] Python packages installeren (dit kan ~3-5 minuten duren)..."
+python3 -m pip install --user -r requirements.txt --quiet
 
-# Installeer pip3 via apt (betrouwbaarder dan ensurepip op Debian/Ubuntu)
-echo "pip3 installeren..."
-sudo apt install -y python3-pip
-
-# pip3 packages
-echo "Python packages installeren (dit kan even duren)..."
-pip3 install --user -r requirements.txt
+# 5. Verify installatie
+echo "[5/5] Verifiëren..."
+python3 -c "import cv2; print('     ✓ opencv-python OK')" 2>/dev/null || (echo "     ✗ opencv-python FAILED"; exit 1)
+python3 -c "import torch; print('     ✓ torch OK')" 2>/dev/null || (echo "     ✗ torch FAILED"; exit 1)
+python3 -c "import depthai; print('     ✓ depthai OK')" 2>/dev/null || (echo "     ✗ depthai FAILED"; exit 1)
+python3 -c "import yaml; print('     ✓ pyyaml OK')" 2>/dev/null || (echo "     ✗ pyyaml FAILED"; exit 1)
 
 echo ""
 echo "=== Setup voltooid! ==="
-echo "Volgende stap:"
-echo "  source ~/ufactory_ws/devel/setup.bash"
-echo "  roslaunch my_depthai vision.launch"
+echo ""
+echo "Volgende stappen:"
+echo "  1. source ~/ufactory_ws/devel/setup.bash"
+echo "  2. roslaunch my_depthai vision.launch"
+echo ""
