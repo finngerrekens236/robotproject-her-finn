@@ -20,9 +20,13 @@ if [ "$MAJOR" -lt 3 ] || ([ "$MAJOR" -eq 3 ] && [ "$MINOR" -lt 8 ]); then
     echo "Python upgraded naar 3.8"
 fi
 
-# ROS dependencies (als ROS nog niet alles heeft)
+# Fix pip3 na Python upgrade
+echo "pip3 repareren..."
+python3 -m ensurepip --upgrade
+
+# ROS dependencies (Melodic, niet Noetic)
 echo "ROS dependencies installeren..."
-sudo apt install -y ros-noetic-cv-bridge python3-rospy python3-yaml
+sudo apt install -y ros-melodic-cv-bridge python3-rospy python3-yaml
 
 # pip3 packages
 echo "Python packages installeren..."
