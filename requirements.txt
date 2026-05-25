@@ -4,8 +4,11 @@
 torch>=2.0.0
 torchvision>=0.15.0
 
-# YOLOv5
+# YOLOv5 en dependencies
 ultralytics
+yolov5
+pandas
+pillow
 
 # Computer Vision
 opencv-python>=4.8.0
