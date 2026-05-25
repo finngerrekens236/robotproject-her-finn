@@ -145,6 +145,7 @@ class VisionNode:
 
     def _init_camera(self):
         import depthai as dai
+        import time
 
         pipeline = dai.Pipeline()
         cam_rgb  = pipeline.create(dai.node.ColorCamera)
@@ -160,13 +161,25 @@ class VisionNode:
         cam_rgb.preview.link(xout.input)
 
         device_id = self.cfg["camera"].get("device_id", "")
-        if device_id:
-            self.device = dai.Device(pipeline, dai.DeviceInfo(device_id))
-        else:
-            self.device = dai.Device(pipeline)
 
-        self.q_rgb = self.device.getOutputQueue(name="rgb", maxSize=1, blocking=True)
-        rospy.loginfo("[vision_node] OAK-D camera geïnitialiseerd.")
+        # Probeer camera te verbinden met retry
+        max_retries = 5
+        for attempt in range(max_retries):
+            try:
+                if device_id:
+                    self.device = dai.Device(pipeline, dai.DeviceInfo(device_id))
+                else:
+                    self.device = dai.Device(pipeline)
+                self.q_rgb = self.device.getOutputQueue(name="rgb", maxSize=1, blocking=True)
+                rospy.loginfo("[vision_node] OAK-D camera geïnitialiseerd.")
+                return
+            except RuntimeError as e:
+                rospy.logwarn(f"[vision_node] Camera niet gevonden (poging {attempt+1}/{max_retries}): {e}")
+                if attempt < max_retries - 1:
+                    time.sleep(2)
+
+        rospy.logerr("[vision_node] Camera kon niet geïnitialiseerd worden na {0} pogingen".format(max_retries))
+        raise RuntimeError("OAK-D camera niet beschikbaar")
 
     def _get_frame(self):
         pkt = self.q_rgb.get()
