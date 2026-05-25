@@ -13,24 +13,23 @@ MAJOR=$(echo $PYTHON_VERSION | cut -d. -f1)
 MINOR=$(echo $PYTHON_VERSION | cut -d. -f2)
 
 if [ "$MAJOR" -lt 3 ] || ([ "$MAJOR" -eq 3 ] && [ "$MINOR" -lt 8 ]); then
-    echo "Python 3.6 gedetecteerd, upgraden naar 3.8..."
+    echo "Python < 3.8 gedetecteerd, upgraden naar 3.8..."
     sudo apt update
     sudo apt install -y python3.8 python3.8-venv python3.8-dev
     sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 1
     echo "Python upgraded naar 3.8"
 fi
 
-# Fix pip3 na Python upgrade
-echo "pip3 repareren..."
-python3 -m ensurepip --upgrade
-
-# ROS dependencies (Melodic, niet Noetic)
-echo "ROS dependencies installeren..."
-sudo apt install -y ros-melodic-cv-bridge python3-rospy python3-yaml
+# Installeer pip3 via apt (betrouwbaarder dan ensurepip op Debian/Ubuntu)
+echo "pip3 installeren..."
+sudo apt install -y python3-pip
 
 # pip3 packages
-echo "Python packages installeren..."
-pip3 install -r requirements.txt
+echo "Python packages installeren (dit kan even duren)..."
+pip3 install --user -r requirements.txt
 
+echo ""
 echo "=== Setup voltooid! ==="
-echo "Volgende stap: catkin build"
+echo "Volgende stap:"
+echo "  source ~/ufactory_ws/devel/setup.bash"
+echo "  roslaunch my_depthai vision.launch"
