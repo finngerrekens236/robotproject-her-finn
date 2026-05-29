@@ -16,6 +16,7 @@ import os
 import sys
 import math
 import time
+import threading
 
 import cv2
 import numpy as np
@@ -168,10 +169,20 @@ class VisionNode:
                 else:
                     self.device = dai.Device(pipeline)
                 self.q_rgb = self.device.getOutputQueue(name="rgb", maxSize=4, blocking=False)
-                # Warmup: laat auto-exposure/focus/WB settelen
+                self._latest_frame = None
+                self._frame_lock = threading.Lock()
+                # Achtergrond-thread: blijft continu lezen zodat XLink niet vastloopt
+                self._reader_thread = threading.Thread(target=self._frame_reader, daemon=True)
+                self._reader_thread.start()
+                # Warmup: wacht tot auto-exposure/focus/WB gesetteld is
                 rospy.loginfo("[vision_node] Camera warmup (30 frames)...")
-                for _ in range(30):
-                    self.q_rgb.get()
+                deadline = time.time() + 10
+                count = 0
+                while count < 30 and time.time() < deadline:
+                    with self._frame_lock:
+                        if self._latest_frame is not None:
+                            count += 1
+                    time.sleep(0.05)
                 rospy.loginfo("[vision_node] OAK-D camera geïnitialiseerd.")
                 return
             except RuntimeError as e:
@@ -182,9 +193,19 @@ class VisionNode:
         rospy.logerr("[vision_node] Camera kon niet geïnitialiseerd worden na {0} pogingen".format(max_retries))
         raise RuntimeError("OAK-D camera niet beschikbaar")
 
+    def _frame_reader(self):
+        """Achtergrond-thread: leest continu frames zodat XLink niet vastloopt."""
+        while not rospy.is_shutdown():
+            pkt = self.q_rgb.get()
+            if pkt is not None:
+                with self._frame_lock:
+                    self._latest_frame = pkt.getCvFrame()
+
     def _get_frame(self):
-        pkt = self.q_rgb.get()
-        return pkt.getCvFrame()  # BGR numpy array
+        with self._frame_lock:
+            if self._latest_frame is None:
+                raise RuntimeError("Nog geen frame beschikbaar van camera")
+            return self._latest_frame.copy()
 
     # ── Detectie ────────────────────────────────
 
