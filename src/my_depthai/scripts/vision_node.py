@@ -24,8 +24,6 @@ import yaml
 import rospy
 from std_msgs.msg import Header
 from geometry_msgs.msg import PoseStamped, Quaternion
-from sensor_msgs.msg import Image
-from cv_bridge import CvBridge
 
 from my_depthai.srv import DetectObject, DetectObjectResponse
 
@@ -127,13 +125,6 @@ class VisionNode:
         # Camera initialiseren (OAK-D als pure RGB)
         self._init_camera()
 
-        # ROS publishers / services
-        self.bridge        = CvBridge()
-        self.img_pub       = rospy.Publisher(
-            self.cfg["ros"]["image_topic"], Image, queue_size=1)
-        self.debug_img_pub = rospy.Publisher(
-            self.cfg["ros"]["debug_image_topic"], Image, queue_size=1)
-
         self.service = rospy.Service(
             self.cfg["ros"]["service_name"],
             DetectObject,
@@ -205,11 +196,6 @@ class VisionNode:
 
         try:
             frame = self._get_frame()
-
-            # Publiceer raw image
-            self.img_pub.publish(
-                self.bridge.cv2_to_imgmsg(frame, encoding="bgr8"))
-
             detections = self._detect(frame)
             best       = self._best_detection(detections)
 
@@ -244,21 +230,6 @@ class VisionNode:
             resp.pick_pose    = pose
 
             rospy.loginfo(f"[vision_node] {resp.message}")
-
-            # Debug image
-            debug = frame.copy()
-            cv2.rectangle(debug, (x1, y1), (x2, y2), (0, 200, 0), 2)
-            cv2.circle(debug, (cx, cy), 6, (0, 0, 255), -1)
-            length = 50
-            rad    = math.radians(angle_deg)
-            ex     = int(cx + length * math.cos(rad))
-            ey     = int(cy + length * math.sin(rad))
-            cv2.arrowedLine(debug, (cx, cy), (ex, ey), (0, 0, 255), 2, tipLength=0.3)
-            cv2.putText(debug, f"{label} {best['confidence']:.2f}",
-                        (x1, max(y1 - 8, 12)),
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 200, 0), 2)
-            self.debug_img_pub.publish(
-                self.bridge.cv2_to_imgmsg(debug, encoding="bgr8"))
 
         except Exception as e:
             rospy.logerr(f"[vision_node] Fout: {e}")
