@@ -15,6 +15,7 @@ De node:
 import os
 import sys
 import math
+import time
 
 import cv2
 import numpy as np
@@ -125,6 +126,11 @@ class VisionNode:
         # Camera initialiseren (OAK-D als pure RGB)
         self._init_camera()
 
+        pkg_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        self.debug_dir = os.path.join(pkg_root, "debug")
+        os.makedirs(self.debug_dir, exist_ok=True)
+        rospy.loginfo(f"[vision_node] Debug images -> {self.debug_dir}")
+
         self.service = rospy.Service(
             self.cfg["ros"]["service_name"],
             DetectObject,
@@ -189,6 +195,37 @@ class VisionNode:
             return None
         return detections.loc[detections["confidence"].idxmax()]
 
+    # ── Debug image logging ──────────────────────
+
+    def _save_debug_images(self, frame, best, cx, cy, angle_deg, label):
+        ts = time.strftime("%Y%m%d_%H%M%S")
+
+        # 1. Raw frame
+        cv2.imwrite(os.path.join(self.debug_dir, f"{ts}_1_raw.jpg"), frame)
+
+        # 2. Bounding box
+        bbox_frame = frame.copy()
+        x1, y1 = int(best.xmin), int(best.ymin)
+        x2, y2 = int(best.xmax), int(best.ymax)
+        cv2.rectangle(bbox_frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
+        cv2.putText(bbox_frame, f"{label} {best['confidence']:.2f}",
+                    (x1, max(y1 - 8, 12)), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
+        cv2.imwrite(os.path.join(self.debug_dir, f"{ts}_2_bbox.jpg"), bbox_frame)
+
+        # 3. Pick locatie + rotatie
+        pose_frame = frame.copy()
+        cv2.circle(pose_frame, (cx, cy), 7, (0, 0, 255), -1)
+        length = 60
+        rz_rad = math.radians(angle_deg)
+        dx = int(length * math.cos(rz_rad))
+        dy = int(length * math.sin(rz_rad))
+        cv2.arrowedLine(pose_frame, (cx, cy), (cx + dx, cy + dy), (0, 0, 255), 2, tipLength=0.3)
+        cv2.putText(pose_frame, f"rz={angle_deg:.1f}deg",
+                    (cx + 10, cy - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 255), 2)
+        cv2.imwrite(os.path.join(self.debug_dir, f"{ts}_3_pose.jpg"), pose_frame)
+
+        rospy.loginfo(f"[vision_node] Debug images opgeslagen: {ts}_*.jpg")
+
     # ── Service handler ──────────────────────────
 
     def _handle_detect(self, _req):
@@ -200,6 +237,9 @@ class VisionNode:
             best       = self._best_detection(detections)
 
             if best is None:
+                ts = time.strftime("%Y%m%d_%H%M%S")
+                cv2.imwrite(os.path.join(self.debug_dir, f"{ts}_1_raw_geen_detectie.jpg"), frame)
+                rospy.loginfo(f"[vision_node] Debug raw opgeslagen (geen detectie): {ts}_1_raw_geen_detectie.jpg")
                 resp.success      = False
                 resp.message      = "Geen object gevonden"
                 resp.object_class = ""
@@ -213,6 +253,8 @@ class VisionNode:
             cx, cy, angle_deg = get_pose_in_bbox(frame, x1, y1, x2, y2)
             rx, ry, rz_height = pixel_to_robot(cx, cy, self.H, self.z_conveyor)
             rz_rad            = math.radians(angle_deg)
+
+            self._save_debug_images(frame, best, cx, cy, angle_deg, label)
 
             # PoseStamped opbouwen
             pose           = PoseStamped()
