@@ -2,15 +2,16 @@
 Eenmalige camera-robot calibratie via ArUco markers.
 
 Werkwijze:
-  1. Maak een foto met alle ArUco markers zichtbaar
+  1. Houd alle ArUco markers in beeld (of geef een foto mee)
   2. Dit script detecteert automatisch de pixel-coördinaten
   3. Robot-coördinaten worden uit de configuratie geladen (of interactief ingevoerd)
   4. De affiene transformatiematrix wordt berekend en opgeslagen in calibration.json
   5. Daarna kunnen de markers verwijderd worden — het hoofdscript gebruikt de opgeslagen matrix
 
 Gebruik:
-    python calibratie.py --image foto_met_markers.jpg
-    python calibratie.py --image foto_met_markers.jpg --interactief
+    python calibratie.py                          # live OAK-D camera, SPACE om te calibreren
+    python calibratie.py --image foto.jpg         # statische afbeelding
+    python calibratie.py --interactief            # robot-coördinaten handmatig invoeren
 """
 
 import argparse
@@ -21,6 +22,7 @@ import sys
 from datetime import datetime
 
 import cv2
+import depthai as dai
 import numpy as np
 
 from config import MARKER_IDS, MARKER_ROBOT_COORDS, Z_CONVEYOR, CALIBRATION_FILE
@@ -56,20 +58,51 @@ def _bereken_en_sla_op(markers_px, robot_coords, z_conveyor):
     return M, rotation_offset_deg, data
 
 
+def _capture_from_camera():
+    pipeline = dai.Pipeline()
+    camRgb = pipeline.create(dai.node.ColorCamera)
+    camRgb.setPreviewSize(640, 480)
+    camRgb.setInterleaved(False)
+    camRgb.setColorOrder(dai.ColorCameraProperties.ColorOrder.BGR)
+    xout = pipeline.create(dai.node.XLinkOut)
+    xout.setStreamName("rgb")
+    camRgb.preview.link(xout.input)
+
+    print("[INFO] Camera gestart. Zorg dat alle markers zichtbaar zijn.")
+    print("       Druk SPACE om te calibreren, Q om te stoppen.")
+
+    with dai.Device(pipeline) as device:
+        q = device.getOutputQueue(name="rgb", maxSize=4, blocking=False)
+        while True:
+            frame = q.get().getCvFrame()
+            preview = teken_aruco_debug(frame.copy())
+            cv2.imshow("Calibratie — SPACE om op te nemen", preview)
+            key = cv2.waitKey(1)
+            if key == ord(' '):
+                cv2.destroyAllWindows()
+                return frame
+            if key == ord('q'):
+                cv2.destroyAllWindows()
+                sys.exit(0)
+
+
 def main():
     parser = argparse.ArgumentParser(description="Camera-robot calibratie via ArUco markers")
-    parser.add_argument("--image", required=True,
-                        help="Afbeelding met alle ArUco markers zichtbaar")
+    parser.add_argument("--image", default=None,
+                        help="Afbeelding met alle ArUco markers (weggelaten = live camera)")
     parser.add_argument("--interactief", action="store_true",
                         help="Robot-coördinaten interactief invoeren i.p.v. uit configuratie")
     args = parser.parse_args()
 
-    frame = cv2.imread(args.image)
-    if frame is None:
-        print(f"[FOUT] Kan afbeelding niet openen: {args.image}")
-        sys.exit(1)
-
-    print(f"\n[INFO] Afbeelding geladen: {args.image}  ({frame.shape[1]}x{frame.shape[0]})")
+    if args.image:
+        frame = cv2.imread(args.image)
+        if frame is None:
+            print(f"[FOUT] Kan afbeelding niet openen: {args.image}")
+            sys.exit(1)
+        print(f"\n[INFO] Afbeelding geladen: {args.image}  ({frame.shape[1]}x{frame.shape[0]})")
+    else:
+        frame = _capture_from_camera()
+        print(f"\n[INFO] Frame opgenomen van camera  ({frame.shape[1]}x{frame.shape[0]})")
 
     # ── Marker detectie ───────────────────────────────────────────────────────
     markers_px = detecteer_aruco(frame)
