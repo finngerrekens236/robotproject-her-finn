@@ -167,7 +167,11 @@ class VisionNode:
                     self.device = dai.Device(pipeline, dai.DeviceInfo(device_id))
                 else:
                     self.device = dai.Device(pipeline)
-                self.q_rgb = self.device.getOutputQueue(name="rgb", maxSize=1, blocking=True)
+                self.q_rgb = self.device.getOutputQueue(name="rgb", maxSize=4, blocking=False)
+                # Warmup: laat auto-exposure/focus/WB settelen
+                rospy.loginfo("[vision_node] Camera warmup (30 frames)...")
+                for _ in range(30):
+                    self.q_rgb.get()
                 rospy.loginfo("[vision_node] OAK-D camera geïnitialiseerd.")
                 return
             except RuntimeError as e:
