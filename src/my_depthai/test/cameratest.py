@@ -7,19 +7,23 @@ import depthai as dai
 import cv2
 
 pipeline = dai.Pipeline()
-cam = pipeline.create(dai.node.Camera).build(dai.CameraBoardSocket.CAM_A)
-videoOut = cam.requestOutput((640, 480), type=dai.ImgFrame.Type.BGR888p)
-queue = videoOut.createOutputQueue(maxSize=4, blocking=False)
 
-pipeline.start()
-print("OAK-D camera gestart. Druk op 'q' om te stoppen.")
+camRgb = pipeline.create(dai.node.ColorCamera)
+camRgb.setPreviewSize(640, 480)
+camRgb.setInterleaved(False)
+camRgb.setColorOrder(dai.ColorCameraProperties.ColorOrder.BGR)
 
-while pipeline.isRunning():
-    frame = queue.tryGet()
-    if frame is not None:
+xout = pipeline.create(dai.node.XLinkOut)
+xout.setStreamName("rgb")
+camRgb.preview.link(xout.input)
+
+with dai.Device(pipeline) as device:
+    q = device.getOutputQueue(name="rgb", maxSize=4, blocking=False)
+    print("OAK-D camera gestart. Druk op 'q' om te stoppen.")
+    while True:
+        frame = q.get()
         cv2.imshow("OAK-D RGB", frame.getCvFrame())
-    if cv2.waitKey(1) == ord('q'):
-        pipeline.stop()
-        break
+        if cv2.waitKey(1) == ord('q'):
+            break
 
 cv2.destroyAllWindows()
