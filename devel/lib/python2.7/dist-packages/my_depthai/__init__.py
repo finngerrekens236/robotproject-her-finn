@@ -1,0 +1,1 @@
+/home/student/ufactory_ws/devel/.private/my_depthai/lib/python2.7/dist-packages/my_depthai/__init__.py

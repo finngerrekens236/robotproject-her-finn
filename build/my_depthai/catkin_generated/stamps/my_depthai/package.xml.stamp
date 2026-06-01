@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>my_depthai</name>
+  <version>0.1.0</version>
+  <description>Vision package voor sorting pick-and-place robotcel (OAK-D + YOLOv5 + ROS Noetic)</description>
+
+  <maintainer email="student@example.com">Vision Team</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>rospy</build_depend>
+  <build_depend>message_generation</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>cv_bridge</build_depend>
+
+  <exec_depend>rospy</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>cv_bridge</exec_depend>
+  <exec_depend>message_runtime</exec_depend>
+
+  <!-- Python dependencies (installeer via pip op de Linux VM) -->
+  <!-- pip install depthai opencv-python torch torchvision pyyaml -->
+
+</package>

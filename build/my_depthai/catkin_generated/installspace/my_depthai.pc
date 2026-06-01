@@ -1,0 +1,8 @@
+prefix=/home/student/ufactory_ws/install
+
+Name: my_depthai
+Description: Description of my_depthai
+Version: 0.1.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
+Requires: rospy std_msgs geometry_msgs sensor_msgs cv_bridge message_runtime

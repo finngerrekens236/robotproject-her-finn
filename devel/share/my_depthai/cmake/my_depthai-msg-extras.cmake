@@ -1,0 +1,1 @@
+/home/student/ufactory_ws/devel/.private/my_depthai/share/my_depthai/cmake/my_depthai-msg-extras.cmake
