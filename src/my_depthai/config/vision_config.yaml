@@ -13,8 +13,8 @@ classes:
   - tandenborstel
 
 camera:
-  width: 1280
-  height: 720
+  width: 640
+  height: 480
   fps: 30
   # OAK-D device id (leeg = automatisch eerste OAK-D)
   device_id: ""
