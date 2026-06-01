@@ -1,0 +1,1 @@
+/home/student/ufactory_ws/devel/.private/my_depthai/share/roseus/ros/my_depthai/srv/DetectObject.l

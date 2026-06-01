@@ -1,0 +1,1 @@
+/home/student/ufactory_ws/devel/.private/my_depthai/share/common-lisp/ros/my_depthai/srv/DetectObject.lisp
