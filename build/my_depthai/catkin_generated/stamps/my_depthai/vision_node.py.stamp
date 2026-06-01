@@ -30,6 +30,13 @@ from geometry_msgs.msg import PoseStamped, Quaternion
 
 from my_depthai.srv import DetectObject, DetectObjectResponse
 
+# lokaliseer + STRATEGIEEN importeren vanuit de test directory
+_pkg_dir  = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+_test_dir = os.path.join(_pkg_dir, "test")
+if _test_dir not in sys.path:
+    sys.path.insert(0, _test_dir)
+from test_lokalisatie import lokaliseer  # noqa: E402
+
 # ──────────────────────────────────────────────
 # Hulpfuncties
 # ──────────────────────────────────────────────
@@ -247,7 +254,7 @@ class VisionNode:
 
     # ── Debug image logging ──────────────────────
 
-    def _save_debug_images(self, frame, best, cx, cy, angle_deg, label):
+    def _save_debug_images(self, frame, best, cx, cy, angle_deg, label, annotated_crop=None):
         ts = time.strftime("%Y%m%d_%H%M%S")
 
         # 1. Raw frame
@@ -258,21 +265,14 @@ class VisionNode:
         x1, y1 = int(best.xmin), int(best.ymin)
         x2, y2 = int(best.xmax), int(best.ymax)
         cv2.rectangle(bbox_frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
+        cv2.circle(bbox_frame, (cx, cy), 7, (0, 200, 0), -1)
         cv2.putText(bbox_frame, f"{label} {best['confidence']:.2f}",
                     (x1, max(y1 - 8, 12)), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
         cv2.imwrite(os.path.join(self.debug_dir, f"{ts}_2_bbox.jpg"), bbox_frame)
 
-        # 3. Pick locatie + rotatie
-        pose_frame = frame.copy()
-        cv2.circle(pose_frame, (cx, cy), 7, (0, 0, 255), -1)
-        length = 60
-        rz_rad = math.radians(angle_deg)
-        dx = int(length * math.cos(rz_rad))
-        dy = int(length * math.sin(rz_rad))
-        cv2.arrowedLine(pose_frame, (cx, cy), (cx + dx, cy + dy), (0, 0, 255), 2, tipLength=0.3)
-        cv2.putText(pose_frame, f"rz={angle_deg:.1f}deg",
-                    (cx + 10, cy - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 0, 255), 2)
-        cv2.imwrite(os.path.join(self.debug_dir, f"{ts}_3_pose.jpg"), pose_frame)
+        # 3. Annotated crop van lokaliseer (as-lijn + oppakpunt)
+        if annotated_crop is not None:
+            cv2.imwrite(os.path.join(self.debug_dir, f"{ts}_3_lokaliseer.jpg"), annotated_crop)
 
         rospy.loginfo(f"[vision_node] Debug images opgeslagen: {ts}_*.jpg")
 
@@ -300,12 +300,16 @@ class VisionNode:
             cls_id  = int(best["class"])
             label   = self.classes[cls_id] if cls_id < len(self.classes) else best["name"]
 
-            cx, cy, angle_deg = get_pose_in_bbox(frame, x1, y1, x2, y2)
+            crop = frame[y1:y2, x1:x2]
+            _, _, angle_deg, pick_x_crop, pick_y_crop, annotated_crop = lokaliseer(crop, label)
+            cx = x1 + pick_x_crop
+            cy = y1 + pick_y_crop
+
             rx, ry, rz_height = pixel_to_robot(cx, cy, self.H, self.z_conveyor)
             robot_angle_deg   = self.angle_sign * angle_deg + self.rotation_offset_deg
             rz_rad            = math.radians(robot_angle_deg)
 
-            self._save_debug_images(frame, best, cx, cy, angle_deg, label)
+            self._save_debug_images(frame, best, cx, cy, angle_deg, label, annotated_crop)
 
             # PoseStamped opbouwen
             pose           = PoseStamped()
