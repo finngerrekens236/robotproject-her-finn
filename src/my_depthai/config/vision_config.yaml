@@ -7,9 +7,9 @@ model:
   device: "cpu"                    # "cpu" of "cuda" als GPU beschikbaar is
 
 classes:
-  - lepel
   - vork
   - schroevendraaier
+  - lepel
   - tandenborstel
 
 camera:
