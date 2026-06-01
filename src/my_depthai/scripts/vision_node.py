@@ -171,6 +171,7 @@ class VisionNode:
                 self.q_rgb = self.device.getOutputQueue(name="rgb", maxSize=4, blocking=False)
                 self._latest_frame = None
                 self._frame_lock = threading.Lock()
+                self._new_frame_event = threading.Event()
                 # Achtergrond-thread: blijft continu lezen zodat XLink niet vastloopt
                 self._reader_thread = threading.Thread(target=self._frame_reader, daemon=True)
                 self._reader_thread.start()
@@ -200,11 +201,14 @@ class VisionNode:
             if pkt is not None:
                 with self._frame_lock:
                     self._latest_frame = pkt.getCvFrame()
+                self._new_frame_event.set()
 
     def _get_frame(self):
+        """Wacht op een vers frame dat ná deze aanroep binnenkomt."""
+        self._new_frame_event.clear()
+        if not self._new_frame_event.wait(timeout=5.0):
+            raise RuntimeError("Timeout: geen frame ontvangen binnen 5 seconden")
         with self._frame_lock:
-            if self._latest_frame is None:
-                raise RuntimeError("Nog geen frame beschikbaar van camera")
             return self._latest_frame.copy()
 
     # ── Detectie ────────────────────────────────
