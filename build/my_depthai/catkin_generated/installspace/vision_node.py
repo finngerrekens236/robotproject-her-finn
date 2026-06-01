@@ -12,6 +12,7 @@ De node:
   4. Bij een call: detecteer + lokaliseer -> geef PoseStamped terug
 """
 
+import json
 import os
 import sys
 import math
@@ -110,8 +111,28 @@ class VisionNode:
 
         self.classes    = self.cfg["classes"]
         self.conf_thresh = self.cfg["model"]["confidence_threshold"]
-        self.z_conveyor  = self.cfg["calibration"]["z_conveyor"]
-        self.H           = np.array(self.cfg["calibration"]["homography"], dtype=np.float64)
+
+        # Laad calibration.json als die bestaat, anders gebruik config homografie
+        cal_path = os.path.join(pkg_dir, "test", "calibration.json")
+        if os.path.exists(cal_path):
+            with open(cal_path, "r") as f:
+                cal = json.load(f)
+            M = np.array(cal["affine_matrix"], dtype=np.float64)  # 2x3
+            self.H = np.vstack([M, [0.0, 0.0, 1.0]])              # 3x3 homografie
+            self.z_conveyor = cal["z_conveyor"]
+            self.rotation_offset_deg = cal["rotation_offset_deg"]
+            # Negatieve determinant betekent as-spiegeling -> draaizin omdraaien
+            det = M[0, 0] * M[1, 1] - M[0, 1] * M[1, 0]
+            self.angle_sign = -1.0 if det < 0 else 1.0
+            rospy.loginfo(f"[vision_node] Calibratie geladen uit {cal_path} "
+                          f"(rot_offset={self.rotation_offset_deg:.1f}deg, "
+                          f"spiegeling={'ja' if self.angle_sign < 0 else 'nee'})")
+        else:
+            self.z_conveyor = self.cfg["calibration"]["z_conveyor"]
+            self.H = np.array(self.cfg["calibration"]["homography"], dtype=np.float64)
+            self.rotation_offset_deg = 0.0
+            self.angle_sign = 1.0
+            rospy.logwarn("[vision_node] Geen calibration.json gevonden, gebruik config homografie")
 
         # Model laden
         model_path = os.path.join(pkg_dir, self.cfg["model"]["path"])
@@ -171,6 +192,7 @@ class VisionNode:
                 self.q_rgb = self.device.getOutputQueue(name="rgb", maxSize=4, blocking=False)
                 self._latest_frame = None
                 self._frame_lock = threading.Lock()
+                self._new_frame_event = threading.Event()
                 # Achtergrond-thread: blijft continu lezen zodat XLink niet vastloopt
                 self._reader_thread = threading.Thread(target=self._frame_reader, daemon=True)
                 self._reader_thread.start()
@@ -200,11 +222,14 @@ class VisionNode:
             if pkt is not None:
                 with self._frame_lock:
                     self._latest_frame = pkt.getCvFrame()
+                self._new_frame_event.set()
 
     def _get_frame(self):
+        """Wacht op een vers frame dat ná deze aanroep binnenkomt."""
+        self._new_frame_event.clear()
+        if not self._new_frame_event.wait(timeout=5.0):
+            raise RuntimeError("Timeout: geen frame ontvangen binnen 5 seconden")
         with self._frame_lock:
-            if self._latest_frame is None:
-                raise RuntimeError("Nog geen frame beschikbaar van camera")
             return self._latest_frame.copy()
 
     # ── Detectie ────────────────────────────────
@@ -277,7 +302,8 @@ class VisionNode:
 
             cx, cy, angle_deg = get_pose_in_bbox(frame, x1, y1, x2, y2)
             rx, ry, rz_height = pixel_to_robot(cx, cy, self.H, self.z_conveyor)
-            rz_rad            = math.radians(angle_deg)
+            robot_angle_deg   = self.angle_sign * angle_deg + self.rotation_offset_deg
+            rz_rad            = math.radians(robot_angle_deg)
 
             self._save_debug_images(frame, best, cx, cy, angle_deg, label)
 
@@ -293,7 +319,7 @@ class VisionNode:
             resp.object_class = label
             resp.message      = (f"Gevonden: {label} conf={best['confidence']:.2f} "
                                  f"pos=({rx:.4f},{ry:.4f},{rz_height:.4f}) "
-                                 f"rz={angle_deg:.1f}deg")
+                                 f"rz={robot_angle_deg:.1f}deg (pixel={angle_deg:.1f}deg)")
             resp.pick_pose    = pose
 
             rospy.loginfo(f"[vision_node] {resp.message}")
