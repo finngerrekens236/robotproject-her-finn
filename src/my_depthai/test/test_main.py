@@ -17,7 +17,8 @@ from test_detection import (
     load_model, detect, get_pose_in_bbox,
     DEFAULT_CLASSES, DEFAULT_COLORS, IMAGE_EXTS,
 )
-from test_lokalisatie import lokaliseer, STRATEGIEEN, PICK_PERCENT
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "scripts"))
+from lokalisatie import lokaliseer, STRATEGIEEN, PICK_PERCENT
 
 INPUT_DIR  = os.path.join(os.path.dirname(__file__), "test_main_input")
 OUTPUT_DIR = os.path.join(os.path.dirname(__file__), "test_main_output")

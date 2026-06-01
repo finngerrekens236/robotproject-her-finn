@@ -4,9 +4,9 @@ Eenmalige camera-robot calibratie via ArUco markers.
 Werkwijze:
   1. Houd alle ArUco markers in beeld (of geef een foto mee)
   2. Dit script detecteert automatisch de pixel-coördinaten
-  3. Robot-coördinaten worden uit de configuratie geladen (of interactief ingevoerd)
-  4. De affiene transformatiematrix wordt berekend en opgeslagen in calibration.json
-  5. Daarna kunnen de markers verwijderd worden — het hoofdscript gebruikt de opgeslagen matrix
+  3. Robot-coördinaten worden uit calibratie_config.py geladen (of interactief ingevoerd)
+  4. De affiene transformatiematrix wordt berekend en opgeslagen in config/calibration.json
+  5. Daarna kunnen de markers verwijderd worden
 
 Gebruik:
     python calibratie.py                          # live OAK-D camera, SPACE om te calibreren
@@ -25,10 +25,10 @@ import cv2
 import depthai as dai
 import numpy as np
 
-from config import MARKER_IDS, MARKER_ROBOT_COORDS, Z_CONVEYOR, CALIBRATION_FILE
+from calibratie_config import MARKER_IDS, MARKER_ROBOT_COORDS, Z_CONVEYOR, CALIBRATION_FILE
 from aruco_transform import detecteer_aruco, teken_aruco_debug
 
-OUTPUT_DIR = os.path.join(os.path.dirname(__file__), "calibratie_output")
+OUTPUT_DIR = os.path.join(os.path.dirname(__file__), "..", "debug")
 
 
 def _bereken_en_sla_op(markers_px, robot_coords, z_conveyor):
@@ -52,6 +52,7 @@ def _bereken_en_sla_op(markers_px, robot_coords, z_conveyor):
         },
     }
 
+    os.makedirs(os.path.dirname(CALIBRATION_FILE), exist_ok=True)
     with open(CALIBRATION_FILE, "w") as f:
         json.dump(data, f, indent=2)
 
@@ -104,7 +105,6 @@ def main():
         frame = _capture_from_camera()
         print(f"\n[INFO] Frame opgenomen van camera  ({frame.shape[1]}x{frame.shape[0]})")
 
-    # ── Marker detectie ───────────────────────────────────────────────────────
     markers_px = detecteer_aruco(frame)
     ontbrekend = [mid for mid in MARKER_IDS if mid not in markers_px]
 
@@ -118,12 +118,9 @@ def main():
 
     if ontbrekend:
         print(f"\n[FOUT] Niet alle markers gevonden. Ontbreekt: {ontbrekend}")
-        print("  Zorg dat alle markers zichtbaar zijn in de afbeelding en probeer opnieuw.")
         sys.exit(1)
 
-    # ── Robot-coördinaten ─────────────────────────────────────────────────────
     robot_coords = {}
-
     if args.interactief:
         print("\n[INPUT] Voer robot-coördinaten in voor elke marker (in mm):")
         for mid in MARKER_IDS:
@@ -136,26 +133,22 @@ def main():
             ry = float(inp_y) if inp_y else default[1]
             robot_coords[mid] = (rx, ry)
     else:
-        print("\n[INFO] Robot-coördinaten uit configuratie (aruco_transform.py):")
+        print("\n[INFO] Robot-coördinaten uit calibratie_config.py:")
         for mid in MARKER_IDS:
             rx, ry = MARKER_ROBOT_COORDS[mid]
             robot_coords[mid] = (rx, ry)
             print(f"  ID {mid}: robot ({rx:.1f}, {ry:.1f}) mm")
 
-    # ── Berekening en opslaan ─────────────────────────────────────────────────
     M, rotation_offset_deg, _ = _bereken_en_sla_op(markers_px, robot_coords, Z_CONVEYOR)
 
     print(f"\n[CALIBRATIE] Affiene matrix berekend:")
     print(f"  [[{M[0,0]:.6f}, {M[0,1]:.6f}, {M[0,2]:.4f}]")
     print(f"   [{M[1,0]:.6f}, {M[1,1]:.6f}, {M[1,2]:.4f}]]")
-    print(f"  Rotatieoffset camera→robot: {rotation_offset_deg:.2f}°")
-    print(f"  Z_conveyor: {Z_CONVEYOR} mm")
+    print(f"  Rotatieoffset: {rotation_offset_deg:.2f}°")
     print(f"\n[OK] Opgeslagen: {CALIBRATION_FILE}")
 
-    # ── Verificatieafbeelding ─────────────────────────────────────────────────
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     vis = teken_aruco_debug(frame, markers_px)
-
     for mid in MARKER_IDS:
         cx, cy = markers_px[mid]
         rx, ry = robot_coords[mid]
@@ -163,15 +156,10 @@ def main():
                     (int(cx) + 10, int(cy) + 22),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.55, (255, 200, 0), 2)
 
-    cv2.putText(vis, f"rot_offset={rotation_offset_deg:.1f}deg  z={Z_CONVEYOR}mm",
-                (10, vis.shape[0] - 15),
-                cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 0), 2)
-
     out_path = os.path.join(OUTPUT_DIR, "calibratie_verificatie.jpg")
     cv2.imwrite(out_path, vis)
     print(f"[INFO] Verificatieafbeelding: {out_path}")
     print("\n[KLAAR] Markers kunnen nu verwijderd worden.")
-    print("        Het hoofdscript gebruikt automatisch calibration.json.")
 
 
 if __name__ == "__main__":

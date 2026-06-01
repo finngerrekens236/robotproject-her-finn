@@ -18,7 +18,7 @@ import os
 import cv2
 import numpy as np
 
-from config import (
+from calibratie_config import (
     ARUCO_DICT, MARKER_IDS, MARKER_ROBOT_COORDS, Z_CONVEYOR, CALIBRATION_FILE,
 )
 
@@ -49,68 +49,35 @@ def detecteer_aruco(frame):
 
 
 def _bereken_affiene_matrix(markers_px):
-    """
-    Berekent affiene transformatiematrix (pixel → robot XY) op basis van
-    de 3 geconfigureerde markers.
-    Geeft (M, rotation_offset_deg) terug.
-    """
-    src_pts = np.float32([
-        markers_px[mid] for mid in MARKER_IDS
-    ])
-    dst_pts = np.float32([
-        MARKER_ROBOT_COORDS[mid] for mid in MARKER_IDS
-    ])
-
-    M = cv2.getAffineTransform(src_pts, dst_pts)  # 2×3 matrix
-
-    # Rotatieoffset van camera-frame t.o.v. robot-frame
+    src_pts = np.float32([markers_px[mid] for mid in MARKER_IDS])
+    dst_pts = np.float32([MARKER_ROBOT_COORDS[mid] for mid in MARKER_IDS])
+    M = cv2.getAffineTransform(src_pts, dst_pts)
     rotation_offset_deg = math.degrees(math.atan2(float(M[1, 0]), float(M[0, 0])))
-
     return M, rotation_offset_deg
 
 
 def pixel_naar_robot(pick_px, pick_py, angle_deg, frame):
     """
     Transformeert pixel-oppakcoördinaten naar robot-coördinaten.
-
-    Parameters:
-        pick_px, pick_py : oppakpunt in pixels (crop-onafhankelijk, origineel frame)
-        angle_deg        : rotatiehoek uit lokaliseer (graden, camera-frame)
-        frame            : het volledige BGR cameraframe (voor marker detectie)
-
-    Geeft (x, y, z, rz_deg) terug in het robot-assenstelsel.
-    Gooit ValueError als niet alle 3 markers zichtbaar zijn.
+    Vereist dat alle markers zichtbaar zijn in frame.
     """
     markers_px = detecteer_aruco(frame)
-
     ontbrekend = [mid for mid in MARKER_IDS if mid not in markers_px]
     if ontbrekend:
         raise ValueError(f"Markers niet gevonden: {ontbrekend}. "
                          f"Gevonden: {list(markers_px.keys())}")
 
     M, rotation_offset_deg = _bereken_affiene_matrix(markers_px)
-
-    # Oppakpunt transformeren
     pt      = np.array([pick_px, pick_py, 1.0], dtype=np.float64)
     robot   = M @ pt
-    robot_x = float(robot[0])
-    robot_y = float(robot[1])
-
-    # Hoek corrigeren voor camerarotatie t.o.v. robot
-    rz_deg = angle_deg + rotation_offset_deg
-
-    return robot_x, robot_y, float(Z_CONVEYOR), rz_deg
+    rz_deg  = angle_deg + rotation_offset_deg
+    return float(robot[0]), float(robot[1]), float(Z_CONVEYOR), rz_deg
 
 
 _calibratie_cache = None
 
 
 def laad_calibratie():
-    """
-    Laadt calibration.json en geeft (M, rotation_offset_deg, z_conveyor) terug.
-    Resultaat wordt gecached zodat het bestand maar één keer gelezen wordt.
-    Gooit FileNotFoundError als calibration.json niet bestaat.
-    """
     global _calibratie_cache
     if _calibratie_cache is not None:
         return _calibratie_cache
@@ -118,7 +85,7 @@ def laad_calibratie():
     if not os.path.exists(CALIBRATION_FILE):
         raise FileNotFoundError(
             f"Geen calibratie gevonden: {CALIBRATION_FILE}\n"
-            "Voer eerst 'python calibratie.py --image <foto_met_markers.jpg>' uit."
+            "Voer eerst 'python calibratie.py' uit."
         )
 
     with open(CALIBRATION_FILE) as f:
@@ -135,29 +102,16 @@ def laad_calibratie():
 def pixel_naar_robot_gecalibreerd(pick_px, pick_py, angle_deg):
     """
     Transformeert pixel-oppakcoördinaten naar robot-coördinaten via opgeslagen calibratie.
-    Markers hoeven NIET meer zichtbaar te zijn in het frame.
-
-    Parameters:
-        pick_px, pick_py : oppakpunt in pixels (origineel frame)
-        angle_deg        : rotatiehoek uit lokaliseer (graden, camera-frame)
-
-    Geeft (x, y, z, rz_deg) terug in het robot-assenstelsel.
-    Gooit FileNotFoundError als calibration.json niet bestaat.
+    Markers hoeven NIET meer zichtbaar te zijn.
     """
     M, rotation_offset_deg, z_conveyor = laad_calibratie()
-
     pt    = np.array([pick_px, pick_py, 1.0], dtype=np.float64)
     robot = M @ pt
-
     rz_deg = angle_deg + rotation_offset_deg
     return float(robot[0]), float(robot[1]), z_conveyor, rz_deg
 
 
 def teken_aruco_debug(frame, markers_px=None):
-    """
-    Tekent gevonden markers en hun ID op een kopie van frame.
-    Handig voor debuggen — geeft het geannoteerde frame terug.
-    """
     if markers_px is None:
         markers_px = detecteer_aruco(frame)
 
