@@ -30,12 +30,11 @@ from geometry_msgs.msg import PoseStamped, Quaternion
 
 from my_depthai.srv import DetectObject, DetectObjectResponse
 
-# lokaliseer + STRATEGIEEN importeren vanuit de test directory
 _pkg_dir  = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-_test_dir = os.path.join(_pkg_dir, "test")
-if _test_dir not in sys.path:
-    sys.path.insert(0, _test_dir)
-from test_lokalisatie import lokaliseer  # noqa: E402
+_scripts_dir = os.path.dirname(os.path.abspath(__file__))
+if _scripts_dir not in sys.path:
+    sys.path.insert(0, _scripts_dir)
+from lokalisatie import lokaliseer  # noqa: E402
 
 # ──────────────────────────────────────────────
 # Hulpfuncties
@@ -120,7 +119,7 @@ class VisionNode:
         self.conf_thresh = self.cfg["model"]["confidence_threshold"]
 
         # Laad calibration.json als die bestaat, anders gebruik config homografie
-        cal_path = os.path.join(pkg_dir, "test", "calibration.json")
+        cal_path = os.path.join(pkg_dir, "config", "calibration.json")
         if os.path.exists(cal_path):
             with open(cal_path, "r") as f:
                 cal = json.load(f)
