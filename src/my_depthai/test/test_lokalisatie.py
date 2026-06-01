@@ -227,6 +227,10 @@ def lokaliseer(crop, label=""):
     # Oppakpunt langs de as
     pick = bottom + pick_percent * (top - bottom)
 
+    # Werkelijke hoek van steel naar top — lost 180° ambiguïteit van minAreaRect op
+    direction = top - bottom
+    angle = math.degrees(math.atan2(direction[1], direction[0]))
+
     # Loodrechte richting (ook gebruikt voor centrering en groene lijn)
     perp_rad = math.radians(angle + 90)
     pdx = math.cos(perp_rad)
