@@ -13,9 +13,9 @@ MARKER_IDS = [0, 1, 2]
 
 # Robot-coördinaten (x, y) per marker ID in mm — inmeten met de robot
 MARKER_ROBOT_COORDS = {
-    0: (-290, -371),
-    1: (-288, -173),
-    2: ( -68,  -60),
+    0: (-163.8, -280.5),
+    1: (-164, -96),
+    2: ( -44,  -90),
 }
 
 # Vaste Z-hoogte van het oppakpunt in het robot-assenstelsel (mm)
