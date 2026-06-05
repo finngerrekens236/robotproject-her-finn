@@ -1,0 +1,1 @@
+/home/student/Git-projects/robotproject-her-finn/devel/.private/conveyor_package/share/conveyor_package/cmake/conveyor_packageConfig-version.cmake

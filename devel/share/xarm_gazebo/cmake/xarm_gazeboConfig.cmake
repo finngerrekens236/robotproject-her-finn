@@ -1,0 +1,1 @@
+/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_gazebo/share/xarm_gazebo/cmake/xarm_gazeboConfig.cmake

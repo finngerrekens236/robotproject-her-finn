@@ -1,0 +1,1 @@
+/home/student/Git-projects/robotproject-her-finn/devel/.private/my_lite6_description/share/my_lite6_description/cmake/my_lite6_descriptionConfig-version.cmake

@@ -1,0 +1,1 @@
+/home/student/Git-projects/robotproject-her-finn/devel/.private/lite6_moveit_config/share/lite6_moveit_config/cmake/lite6_moveit_configConfig.cmake

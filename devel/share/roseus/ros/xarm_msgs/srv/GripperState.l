@@ -1,0 +1,1 @@
+/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_msgs/share/roseus/ros/xarm_msgs/srv/GripperState.l

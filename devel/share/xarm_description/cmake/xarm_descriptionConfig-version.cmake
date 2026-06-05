@@ -1,0 +1,1 @@
+/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_description/share/xarm_description/cmake/xarm_descriptionConfig-version.cmake

@@ -1,0 +1,1 @@
+/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm6_moveit_config/lib/pkgconfig/xarm6_moveit_config.pc

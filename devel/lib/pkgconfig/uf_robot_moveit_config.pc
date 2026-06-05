@@ -1,0 +1,1 @@
+/home/student/Git-projects/robotproject-her-finn/devel/.private/uf_robot_moveit_config/lib/pkgconfig/uf_robot_moveit_config.pc

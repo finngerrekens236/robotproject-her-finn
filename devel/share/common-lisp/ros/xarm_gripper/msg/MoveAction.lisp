@@ -1,0 +1,1 @@
+/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_gripper/share/common-lisp/ros/xarm_gripper/msg/MoveAction.lisp

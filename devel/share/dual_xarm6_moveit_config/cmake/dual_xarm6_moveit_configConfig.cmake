@@ -1,0 +1,1 @@
+/home/student/Git-projects/robotproject-her-finn/devel/.private/dual_xarm6_moveit_config/share/dual_xarm6_moveit_config/cmake/dual_xarm6_moveit_configConfig.cmake

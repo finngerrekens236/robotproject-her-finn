@@ -1,0 +1,1 @@
+/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_msgs/lib/python2.7/dist-packages/xarm_msgs/srv/_FtIdenLoad.py

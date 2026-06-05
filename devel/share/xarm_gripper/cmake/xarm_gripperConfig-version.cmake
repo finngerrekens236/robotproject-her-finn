@@ -1,0 +1,1 @@
+/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_gripper/share/xarm_gripper/cmake/xarm_gripperConfig-version.cmake

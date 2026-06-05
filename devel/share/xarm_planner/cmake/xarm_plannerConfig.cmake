@@ -1,0 +1,1 @@
+/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_planner/share/xarm_planner/cmake/xarm_plannerConfig.cmake

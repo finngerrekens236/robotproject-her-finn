@@ -1,0 +1,1 @@
+/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_gripper/share/gennodejs/ros/xarm_gripper/msg/MoveResult.js

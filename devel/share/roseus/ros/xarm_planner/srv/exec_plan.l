@@ -1,0 +1,1 @@
+/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_planner/share/roseus/ros/xarm_planner/srv/exec_plan.l

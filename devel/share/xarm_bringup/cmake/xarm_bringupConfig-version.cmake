@@ -1,0 +1,1 @@
+/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_bringup/share/xarm_bringup/cmake/xarm_bringupConfig-version.cmake

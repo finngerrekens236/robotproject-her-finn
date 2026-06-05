@@ -1,0 +1,1 @@
+/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_planner/share/common-lisp/ros/xarm_planner/srv/single_straight_plan.lisp

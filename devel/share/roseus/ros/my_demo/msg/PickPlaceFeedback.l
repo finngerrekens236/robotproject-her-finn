@@ -1,0 +1,1 @@
+/home/student/Git-projects/robotproject-her-finn/devel/.private/my_demo/share/roseus/ros/my_demo/msg/PickPlaceFeedback.l

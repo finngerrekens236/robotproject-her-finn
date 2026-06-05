@@ -1,0 +1,1 @@
+/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_msgs/share/common-lisp/ros/xarm_msgs/srv/_package_SetFloat32.lisp

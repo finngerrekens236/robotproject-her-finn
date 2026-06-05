@@ -1,0 +1,1 @@
+/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm7_redundancy_res/share/xarm7_redundancy_res/cmake/xarm7_redundancy_resConfig-version.cmake

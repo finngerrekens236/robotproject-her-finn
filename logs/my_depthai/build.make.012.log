@@ -1,0 +1,24 @@
+[  0%] Built target _my_depthai_generate_messages_check_deps_DetectObject
+[  0%] Built target std_msgs_generate_messages_py
+[  0%] Built target geometry_msgs_generate_messages_py
+[  0%] Built target std_msgs_generate_messages_cpp
+[  0%] Built target geometry_msgs_generate_messages_cpp
+[  0%] Built target std_msgs_generate_messages_eus
+[  0%] Built target geometry_msgs_generate_messages_eus
+[  0%] Built target std_msgs_generate_messages_lisp
+[  0%] Built target geometry_msgs_generate_messages_lisp
+[  0%] Built target std_msgs_generate_messages_nodejs
+[  0%] Built target geometry_msgs_generate_messages_nodejs
+[ 14%] [34m[1mGenerating Python code from SRV my_depthai/DetectObject[0m
+[ 28%] [34m[1mGenerating Python srv __init__.py for my_depthai[0m
+[ 28%] Built target my_depthai_generate_messages_py
+[ 42%] [34m[1mGenerating C++ code from my_depthai/DetectObject.srv[0m
+[ 42%] Built target my_depthai_generate_messages_cpp
+[ 57%] [34m[1mGenerating EusLisp code from my_depthai/DetectObject.srv[0m
+[ 71%] [34m[1mGenerating EusLisp manifest code for my_depthai[0m
+[ 85%] [34m[1mGenerating Lisp code from my_depthai/DetectObject.srv[0m
+[ 85%] Built target my_depthai_generate_messages_lisp
+[100%] [34m[1mGenerating Javascript code from my_depthai/DetectObject.srv[0m
+[100%] Built target my_depthai_generate_messages_nodejs
+[100%] Built target my_depthai_generate_messages_eus
+[100%] Built target my_depthai_generate_messages

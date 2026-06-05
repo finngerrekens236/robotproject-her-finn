@@ -1,0 +1,1 @@
+/home/student/Git-projects/robotproject-her-finn/devel/.private/my_demo/lib/python2.7/dist-packages/my_demo/msg/_PickPlaceFeedback.py

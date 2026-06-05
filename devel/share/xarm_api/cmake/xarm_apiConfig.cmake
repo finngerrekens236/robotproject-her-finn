@@ -1,0 +1,1 @@
+/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_api/share/xarm_api/cmake/xarm_apiConfig.cmake
