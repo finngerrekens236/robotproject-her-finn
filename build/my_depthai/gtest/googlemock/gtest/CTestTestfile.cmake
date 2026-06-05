@@ -1,6 +1,6 @@
 # CMake generated Testfile for 
 # Source directory: /usr/src/googletest/googletest
-# Build directory: /home/student/ufactory_ws/build/my_depthai/gtest/googlemock/gtest
+# Build directory: /home/student/Git-projects/robotproject-her-finn/build/my_depthai/gtest/googlemock/gtest
 # 
 # This file includes the relevant testing commands required for 
 # testing this directory and lists subdirectories to be tested as well.

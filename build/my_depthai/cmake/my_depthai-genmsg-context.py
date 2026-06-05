@@ -1,7 +1,7 @@
 # generated from genmsg/cmake/pkg-genmsg.context.in
 
 messages_str = ""
-services_str = "/home/student/ufactory_ws/src/my_depthai/srv/DetectObject.srv"
+services_str = "/home/student/Git-projects/robotproject-her-finn/src/my_depthai/srv/DetectObject.srv"
 pkg_name = "my_depthai"
 dependencies_str = "std_msgs;geometry_msgs"
 langs = "gencpp;geneus;genlisp;gennodejs;genpy"

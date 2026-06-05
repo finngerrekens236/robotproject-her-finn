@@ -1,0 +1,8 @@
+prefix=/home/student/Git-projects/robotproject-her-finn/devel/.private/my_lite6_moveit_config
+
+Name: my_lite6_moveit_config
+Description: Description of my_lite6_moveit_config
+Version: 0.3.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

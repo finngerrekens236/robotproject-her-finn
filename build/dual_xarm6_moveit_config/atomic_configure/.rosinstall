@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/student/Git-projects/robotproject-her-finn/devel/.private/dual_xarm6_moveit_config/setup.sh

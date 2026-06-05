@@ -1,0 +1,10 @@
+# 1. GOAL (Wat het hoofdprogramma naar de robot stuurt)
+geometry_msgs/Pose target_pose
+
+---
+# 2. RESULT (Wat de robot terugstuurt als hij klaar is)
+bool success
+
+---
+# 3. FEEDBACK (Wat de robot tijdens het bewegen stuurt - mag leeg blijven)
+int32 progress

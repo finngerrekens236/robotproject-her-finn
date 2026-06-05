@@ -1,1 +1,1 @@
-/home/student/ufactory_ws/devel/.private/my_depthai/share/gennodejs/ros/my_depthai/_index.js
+/home/student/Git-projects/robotproject-her-finn/devel/.private/my_depthai/share/gennodejs/ros/my_depthai/_index.js

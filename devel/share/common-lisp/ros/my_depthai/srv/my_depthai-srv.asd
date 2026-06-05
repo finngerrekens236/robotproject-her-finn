@@ -1,1 +1,1 @@
-/home/student/ufactory_ws/devel/.private/my_depthai/share/common-lisp/ros/my_depthai/srv/my_depthai-srv.asd
+/home/student/Git-projects/robotproject-her-finn/devel/.private/my_depthai/share/common-lisp/ros/my_depthai/srv/my_depthai-srv.asd

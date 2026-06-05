@@ -1,0 +1,1 @@
+set(ORDERED_PATHS "/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_api/lib;/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_sdk/lib;/opt/ros/melodic/lib")

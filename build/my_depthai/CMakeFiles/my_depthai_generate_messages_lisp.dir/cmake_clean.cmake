@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
+  "/home/student/Git-projects/robotproject-her-finn/devel/.private/my_depthai/share/common-lisp/ros/my_depthai/srv/DetectObject.lisp"
   "CMakeFiles/my_depthai_generate_messages_lisp"
-  "/home/student/ufactory_ws/devel/.private/my_depthai/share/common-lisp/ros/my_depthai/srv/DetectObject.lisp"
 )
 
 # Per-language clean rules from dependency scanning.

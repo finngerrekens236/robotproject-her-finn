@@ -1,1 +1,1 @@
-/home/student/ufactory_ws/devel/.private/my_depthai/lib/python2.7/dist-packages/my_depthai/srv/__init__.py
+/home/student/Git-projects/robotproject-her-finn/devel/.private/my_depthai/lib/python2.7/dist-packages/my_depthai/srv/__init__.py

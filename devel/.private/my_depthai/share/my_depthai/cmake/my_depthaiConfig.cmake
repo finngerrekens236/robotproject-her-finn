@@ -67,14 +67,14 @@ set(my_depthai_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("TRUE" STREQUAL "TRUE")
-  set(my_depthai_SOURCE_PREFIX /home/student/ufactory_ws/src/my_depthai)
-  set(my_depthai_DEVEL_PREFIX /home/student/ufactory_ws/devel/.private/my_depthai)
+  set(my_depthai_SOURCE_PREFIX /home/student/Git-projects/robotproject-her-finn/src/my_depthai)
+  set(my_depthai_DEVEL_PREFIX /home/student/Git-projects/robotproject-her-finn/devel/.private/my_depthai)
   set(my_depthai_INSTALL_PREFIX "")
   set(my_depthai_PREFIX ${my_depthai_DEVEL_PREFIX})
 else()
   set(my_depthai_SOURCE_PREFIX "")
   set(my_depthai_DEVEL_PREFIX "")
-  set(my_depthai_INSTALL_PREFIX /home/student/ufactory_ws/install)
+  set(my_depthai_INSTALL_PREFIX /home/student/Git-projects/robotproject-her-finn/install)
   set(my_depthai_PREFIX ${my_depthai_INSTALL_PREFIX})
 endif()
 
@@ -91,9 +91,9 @@ endif()
 # flag project as catkin-based to distinguish if a find_package()-ed project is a catkin project
 set(my_depthai_FOUND_CATKIN_PROJECT TRUE)
 
-if(NOT "/home/student/ufactory_ws/devel/.private/my_depthai/include " STREQUAL " ")
+if(NOT "/home/student/Git-projects/robotproject-her-finn/devel/.private/my_depthai/include " STREQUAL " ")
   set(my_depthai_INCLUDE_DIRS "")
-  set(_include_dirs "/home/student/ufactory_ws/devel/.private/my_depthai/include")
+  set(_include_dirs "/home/student/Git-projects/robotproject-her-finn/devel/.private/my_depthai/include")
   if(NOT " " STREQUAL " ")
     set(_report "Check the issue tracker '' and consider creating a ticket if the problem has not been reported yet.")
   elseif(NOT " " STREQUAL " ")
@@ -110,7 +110,7 @@ if(NOT "/home/student/ufactory_ws/devel/.private/my_depthai/include " STREQUAL "
         message(FATAL_ERROR "Project 'my_depthai' specifies '${idir}' as an include dir, which is not found.  It does not exist in '${include}'.  ${_report}")
       endif()
     else()
-      message(FATAL_ERROR "Project 'my_depthai' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/home/student/ufactory_ws/src/my_depthai/${idir}'.  ${_report}")
+      message(FATAL_ERROR "Project 'my_depthai' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/home/student/Git-projects/robotproject-her-finn/src/my_depthai/${idir}'.  ${_report}")
     endif()
     _list_append_unique(my_depthai_INCLUDE_DIRS ${include})
   endforeach()
@@ -154,7 +154,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/student/ufactory_ws/devel/.private/my_depthai/lib;/home/student/ufactory_ws/devel/lib;/home/student/rospackages_ws/devel/lib;/opt/ros/melodic/lib)
+    foreach(path /home/student/Git-projects/robotproject-her-finn/devel/.private/my_depthai/lib;/home/student/Git-projects/robotproject-her-finn/devel/lib;/home/student/ufactory_ws/devel/lib;/home/student/range_sensor_tutorial_ws/devel/lib;/home/student/rospackages_ws/devel/lib;/opt/ros/melodic/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)

@@ -1,4 +1,4 @@
-prefix=/home/student/ufactory_ws/install
+prefix=/home/student/Git-projects/robotproject-her-finn/install
 
 Name: my_depthai
 Description: Description of my_depthai

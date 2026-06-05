@@ -1,0 +1,8 @@
+prefix=/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_gazebo
+
+Name: xarm_gazebo
+Description: Description of xarm_gazebo
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

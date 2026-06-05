@@ -1,1 +1,1 @@
-/home/student/ufactory_ws/devel/.private/my_depthai/share/my_depthai/cmake/my_depthai-msg-paths.cmake
+/home/student/Git-projects/robotproject-her-finn/devel/.private/my_depthai/share/my_depthai/cmake/my_depthai-msg-paths.cmake

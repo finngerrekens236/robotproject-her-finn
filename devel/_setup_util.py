@@ -1,1 +1,1 @@
-/home/student/ufactory_ws/devel/.private/catkin_tools_prebuild/_setup_util.py
+/home/student/Git-projects/robotproject-her-finn/devel/.private/catkin_tools_prebuild/_setup_util.py

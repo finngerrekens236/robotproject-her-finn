@@ -1,0 +1,5 @@
+xarm_ros/xarm_description
+/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_description/cmake.lock /home/student/Git-projects/robotproject-her-finn/devel/./cmake.lock
+/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_description/lib/pkgconfig/xarm_description.pc /home/student/Git-projects/robotproject-her-finn/devel/lib/pkgconfig/xarm_description.pc
+/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_description/share/xarm_description/cmake/xarm_descriptionConfig-version.cmake /home/student/Git-projects/robotproject-her-finn/devel/share/xarm_description/cmake/xarm_descriptionConfig-version.cmake
+/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_description/share/xarm_description/cmake/xarm_descriptionConfig.cmake /home/student/Git-projects/robotproject-her-finn/devel/share/xarm_description/cmake/xarm_descriptionConfig.cmake

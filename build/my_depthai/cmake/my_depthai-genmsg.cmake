@@ -17,9 +17,9 @@ add_custom_target(my_depthai_generate_messages ALL)
 
 
 
-get_filename_component(_filename "/home/student/ufactory_ws/src/my_depthai/srv/DetectObject.srv" NAME_WE)
+get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/src/my_depthai/srv/DetectObject.srv" NAME_WE)
 add_custom_target(_my_depthai_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "my_depthai" "/home/student/ufactory_ws/src/my_depthai/srv/DetectObject.srv" "geometry_msgs/Pose:geometry_msgs/Quaternion:geometry_msgs/Point:geometry_msgs/PoseStamped:std_msgs/Header"
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "my_depthai" "/home/student/Git-projects/robotproject-her-finn/src/my_depthai/srv/DetectObject.srv" "geometry_msgs/Pose:geometry_msgs/Quaternion:geometry_msgs/Point:geometry_msgs/PoseStamped:std_msgs/Header"
 )
 
 #
@@ -31,7 +31,7 @@ add_custom_target(_my_depthai_generate_messages_check_deps_${_filename}
 
 ### Generating Services
 _generate_srv_cpp(my_depthai
-  "/home/student/ufactory_ws/src/my_depthai/srv/DetectObject.srv"
+  "/home/student/Git-projects/robotproject-her-finn/src/my_depthai/srv/DetectObject.srv"
   "${MSG_I_FLAGS}"
   "/opt/ros/melodic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/melodic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/melodic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/melodic/share/geometry_msgs/cmake/../msg/PoseStamped.msg;/opt/ros/melodic/share/std_msgs/cmake/../msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/my_depthai
@@ -49,7 +49,7 @@ add_custom_target(my_depthai_generate_messages_cpp
 add_dependencies(my_depthai_generate_messages my_depthai_generate_messages_cpp)
 
 # add dependencies to all check dependencies targets
-get_filename_component(_filename "/home/student/ufactory_ws/src/my_depthai/srv/DetectObject.srv" NAME_WE)
+get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/src/my_depthai/srv/DetectObject.srv" NAME_WE)
 add_dependencies(my_depthai_generate_messages_cpp _my_depthai_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -64,7 +64,7 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS my_depthai_generate_messages_cpp)
 
 ### Generating Services
 _generate_srv_eus(my_depthai
-  "/home/student/ufactory_ws/src/my_depthai/srv/DetectObject.srv"
+  "/home/student/Git-projects/robotproject-her-finn/src/my_depthai/srv/DetectObject.srv"
   "${MSG_I_FLAGS}"
   "/opt/ros/melodic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/melodic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/melodic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/melodic/share/geometry_msgs/cmake/../msg/PoseStamped.msg;/opt/ros/melodic/share/std_msgs/cmake/../msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/my_depthai
@@ -82,7 +82,7 @@ add_custom_target(my_depthai_generate_messages_eus
 add_dependencies(my_depthai_generate_messages my_depthai_generate_messages_eus)
 
 # add dependencies to all check dependencies targets
-get_filename_component(_filename "/home/student/ufactory_ws/src/my_depthai/srv/DetectObject.srv" NAME_WE)
+get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/src/my_depthai/srv/DetectObject.srv" NAME_WE)
 add_dependencies(my_depthai_generate_messages_eus _my_depthai_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -97,7 +97,7 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS my_depthai_generate_messages_eus)
 
 ### Generating Services
 _generate_srv_lisp(my_depthai
-  "/home/student/ufactory_ws/src/my_depthai/srv/DetectObject.srv"
+  "/home/student/Git-projects/robotproject-her-finn/src/my_depthai/srv/DetectObject.srv"
   "${MSG_I_FLAGS}"
   "/opt/ros/melodic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/melodic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/melodic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/melodic/share/geometry_msgs/cmake/../msg/PoseStamped.msg;/opt/ros/melodic/share/std_msgs/cmake/../msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/my_depthai
@@ -115,7 +115,7 @@ add_custom_target(my_depthai_generate_messages_lisp
 add_dependencies(my_depthai_generate_messages my_depthai_generate_messages_lisp)
 
 # add dependencies to all check dependencies targets
-get_filename_component(_filename "/home/student/ufactory_ws/src/my_depthai/srv/DetectObject.srv" NAME_WE)
+get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/src/my_depthai/srv/DetectObject.srv" NAME_WE)
 add_dependencies(my_depthai_generate_messages_lisp _my_depthai_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -130,7 +130,7 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS my_depthai_generate_messages_lisp)
 
 ### Generating Services
 _generate_srv_nodejs(my_depthai
-  "/home/student/ufactory_ws/src/my_depthai/srv/DetectObject.srv"
+  "/home/student/Git-projects/robotproject-her-finn/src/my_depthai/srv/DetectObject.srv"
   "${MSG_I_FLAGS}"
   "/opt/ros/melodic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/melodic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/melodic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/melodic/share/geometry_msgs/cmake/../msg/PoseStamped.msg;/opt/ros/melodic/share/std_msgs/cmake/../msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/my_depthai
@@ -148,7 +148,7 @@ add_custom_target(my_depthai_generate_messages_nodejs
 add_dependencies(my_depthai_generate_messages my_depthai_generate_messages_nodejs)
 
 # add dependencies to all check dependencies targets
-get_filename_component(_filename "/home/student/ufactory_ws/src/my_depthai/srv/DetectObject.srv" NAME_WE)
+get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/src/my_depthai/srv/DetectObject.srv" NAME_WE)
 add_dependencies(my_depthai_generate_messages_nodejs _my_depthai_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -163,7 +163,7 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS my_depthai_generate_messages_nodejs
 
 ### Generating Services
 _generate_srv_py(my_depthai
-  "/home/student/ufactory_ws/src/my_depthai/srv/DetectObject.srv"
+  "/home/student/Git-projects/robotproject-her-finn/src/my_depthai/srv/DetectObject.srv"
   "${MSG_I_FLAGS}"
   "/opt/ros/melodic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/melodic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/melodic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/melodic/share/geometry_msgs/cmake/../msg/PoseStamped.msg;/opt/ros/melodic/share/std_msgs/cmake/../msg/Header.msg"
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/my_depthai
@@ -181,7 +181,7 @@ add_custom_target(my_depthai_generate_messages_py
 add_dependencies(my_depthai_generate_messages my_depthai_generate_messages_py)
 
 # add dependencies to all check dependencies targets
-get_filename_component(_filename "/home/student/ufactory_ws/src/my_depthai/srv/DetectObject.srv" NAME_WE)
+get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/src/my_depthai/srv/DetectObject.srv" NAME_WE)
 add_dependencies(my_depthai_generate_messages_py _my_depthai_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility

@@ -1,6 +1,6 @@
 file(REMOVE_RECURSE
+  "/home/student/Git-projects/robotproject-her-finn/devel/.private/my_depthai/share/gennodejs/ros/my_depthai/srv/DetectObject.js"
   "CMakeFiles/my_depthai_generate_messages_nodejs"
-  "/home/student/ufactory_ws/devel/.private/my_depthai/share/gennodejs/ros/my_depthai/srv/DetectObject.js"
 )
 
 # Per-language clean rules from dependency scanning.

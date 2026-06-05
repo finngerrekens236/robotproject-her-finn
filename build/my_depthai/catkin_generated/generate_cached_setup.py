@@ -12,16 +12,16 @@ try:
     from catkin.environment_cache import generate_environment_script
 except ImportError:
     # search for catkin package in all workspaces and prepend to path
-    for workspace in '/home/student/ufactory_ws/devel;/home/student/rospackages_ws/devel;/opt/ros/melodic'.split(';'):
+    for workspace in '/home/student/Git-projects/robotproject-her-finn/devel;/home/student/ufactory_ws/devel;/home/student/range_sensor_tutorial_ws/devel;/home/student/rospackages_ws/devel;/opt/ros/melodic'.split(';'):
         python_path = os.path.join(workspace, 'lib/python2.7/dist-packages')
         if os.path.isdir(os.path.join(python_path, 'catkin')):
             sys.path.insert(0, python_path)
             break
     from catkin.environment_cache import generate_environment_script
 
-code = generate_environment_script('/home/student/ufactory_ws/devel/.private/my_depthai/env.sh')
+code = generate_environment_script('/home/student/Git-projects/robotproject-her-finn/devel/.private/my_depthai/env.sh')
 
-output_filename = '/home/student/ufactory_ws/build/my_depthai/catkin_generated/setup_cached.sh'
+output_filename = '/home/student/Git-projects/robotproject-her-finn/build/my_depthai/catkin_generated/setup_cached.sh'
 with open(output_filename, 'w') as f:
     # print('Generate script for cached setup "%s"' % output_filename)
     f.write('\n'.join(code))

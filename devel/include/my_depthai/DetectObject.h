@@ -1,1 +1,1 @@
-/home/student/ufactory_ws/devel/.private/my_depthai/include/my_depthai/DetectObject.h
+/home/student/Git-projects/robotproject-her-finn/devel/.private/my_depthai/include/my_depthai/DetectObject.h

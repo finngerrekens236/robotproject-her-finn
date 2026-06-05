@@ -1,1 +1,1 @@
-/home/student/ufactory_ws/devel/.private/my_depthai/share/roseus/ros/my_depthai/manifest.l
+/home/student/Git-projects/robotproject-her-finn/devel/.private/my_depthai/share/roseus/ros/my_depthai/manifest.l

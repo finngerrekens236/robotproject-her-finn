@@ -1,1 +1,1 @@
-/home/student/ufactory_ws/devel/.private/catkin_tools_prebuild/setup.sh
+/home/student/Git-projects/robotproject-her-finn/devel/.private/catkin_tools_prebuild/setup.sh

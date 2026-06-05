@@ -1,20 +1,20 @@
-Linked: (/home/student/ufactory_ws/devel/.private/my_depthai/include/my_depthai/DetectObjectResponse.h, /home/student/ufactory_ws/devel/include/my_depthai/DetectObjectResponse.h)
-Linked: (/home/student/ufactory_ws/devel/.private/my_depthai/include/my_depthai/DetectObject.h, /home/student/ufactory_ws/devel/include/my_depthai/DetectObject.h)
-Linked: (/home/student/ufactory_ws/devel/.private/my_depthai/include/my_depthai/DetectObjectRequest.h, /home/student/ufactory_ws/devel/include/my_depthai/DetectObjectRequest.h)
-Linked: (/home/student/ufactory_ws/devel/.private/my_depthai/lib/python2.7/dist-packages/my_depthai/__init__.py, /home/student/ufactory_ws/devel/lib/python2.7/dist-packages/my_depthai/__init__.py)
-Linked: (/home/student/ufactory_ws/devel/.private/my_depthai/lib/python2.7/dist-packages/my_depthai/srv/_DetectObject.py, /home/student/ufactory_ws/devel/lib/python2.7/dist-packages/my_depthai/srv/_DetectObject.py)
-Linked: (/home/student/ufactory_ws/devel/.private/my_depthai/lib/python2.7/dist-packages/my_depthai/srv/__init__.py, /home/student/ufactory_ws/devel/lib/python2.7/dist-packages/my_depthai/srv/__init__.py)
-Linked: (/home/student/ufactory_ws/devel/.private/my_depthai/lib/pkgconfig/my_depthai.pc, /home/student/ufactory_ws/devel/lib/pkgconfig/my_depthai.pc)
-Linked: (/home/student/ufactory_ws/devel/.private/my_depthai/share/my_depthai/cmake/my_depthai-msg-extras.cmake, /home/student/ufactory_ws/devel/share/my_depthai/cmake/my_depthai-msg-extras.cmake)
-Linked: (/home/student/ufactory_ws/devel/.private/my_depthai/share/my_depthai/cmake/my_depthaiConfig.cmake, /home/student/ufactory_ws/devel/share/my_depthai/cmake/my_depthaiConfig.cmake)
-Linked: (/home/student/ufactory_ws/devel/.private/my_depthai/share/my_depthai/cmake/my_depthai-msg-paths.cmake, /home/student/ufactory_ws/devel/share/my_depthai/cmake/my_depthai-msg-paths.cmake)
-Linked: (/home/student/ufactory_ws/devel/.private/my_depthai/share/my_depthai/cmake/my_depthaiConfig-version.cmake, /home/student/ufactory_ws/devel/share/my_depthai/cmake/my_depthaiConfig-version.cmake)
-Linked: (/home/student/ufactory_ws/devel/.private/my_depthai/share/gennodejs/ros/my_depthai/_index.js, /home/student/ufactory_ws/devel/share/gennodejs/ros/my_depthai/_index.js)
-Linked: (/home/student/ufactory_ws/devel/.private/my_depthai/share/gennodejs/ros/my_depthai/srv/_index.js, /home/student/ufactory_ws/devel/share/gennodejs/ros/my_depthai/srv/_index.js)
-Linked: (/home/student/ufactory_ws/devel/.private/my_depthai/share/gennodejs/ros/my_depthai/srv/DetectObject.js, /home/student/ufactory_ws/devel/share/gennodejs/ros/my_depthai/srv/DetectObject.js)
-Linked: (/home/student/ufactory_ws/devel/.private/my_depthai/share/roseus/ros/my_depthai/manifest.l, /home/student/ufactory_ws/devel/share/roseus/ros/my_depthai/manifest.l)
-Linked: (/home/student/ufactory_ws/devel/.private/my_depthai/share/roseus/ros/my_depthai/srv/DetectObject.l, /home/student/ufactory_ws/devel/share/roseus/ros/my_depthai/srv/DetectObject.l)
-Linked: (/home/student/ufactory_ws/devel/.private/my_depthai/share/common-lisp/ros/my_depthai/srv/DetectObject.lisp, /home/student/ufactory_ws/devel/share/common-lisp/ros/my_depthai/srv/DetectObject.lisp)
-Linked: (/home/student/ufactory_ws/devel/.private/my_depthai/share/common-lisp/ros/my_depthai/srv/_package.lisp, /home/student/ufactory_ws/devel/share/common-lisp/ros/my_depthai/srv/_package.lisp)
-Linked: (/home/student/ufactory_ws/devel/.private/my_depthai/share/common-lisp/ros/my_depthai/srv/_package_DetectObject.lisp, /home/student/ufactory_ws/devel/share/common-lisp/ros/my_depthai/srv/_package_DetectObject.lisp)
-Linked: (/home/student/ufactory_ws/devel/.private/my_depthai/share/common-lisp/ros/my_depthai/srv/my_depthai-srv.asd, /home/student/ufactory_ws/devel/share/common-lisp/ros/my_depthai/srv/my_depthai-srv.asd)
+Symlinking /home/student/Git-projects/robotproject-her-finn/devel/include/my_depthai/DetectObjectResponse.h
+Symlinking /home/student/Git-projects/robotproject-her-finn/devel/include/my_depthai/DetectObject.h
+Symlinking /home/student/Git-projects/robotproject-her-finn/devel/include/my_depthai/DetectObjectRequest.h
+Symlinking /home/student/Git-projects/robotproject-her-finn/devel/lib/python2.7/dist-packages/my_depthai/__init__.py
+Symlinking /home/student/Git-projects/robotproject-her-finn/devel/lib/python2.7/dist-packages/my_depthai/srv/_DetectObject.py
+Symlinking /home/student/Git-projects/robotproject-her-finn/devel/lib/python2.7/dist-packages/my_depthai/srv/__init__.py
+Symlinking /home/student/Git-projects/robotproject-her-finn/devel/lib/pkgconfig/my_depthai.pc
+Symlinking /home/student/Git-projects/robotproject-her-finn/devel/share/my_depthai/cmake/my_depthai-msg-extras.cmake
+Symlinking /home/student/Git-projects/robotproject-her-finn/devel/share/my_depthai/cmake/my_depthaiConfig.cmake
+Symlinking /home/student/Git-projects/robotproject-her-finn/devel/share/my_depthai/cmake/my_depthai-msg-paths.cmake
+Symlinking /home/student/Git-projects/robotproject-her-finn/devel/share/my_depthai/cmake/my_depthaiConfig-version.cmake
+Symlinking /home/student/Git-projects/robotproject-her-finn/devel/share/gennodejs/ros/my_depthai/_index.js
+Symlinking /home/student/Git-projects/robotproject-her-finn/devel/share/gennodejs/ros/my_depthai/srv/_index.js
+Symlinking /home/student/Git-projects/robotproject-her-finn/devel/share/gennodejs/ros/my_depthai/srv/DetectObject.js
+Symlinking /home/student/Git-projects/robotproject-her-finn/devel/share/roseus/ros/my_depthai/manifest.l
+Symlinking /home/student/Git-projects/robotproject-her-finn/devel/share/roseus/ros/my_depthai/srv/DetectObject.l
+Symlinking /home/student/Git-projects/robotproject-her-finn/devel/share/common-lisp/ros/my_depthai/srv/DetectObject.lisp
+Symlinking /home/student/Git-projects/robotproject-her-finn/devel/share/common-lisp/ros/my_depthai/srv/_package.lisp
+Symlinking /home/student/Git-projects/robotproject-her-finn/devel/share/common-lisp/ros/my_depthai/srv/_package_DetectObject.lisp
+Symlinking /home/student/Git-projects/robotproject-her-finn/devel/share/common-lisp/ros/my_depthai/srv/my_depthai-srv.asd

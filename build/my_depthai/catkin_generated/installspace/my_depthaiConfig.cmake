@@ -67,14 +67,14 @@ set(my_depthai_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("FALSE" STREQUAL "TRUE")
-  set(my_depthai_SOURCE_PREFIX /home/student/ufactory_ws/src/my_depthai)
-  set(my_depthai_DEVEL_PREFIX /home/student/ufactory_ws/devel/.private/my_depthai)
+  set(my_depthai_SOURCE_PREFIX /home/student/Git-projects/robotproject-her-finn/src/my_depthai)
+  set(my_depthai_DEVEL_PREFIX /home/student/Git-projects/robotproject-her-finn/devel/.private/my_depthai)
   set(my_depthai_INSTALL_PREFIX "")
   set(my_depthai_PREFIX ${my_depthai_DEVEL_PREFIX})
 else()
   set(my_depthai_SOURCE_PREFIX "")
   set(my_depthai_DEVEL_PREFIX "")
-  set(my_depthai_INSTALL_PREFIX /home/student/ufactory_ws/install)
+  set(my_depthai_INSTALL_PREFIX /home/student/Git-projects/robotproject-her-finn/install)
   set(my_depthai_PREFIX ${my_depthai_INSTALL_PREFIX})
 endif()
 
@@ -154,7 +154,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/student/ufactory_ws/install/lib;/home/student/ufactory_ws/devel/lib;/home/student/rospackages_ws/devel/lib;/opt/ros/melodic/lib)
+    foreach(path /home/student/Git-projects/robotproject-her-finn/install/lib;/home/student/Git-projects/robotproject-her-finn/devel/lib;/home/student/ufactory_ws/devel/lib;/home/student/range_sensor_tutorial_ws/devel/lib;/home/student/rospackages_ws/devel/lib;/opt/ros/melodic/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
