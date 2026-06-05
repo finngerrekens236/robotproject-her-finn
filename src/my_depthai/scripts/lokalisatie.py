@@ -11,19 +11,19 @@ import numpy as np
 PICK_PERCENT = 0.35
 
 STRATEGIEEN = {
-    "vork": {
+    "Vork": {
         "method": "canny", "onderkant": "smalste", "pick_percent": 0.50,
         "canny_low": 50, "canny_high": 150, "clahe": False, "denoise": False, "min_area": 500,
     },
-    "lepel": {
+    "Lepel": {
         "method": "canny", "onderkant": "smalste", "pick_percent": 0.50,
         "canny_low": 30, "canny_high": 100, "clahe": True, "denoise": True, "min_area": 150,
     },
-    "tandenborstel": {
+    "Tandenborstel": {
         "method": "canny", "onderkant": "smalste", "pick_percent": 0.50,
         "canny_low": 50, "canny_high": 150, "clahe": False, "denoise": False, "min_area": 500,
     },
-    "schroevendraaier": {
+    "Schroevendraaier": {
         "method": "value_otsu", "onderkant": "breedste", "pick_percent": 0.50, "min_area": 500,
     },
 }

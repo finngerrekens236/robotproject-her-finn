@@ -23,17 +23,6 @@ class HMIToRobot:
         else:
             rospy.logwarn("Onbekend commando ontvangen: %s", msg.data)
 
-    def go_to_home_position(self):
-        rospy.loginfo("Stuur robot naar homepositie.")
-        traj = JointTrajectory()
-        traj.joint_names = [
-            "joint1", "joint2", "joint3", "joint4", "joint5", "joint6"
-        ]
-        point = JointTrajectoryPoint()
-        point.positions = [0, 0, 0, 0, 0, 0]  # Homepositie
-        point.time_from_start = rospy.Duration(2.0)
-        traj.points.append(point)
-        self.robot_pub.publish(traj)
 
     def start_single(self):
         rospy.loginfo("Start enkele bewerking.")

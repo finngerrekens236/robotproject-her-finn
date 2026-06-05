@@ -1,0 +1,5 @@
+hmi_ros
+/home/student/Git-projects/robotproject-her-finn/devel/.private/hmi_ros/cmake.lock /home/student/Git-projects/robotproject-her-finn/devel/./cmake.lock
+/home/student/Git-projects/robotproject-her-finn/devel/.private/hmi_ros/lib/pkgconfig/hmi_ros.pc /home/student/Git-projects/robotproject-her-finn/devel/lib/pkgconfig/hmi_ros.pc
+/home/student/Git-projects/robotproject-her-finn/devel/.private/hmi_ros/share/hmi_ros/cmake/hmi_rosConfig-version.cmake /home/student/Git-projects/robotproject-her-finn/devel/share/hmi_ros/cmake/hmi_rosConfig-version.cmake
+/home/student/Git-projects/robotproject-her-finn/devel/.private/hmi_ros/share/hmi_ros/cmake/hmi_rosConfig.cmake /home/student/Git-projects/robotproject-her-finn/devel/share/hmi_ros/cmake/hmi_rosConfig.cmake

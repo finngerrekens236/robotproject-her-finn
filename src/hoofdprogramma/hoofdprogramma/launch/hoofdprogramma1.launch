@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!-- Simulatie of echte robot  ip aangepast -->
+  <arg name="sim" default="false"/>
+  <arg name="robot_ip" default="192.168.1.163"/>
+
+  <!-- Robot starten controleren of path klopt
+  <group unless="$(arg sim)">
+    <include file="$(find my_lite6_moveit_config)/launch/realMove_exec.launch">
+      <arg name="robot_ip" value="$(arg robot_ip)"/>
+    </include>
+  </group>-->
+
+  <!-- Simulatie controleren of path klopt
+  <group if="$(arg sim)">
+    <include file="$(find my_lite6_moveit_config)/launch/demo.launch"/>
+  </group>-->
+
+  <!-- Transportband/conveyor -->
+  <node
+    name="conveyor_node"
+    pkg="conveyor_package"
+    type="conveyor_node.py"
+    output="screen"
+  />
+
+<!-- HMI -->
+  <node
+    name="hmi_gui"
+    pkg="hmi_ros"
+    type="hmi_gui.py"
+    output="screen"
+  />
+
+  <!-- Hoofdprogramma (centrale brain) 
+  <node
+    name="hoofdprogramma"
+    pkg="hoofdprogramma"
+    type="HoofdprogrammaTest.py"
+    output="screen"
+  />-->
+
+  <!-- Robot uitvoerder andere namen geven
+  <node
+    name="Robot_Action_Server"
+    pkg="my_demo"
+    type="Robot_Action_Server.py"
+    output="screen"
+  />-->
+
+  <!-- Vision 
+  <include file="$(find my_depthai)/launch/vision.launch"/>   -->
+
+  
+</launch>

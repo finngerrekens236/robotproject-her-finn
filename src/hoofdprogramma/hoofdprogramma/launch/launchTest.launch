@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<launch>
+ 
+  <node name="conveyor_node" pkg="conveyor_package" type="conveyor_node.py" output="screen" />
+
+  <!-- GUI Node -->
+  <node pkg="hmi_ros" type="hmi_gui.py" name="hmi_gui" output="screen" />
+
+  <!-- Status-simulator Node -->
+  <node pkg="hmi_ros" type="status_simulator.py" name="status_simulator" output="screen" />
+
+</launch>
