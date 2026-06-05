@@ -1,0 +1,11 @@
+# Goal
+geometry_msgs/PoseStamped target_pose
+string kwast_type
+---
+# Result
+bool success
+string message
+---
+# Feedback
+float32 progress
+string state
