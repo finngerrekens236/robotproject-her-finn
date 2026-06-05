@@ -1,0 +1,5 @@
+string object_type
+bool reset
+---
+bool success
+string message
