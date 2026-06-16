@@ -1,10 +1,10 @@
 file(REMOVE_RECURSE
-  "/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_planner/share/roseus/ros/xarm_planner/manifest.l"
-  "/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_planner/share/roseus/ros/xarm_planner/srv/exec_plan.l"
+  "CMakeFiles/xarm_planner_generate_messages_eus"
   "/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_planner/share/roseus/ros/xarm_planner/srv/joint_plan.l"
+  "/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_planner/share/roseus/ros/xarm_planner/srv/exec_plan.l"
   "/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_planner/share/roseus/ros/xarm_planner/srv/pose_plan.l"
   "/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_planner/share/roseus/ros/xarm_planner/srv/single_straight_plan.l"
-  "CMakeFiles/xarm_planner_generate_messages_eus"
+  "/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_planner/share/roseus/ros/xarm_planner/manifest.l"
 )
 
 # Per-language clean rules from dependency scanning.

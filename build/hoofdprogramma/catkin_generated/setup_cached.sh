@@ -8,6 +8,9 @@
 
 # modified environment variables
 export CMAKE_PREFIX_PATH="/home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma:$CMAKE_PREFIX_PATH"
+export LD_LIBRARY_PATH="/home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/lib:$LD_LIBRARY_PATH"
+export PKG_CONFIG_PATH="/home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/lib/pkgconfig:$PKG_CONFIG_PATH"
 export PWD='/home/student/Git-projects/robotproject-her-finn/build/hoofdprogramma'
+export PYTHONPATH="/home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/lib/python2.7/dist-packages:$PYTHONPATH"
 export ROSLISP_PACKAGE_DIRECTORIES="/home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/common-lisp:$ROSLISP_PACKAGE_DIRECTORIES"
 export ROS_PACKAGE_PATH="/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma:$ROS_PACKAGE_PATH"

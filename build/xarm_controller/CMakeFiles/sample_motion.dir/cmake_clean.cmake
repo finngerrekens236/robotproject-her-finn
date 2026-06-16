@@ -1,8 +1,7 @@
 file(REMOVE_RECURSE
-  "/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_controller/lib/xarm_controller/sample_motion"
-  "/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_controller/lib/xarm_controller/sample_motion.pdb"
   "CMakeFiles/sample_motion.dir/src/sample_motion.cpp.o"
-  "CMakeFiles/sample_motion.dir/src/sample_motion.cpp.o.d"
+  "/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_controller/lib/xarm_controller/sample_motion.pdb"
+  "/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_controller/lib/xarm_controller/sample_motion"
 )
 
 # Per-language clean rules from dependency scanning.

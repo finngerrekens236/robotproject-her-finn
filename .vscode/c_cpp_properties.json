@@ -1,0 +1,24 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "${default}",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "/home/student/Git-projects/robotproject-her-finn/devel/include/**",
+        "/opt/ros/melodic/include/**",
+        "/home/student/Git-projects/robotproject-her-finn/src/xarm_ros/xarm_api/include/**",
+        "/home/student/Git-projects/robotproject-her-finn/src/xarm_ros/xarm_controller/include/**",
+        "/home/student/Git-projects/robotproject-her-finn/src/xarm_ros/xarm_moveit_servo/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS",
+      "intelliSenseMode": "gcc-x64",
+      "compilerPath": "/usr/bin/gcc",
+      "cStandard": "gnu11",
+      "cppStandard": "c++14"
+    }
+  ],
+  "version": 4
+}

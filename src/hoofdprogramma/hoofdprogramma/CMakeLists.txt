@@ -20,6 +20,10 @@ add_message_files(
 add_service_files(
   FILES
   StartCyclus.srv
+  StopCyclus.srv
+  ResetCyclus.srv
+  SingleStart.srv
+  ConveyorControl.srv
 )
 
 add_action_files(

@@ -24,22 +24,17 @@ struct StartCyclusRequest_
   typedef StartCyclusRequest_<ContainerAllocator> Type;
 
   StartCyclusRequest_()
-    : object_type()
-    , reset(false)  {
+    : start(false)  {
     }
   StartCyclusRequest_(const ContainerAllocator& _alloc)
-    : object_type(_alloc)
-    , reset(false)  {
+    : start(false)  {
   (void)_alloc;
     }
 
 
 
-   typedef std::basic_string<char, std::char_traits<char>, typename std::allocator_traits<ContainerAllocator>::template rebind_alloc<char>> _object_type_type;
-  _object_type_type object_type;
-
-   typedef uint8_t _reset_type;
-  _reset_type reset;
+   typedef uint8_t _start_type;
+  _start_type start;
 
 
 
@@ -70,8 +65,7 @@ return s;
 template<typename ContainerAllocator1, typename ContainerAllocator2>
 bool operator==(const ::hoofdprogramma::StartCyclusRequest_<ContainerAllocator1> & lhs, const ::hoofdprogramma::StartCyclusRequest_<ContainerAllocator2> & rhs)
 {
-  return lhs.object_type == rhs.object_type &&
-    lhs.reset == rhs.reset;
+  return lhs.start == rhs.start;
 }
 
 template<typename ContainerAllocator1, typename ContainerAllocator2>
@@ -94,12 +88,12 @@ namespace message_traits
 
 template <class ContainerAllocator>
 struct IsFixedSize< ::hoofdprogramma::StartCyclusRequest_<ContainerAllocator> >
-  : FalseType
+  : TrueType
   { };
 
 template <class ContainerAllocator>
 struct IsFixedSize< ::hoofdprogramma::StartCyclusRequest_<ContainerAllocator> const>
-  : FalseType
+  : TrueType
   { };
 
 template <class ContainerAllocator>
@@ -128,12 +122,12 @@ struct MD5Sum< ::hoofdprogramma::StartCyclusRequest_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "60875a7ea2b59bdae48f81a727cbffcb";
+    return "676aa7bfb3ec2071e814f2368dfd5fb5";
   }
 
   static const char* value(const ::hoofdprogramma::StartCyclusRequest_<ContainerAllocator>&) { return value(); }
-  static const uint64_t static_value1 = 0x60875a7ea2b59bdaULL;
-  static const uint64_t static_value2 = 0xe48f81a727cbffcbULL;
+  static const uint64_t static_value1 = 0x676aa7bfb3ec2071ULL;
+  static const uint64_t static_value2 = 0xe814f2368dfd5fb5ULL;
 };
 
 template<class ContainerAllocator>
@@ -152,8 +146,7 @@ struct Definition< ::hoofdprogramma::StartCyclusRequest_<ContainerAllocator> >
 {
   static const char* value()
   {
-    return "string object_type\n"
-"bool reset\n"
+    return "bool start\n"
 ;
   }
 
@@ -172,8 +165,7 @@ namespace serialization
   {
     template<typename Stream, typename T> inline static void allInOne(Stream& stream, T m)
     {
-      stream.next(m.object_type);
-      stream.next(m.reset);
+      stream.next(m.start);
     }
 
     ROS_DECLARE_ALLINONE_SERIALIZER
@@ -192,10 +184,8 @@ struct Printer< ::hoofdprogramma::StartCyclusRequest_<ContainerAllocator> >
 {
   template<typename Stream> static void stream(Stream& s, const std::string& indent, const ::hoofdprogramma::StartCyclusRequest_<ContainerAllocator>& v)
   {
-    s << indent << "object_type: ";
-    Printer<std::basic_string<char, std::char_traits<char>, typename std::allocator_traits<ContainerAllocator>::template rebind_alloc<char>>>::stream(s, indent + "  ", v.object_type);
-    s << indent << "reset: ";
-    Printer<uint8_t>::stream(s, indent + "  ", v.reset);
+    s << indent << "start: ";
+    Printer<uint8_t>::stream(s, indent + "  ", v.start);
   }
 };
 

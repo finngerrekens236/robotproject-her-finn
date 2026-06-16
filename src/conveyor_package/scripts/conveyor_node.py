@@ -1,70 +1,145 @@
 #!/usr/bin/env python
 
 import rospy
-from std_msgs.msg import String, Bool
 import serial
+from std_msgs.msg import String
 
-ser = None
-product_ready_pub = None
-
-
-def control_callback(msg):
-    if ser is None:
-        return
-
-    if msg.data == "start":
-        ser.write(b"start\n")
-
-    elif msg.data == "stop":
-        ser.write(b"stop\n")
+from hoofdprogramma.srv import (
+    ConveyorControl,
+    ConveyorControlResponse
+)
 
 
-if __name__ == '__main__':
+class ConveyorNode:
 
-    rospy.init_node('conveyor_node')
+    def __init__(self):
 
-    port = rospy.get_param("~port", "/dev/ttyACM0")
+        rospy.init_node('conveyor_node')
 
-    try:
-        ser = serial.Serial(port, 9600, timeout=1)
-        rospy.sleep(2)
-        rospy.loginfo("Serial connected: %s", port)
+        # =========================
+        # SERIAL CONNECTION
+        # =========================
+        try:
+            self.ser = serial.Serial('/dev/ttyACM0', 9600, timeout=1)
+            rospy.sleep(2)
+            rospy.loginfo("Arduino verbonden")
+        except Exception as e:
+            rospy.logerr("Geen Arduino verbinding: %s", e)
+            self.ser = None
 
-    except Exception as e:
-        rospy.logerr("Serial error: %s", e)
-        ser = None
+        # =========================
+        # STATE
+        # =========================
+        self.ready = False
+        self.running = False
 
-    rospy.Subscriber('/conveyor/control', String, control_callback)
+        # =========================
+        # STATUS PUBLISHER
+        # =========================
+        self.status_pub = rospy.Publisher(
+            '/system/status',
+            String,
+            queue_size=10
+        )
 
-    product_ready_pub = rospy.Publisher(
-        '/conveyor/product_ready',
-        Bool,
-        queue_size=10
-    )
+        # =========================
+        # SERVICE
+        # =========================
+        rospy.Service(
+            '/conveyor_control',
+            ConveyorControl,
+            self.control_callback
+        )
 
-    rate = rospy.Rate(10)
+        rospy.loginfo("Conveyor service ready")
 
-    while not rospy.is_shutdown():
+        # =========================
+        # SERIAL LOOP
+        # =========================
+        rospy.Timer(rospy.Duration(0.05), self.read_serial)
 
-        if ser and ser.in_waiting > 0:
+        rospy.spin()
 
-            line = ser.readline().decode('utf-8', errors='ignore').strip()
+    # ==================================================
+    # SERVICE CALLBACK
+    # ==================================================
+    def control_callback(self, req):
+
+        if req.run:
+
+            rospy.loginfo("Conveyor START")
+
+            self.ready = False
+            self.running = True
+
+            if self.ser:
+                self.ser.write(b"start\n")
+
+            self.status_pub.publish("conveyor_running")
+
+            return ConveyorControlResponse(
+                True,
+                "Conveyor gestart",
+                "RUNNING"
+            )
+
+        else:
+
+            rospy.loginfo("Conveyor STOP")
+
+            self.running = False
+
+            if self.ser:
+                self.ser.write(b"stop\n")
+
+            self.status_pub.publish("idle")
+
+            return ConveyorControlResponse(
+                True,
+                "Conveyor gestopt",
+                "IDLE"
+            )
+
+    # ==================================================
+    # SERIAL INPUT HANDLER
+    # ==================================================
+    def read_serial(self, event):
+
+        if not self.ser:
+            return
+
+        if self.ser.in_waiting > 0:
+
+            line = self.ser.readline().decode(errors='ignore').strip()
 
             if not line:
-                continue
+                return
 
-            # ==========================
-            # STATE MAPPING
-            # ==========================
+            # DEBUG
+            rospy.loginfo("Arduino RAW: %s", line)
 
-            if line == "Conveyor: Idle":
-                rospy.loginfo("Conveyor: Idle (wacht op product)")
+            # ==================================================
+            # READY DETECTIE (ROBUST)
+            # ==================================================
+            if "READY" in line.upper():
 
-            elif line == "Conveyor: Running":
-                rospy.loginfo("Conveyor: Running (product onderweg)")
+                rospy.loginfo("CONVEYOR READY (eindsensor bereikt)")
+                self.ready = True
 
-            elif line == "Conveyor: Ready":
-                rospy.loginfo("Conveyor: Ready (eindpositie bereikt)")
-                product_ready_pub.publish(True)
+                self.status_pub.publish("conveyor_ready")
 
-        rate.sleep()
+            # ==================================================
+            # IDLE DETECTIE
+            # ==================================================
+            elif "IDLE" in line.upper():
+
+                self.ready = False
+                self.running = False
+                self.status_pub.publish("idle")
+
+
+# ==================================================
+# MAIN
+# ==================================================
+if __name__ == '__main__':
+    ConveyorNode()

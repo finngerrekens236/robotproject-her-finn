@@ -1,8 +1,7 @@
 file(REMOVE_RECURSE
-  "/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_gripper/lib/xarm_gripper/gripper_action_server"
-  "/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_gripper/lib/xarm_gripper/gripper_action_server.pdb"
   "CMakeFiles/gripper_action_server.dir/src/gripper_action_server.cpp.o"
-  "CMakeFiles/gripper_action_server.dir/src/gripper_action_server.cpp.o.d"
+  "/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_gripper/lib/xarm_gripper/gripper_action_server.pdb"
+  "/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_gripper/lib/xarm_gripper/gripper_action_server"
 )
 
 # Per-language clean rules from dependency scanning.

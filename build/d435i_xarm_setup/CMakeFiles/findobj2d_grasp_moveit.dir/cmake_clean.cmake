@@ -1,8 +1,7 @@
 file(REMOVE_RECURSE
-  "/home/student/Git-projects/robotproject-her-finn/devel/.private/d435i_xarm_setup/lib/d435i_xarm_setup/findobj2d_grasp_moveit"
-  "/home/student/Git-projects/robotproject-her-finn/devel/.private/d435i_xarm_setup/lib/d435i_xarm_setup/findobj2d_grasp_moveit.pdb"
   "CMakeFiles/findobj2d_grasp_moveit.dir/src/findobj_grasp_moveit_planner.cpp.o"
-  "CMakeFiles/findobj2d_grasp_moveit.dir/src/findobj_grasp_moveit_planner.cpp.o.d"
+  "/home/student/Git-projects/robotproject-her-finn/devel/.private/d435i_xarm_setup/lib/d435i_xarm_setup/findobj2d_grasp_moveit.pdb"
+  "/home/student/Git-projects/robotproject-her-finn/devel/.private/d435i_xarm_setup/lib/d435i_xarm_setup/findobj2d_grasp_moveit"
 )
 
 # Per-language clean rules from dependency scanning.

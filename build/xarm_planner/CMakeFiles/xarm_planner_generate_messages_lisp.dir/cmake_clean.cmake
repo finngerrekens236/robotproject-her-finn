@@ -1,9 +1,9 @@
 file(REMOVE_RECURSE
-  "/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_planner/share/common-lisp/ros/xarm_planner/srv/exec_plan.lisp"
+  "CMakeFiles/xarm_planner_generate_messages_lisp"
   "/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_planner/share/common-lisp/ros/xarm_planner/srv/joint_plan.lisp"
+  "/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_planner/share/common-lisp/ros/xarm_planner/srv/exec_plan.lisp"
   "/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_planner/share/common-lisp/ros/xarm_planner/srv/pose_plan.lisp"
   "/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_planner/share/common-lisp/ros/xarm_planner/srv/single_straight_plan.lisp"
-  "CMakeFiles/xarm_planner_generate_messages_lisp"
 )
 
 # Per-language clean rules from dependency scanning.

@@ -1,8 +1,7 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/xarm_hw.dir/src/xarm_hw.cpp.o"
   "/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_controller/lib/libxarm_hw.pdb"
   "/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_controller/lib/libxarm_hw.so"
-  "CMakeFiles/xarm_hw.dir/src/xarm_hw.cpp.o"
-  "CMakeFiles/xarm_hw.dir/src/xarm_hw.cpp.o.d"
 )
 
 # Per-language clean rules from dependency scanning.

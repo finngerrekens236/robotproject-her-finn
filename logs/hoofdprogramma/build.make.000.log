@@ -1,78 +1,115 @@
-[  0%] Built target _hoofdprogramma_generate_messages_check_deps_PickAndPlaceFeedback
-[  0%] Built target std_msgs_generate_messages_py
-[  0%] Built target geometry_msgs_generate_messages_py
+[35m[1mScanning dependencies of target actionlib_msgs_generate_messages_py[0m
+[35m[1mScanning dependencies of target _hoofdprogramma_generate_messages_check_deps_PickAndPlaceFeedback[0m
+[35m[1mScanning dependencies of target _hoofdprogramma_generate_messages_check_deps_PickAndPlaceActionFeedback[0m
 [  0%] Built target actionlib_msgs_generate_messages_py
-[  0%] Built target _hoofdprogramma_generate_messages_check_deps_PickAndPlaceActionGoal
-[  0%] Built target _hoofdprogramma_generate_messages_check_deps_PickAndPlaceGoal
-[  0%] Built target _hoofdprogramma_generate_messages_check_deps_StartCyclus
-[  0%] Built target _hoofdprogramma_generate_messages_check_deps_PickAndPlaceAction
-[  0%] Built target _hoofdprogramma_generate_messages_check_deps_PickAndPlaceResult
-[  0%] Built target _hoofdprogramma_generate_messages_check_deps_PickAndPlaceActionResult
-[  0%] Built target _hoofdprogramma_generate_messages_check_deps_objectDetection
+[35m[1mScanning dependencies of target _hoofdprogramma_generate_messages_check_deps_ConveyorControl[0m
+[  0%] Built target _hoofdprogramma_generate_messages_check_deps_PickAndPlaceFeedback
 [  0%] Built target _hoofdprogramma_generate_messages_check_deps_PickAndPlaceActionFeedback
-[  0%] Built target std_msgs_generate_messages_cpp
-[  0%] Built target actionlib_msgs_generate_messages_cpp
-[  0%] Built target geometry_msgs_generate_messages_cpp
-[  0%] Built target geometry_msgs_generate_messages_eus
-[  0%] Built target std_msgs_generate_messages_eus
-[  0%] Built target std_msgs_generate_messages_lisp
-[  0%] Built target actionlib_msgs_generate_messages_eus
-[  0%] Built target geometry_msgs_generate_messages_lisp
-[  0%] Built target actionlib_msgs_generate_messages_lisp
+[35m[1mScanning dependencies of target _hoofdprogramma_generate_messages_check_deps_PickAndPlaceAction[0m
+[35m[1mScanning dependencies of target _hoofdprogramma_generate_messages_check_deps_PickAndPlaceGoal[0m
+[  0%] Built target _hoofdprogramma_generate_messages_check_deps_ConveyorControl
+[35m[1mScanning dependencies of target _hoofdprogramma_generate_messages_check_deps_PickAndPlaceActionGoal[0m
+[  0%] Built target _hoofdprogramma_generate_messages_check_deps_PickAndPlaceAction
+[  0%] Built target _hoofdprogramma_generate_messages_check_deps_PickAndPlaceGoal
+[35m[1mScanning dependencies of target geometry_msgs_generate_messages_py[0m
+[35m[1mScanning dependencies of target _hoofdprogramma_generate_messages_check_deps_PickAndPlaceResult[0m
+[  0%] Built target geometry_msgs_generate_messages_py
+[  0%] Built target _hoofdprogramma_generate_messages_check_deps_PickAndPlaceActionGoal
+[35m[1mScanning dependencies of target std_msgs_generate_messages_py[0m
+[35m[1mScanning dependencies of target _hoofdprogramma_generate_messages_check_deps_objectDetection[0m
+[  0%] Built target std_msgs_generate_messages_py
+[  0%] Built target _hoofdprogramma_generate_messages_check_deps_PickAndPlaceResult
+[35m[1mScanning dependencies of target _hoofdprogramma_generate_messages_check_deps_StartCyclus[0m
+[  0%] Built target _hoofdprogramma_generate_messages_check_deps_objectDetection
+[35m[1mScanning dependencies of target _hoofdprogramma_generate_messages_check_deps_PickAndPlaceActionResult[0m
+[35m[1mScanning dependencies of target std_msgs_generate_messages_nodejs[0m
 [  0%] Built target std_msgs_generate_messages_nodejs
+[  0%] Built target _hoofdprogramma_generate_messages_check_deps_PickAndPlaceActionResult
+[35m[1mScanning dependencies of target actionlib_msgs_generate_messages_nodejs[0m
+[35m[1mScanning dependencies of target geometry_msgs_generate_messages_nodejs[0m
+[  0%] Built target _hoofdprogramma_generate_messages_check_deps_StartCyclus
 [  0%] Built target geometry_msgs_generate_messages_nodejs
 [  0%] Built target actionlib_msgs_generate_messages_nodejs
-[  2%] [34m[1mGenerating Python from MSG hoofdprogramma/PickAndPlaceActionGoal[0m
-[  4%] [34m[1mGenerating EusLisp code from hoofdprogramma/PickAndPlaceActionGoal.msg[0m
-[  6%] [34m[1mGenerating C++ code from hoofdprogramma/PickAndPlaceActionGoal.msg[0m
-[  8%] [34m[1mGenerating EusLisp code from hoofdprogramma/PickAndPlaceGoal.msg[0m
-[ 10%] [34m[1mGenerating C++ code from hoofdprogramma/PickAndPlaceGoal.msg[0m
-[ 12%] [34m[1mGenerating EusLisp code from hoofdprogramma/PickAndPlaceAction.msg[0m
-[ 14%] [34m[1mGenerating Python from MSG hoofdprogramma/PickAndPlaceGoal[0m
-[ 16%] [34m[1mGenerating C++ code from hoofdprogramma/PickAndPlaceAction.msg[0m
-[ 18%] [34m[1mGenerating EusLisp code from hoofdprogramma/PickAndPlaceActionResult.msg[0m
-[ 20%] [34m[1mGenerating EusLisp code from hoofdprogramma/PickAndPlaceResult.msg[0m
-[ 22%] [34m[1mGenerating Python from MSG hoofdprogramma/PickAndPlaceAction[0m
-[ 25%] [34m[1mGenerating C++ code from hoofdprogramma/PickAndPlaceActionResult.msg[0m
-[ 27%] [34m[1mGenerating EusLisp code from hoofdprogramma/objectDetection.msg[0m
-[ 29%] [34m[1mGenerating EusLisp code from hoofdprogramma/PickAndPlaceFeedback.msg[0m
-[ 31%] [34m[1mGenerating Python from MSG hoofdprogramma/PickAndPlaceActionResult[0m
-[ 33%] [34m[1mGenerating C++ code from hoofdprogramma/PickAndPlaceResult.msg[0m
-[ 35%] [34m[1mGenerating EusLisp code from hoofdprogramma/PickAndPlaceActionFeedback.msg[0m
-[ 37%] [34m[1mGenerating EusLisp code from hoofdprogramma/StartCyclus.srv[0m
-[ 39%] [34m[1mGenerating C++ code from hoofdprogramma/objectDetection.msg[0m
-[ 41%] [34m[1mGenerating Python from MSG hoofdprogramma/PickAndPlaceResult[0m
-[ 43%] [34m[1mGenerating EusLisp manifest code for hoofdprogramma[0m
-[ 45%] [34m[1mGenerating C++ code from hoofdprogramma/PickAndPlaceFeedback.msg[0m
-[ 47%] [34m[1mGenerating Python from MSG hoofdprogramma/objectDetection[0m
-[ 50%] [34m[1mGenerating C++ code from hoofdprogramma/PickAndPlaceActionFeedback.msg[0m
-[ 52%] [34m[1mGenerating Python from MSG hoofdprogramma/PickAndPlaceFeedback[0m
-[ 54%] [34m[1mGenerating C++ code from hoofdprogramma/StartCyclus.srv[0m
-[ 56%] [34m[1mGenerating Python from MSG hoofdprogramma/PickAndPlaceActionFeedback[0m
-[ 56%] Built target hoofdprogramma_generate_messages_cpp
-[ 58%] [34m[1mGenerating Lisp code from hoofdprogramma/PickAndPlaceActionGoal.msg[0m
-[ 60%] [34m[1mGenerating Python code from SRV hoofdprogramma/StartCyclus[0m
-[ 62%] [34m[1mGenerating Lisp code from hoofdprogramma/PickAndPlaceGoal.msg[0m
-[ 64%] [34m[1mGenerating Lisp code from hoofdprogramma/PickAndPlaceAction.msg[0m
-[ 66%] [34m[1mGenerating Python msg __init__.py for hoofdprogramma[0m
-[ 68%] [34m[1mGenerating Lisp code from hoofdprogramma/PickAndPlaceActionResult.msg[0m
-[ 70%] [34m[1mGenerating Lisp code from hoofdprogramma/PickAndPlaceResult.msg[0m
-[ 72%] [34m[1mGenerating Lisp code from hoofdprogramma/objectDetection.msg[0m
-[ 75%] [34m[1mGenerating Python srv __init__.py for hoofdprogramma[0m
-[ 77%] [34m[1mGenerating Lisp code from hoofdprogramma/PickAndPlaceFeedback.msg[0m
-[ 79%] [34m[1mGenerating Lisp code from hoofdprogramma/PickAndPlaceActionFeedback.msg[0m
-[ 81%] [34m[1mGenerating Lisp code from hoofdprogramma/StartCyclus.srv[0m
-[ 81%] Built target hoofdprogramma_generate_messages_py
-[ 83%] [34m[1mGenerating Javascript code from hoofdprogramma/PickAndPlaceActionGoal.msg[0m
-[ 83%] Built target hoofdprogramma_generate_messages_eus
-[ 85%] [34m[1mGenerating Javascript code from hoofdprogramma/PickAndPlaceGoal.msg[0m
-[ 85%] Built target hoofdprogramma_generate_messages_lisp
-[ 87%] [34m[1mGenerating Javascript code from hoofdprogramma/PickAndPlaceAction.msg[0m
-[ 89%] [34m[1mGenerating Javascript code from hoofdprogramma/PickAndPlaceActionResult.msg[0m
-[ 91%] [34m[1mGenerating Javascript code from hoofdprogramma/PickAndPlaceResult.msg[0m
-[ 93%] [34m[1mGenerating Javascript code from hoofdprogramma/objectDetection.msg[0m
-[ 95%] [34m[1mGenerating Javascript code from hoofdprogramma/PickAndPlaceFeedback.msg[0m
-[ 97%] [34m[1mGenerating Javascript code from hoofdprogramma/PickAndPlaceActionFeedback.msg[0m
-[100%] [34m[1mGenerating Javascript code from hoofdprogramma/StartCyclus.srv[0m
-[100%] Built target hoofdprogramma_generate_messages_nodejs
+[35m[1mScanning dependencies of target actionlib_msgs_generate_messages_lisp[0m
+[35m[1mScanning dependencies of target geometry_msgs_generate_messages_lisp[0m
+[35m[1mScanning dependencies of target std_msgs_generate_messages_lisp[0m
+[  0%] Built target actionlib_msgs_generate_messages_lisp
+[  0%] Built target geometry_msgs_generate_messages_lisp
+[35m[1mScanning dependencies of target actionlib_msgs_generate_messages_cpp[0m
+[  0%] Built target std_msgs_generate_messages_lisp
+[35m[1mScanning dependencies of target geometry_msgs_generate_messages_cpp[0m
+[  0%] Built target actionlib_msgs_generate_messages_cpp
+[35m[1mScanning dependencies of target std_msgs_generate_messages_cpp[0m
+[  0%] Built target geometry_msgs_generate_messages_cpp
+[35m[1mScanning dependencies of target geometry_msgs_generate_messages_eus[0m
+[  0%] Built target std_msgs_generate_messages_cpp
+[35m[1mScanning dependencies of target std_msgs_generate_messages_eus[0m
+[35m[1mScanning dependencies of target actionlib_msgs_generate_messages_eus[0m
+[  0%] Built target geometry_msgs_generate_messages_eus
+[  0%] Built target std_msgs_generate_messages_eus
+[  0%] Built target actionlib_msgs_generate_messages_eus
+[35m[1mScanning dependencies of target hoofdprogramma_generate_messages_py[0m
+[35m[1mScanning dependencies of target hoofdprogramma_generate_messages_nodejs[0m
+[  1%] [34m[1mGenerating Python from MSG hoofdprogramma/PickAndPlaceActionGoal[0m
+[35m[1mScanning dependencies of target hoofdprogramma_generate_messages_lisp[0m
+[  3%] [34m[1mGenerating Javascript code from hoofdprogramma/PickAndPlaceActionGoal.msg[0m
+[  5%] [34m[1mGenerating Lisp code from hoofdprogramma/PickAndPlaceActionGoal.msg[0m
+[  7%] [34m[1mGenerating Javascript code from hoofdprogramma/PickAndPlaceGoal.msg[0m
+[  9%] [34m[1mGenerating Lisp code from hoofdprogramma/PickAndPlaceGoal.msg[0m
+[ 11%] [34m[1mGenerating Javascript code from hoofdprogramma/PickAndPlaceAction.msg[0m
+[ 13%] [34m[1mGenerating Lisp code from hoofdprogramma/PickAndPlaceAction.msg[0m
+[ 15%] [34m[1mGenerating Javascript code from hoofdprogramma/PickAndPlaceActionResult.msg[0m
+[ 16%] [34m[1mGenerating Lisp code from hoofdprogramma/PickAndPlaceActionResult.msg[0m
+[ 18%] [34m[1mGenerating Lisp code from hoofdprogramma/PickAndPlaceResult.msg[0m
+[ 20%] [34m[1mGenerating Javascript code from hoofdprogramma/PickAndPlaceResult.msg[0m
+[ 22%] [34m[1mGenerating Lisp code from hoofdprogramma/objectDetection.msg[0m
+[ 24%] [34m[1mGenerating Javascript code from hoofdprogramma/objectDetection.msg[0m
+[ 26%] [34m[1mGenerating Python from MSG hoofdprogramma/PickAndPlaceGoal[0m
+[ 28%] [34m[1mGenerating Javascript code from hoofdprogramma/PickAndPlaceFeedback.msg[0m
+[ 30%] [34m[1mGenerating Lisp code from hoofdprogramma/PickAndPlaceFeedback.msg[0m
+[ 32%] [34m[1mGenerating Javascript code from hoofdprogramma/PickAndPlaceActionFeedback.msg[0m
+[ 33%] [34m[1mGenerating Lisp code from hoofdprogramma/PickAndPlaceActionFeedback.msg[0m
+[ 35%] [34m[1mGenerating Python from MSG hoofdprogramma/PickAndPlaceAction[0m
+[ 37%] [34m[1mGenerating Javascript code from hoofdprogramma/StartCyclus.srv[0m
+[ 39%] [34m[1mGenerating Lisp code from hoofdprogramma/StartCyclus.srv[0m
+[ 41%] [34m[1mGenerating Lisp code from hoofdprogramma/ConveyorControl.srv[0m
+[ 43%] [34m[1mGenerating Javascript code from hoofdprogramma/ConveyorControl.srv[0m
+[ 43%] Built target hoofdprogramma_generate_messages_lisp
+[ 43%] Built target hoofdprogramma_generate_messages_nodejs
+[ 45%] [34m[1mGenerating Python from MSG hoofdprogramma/PickAndPlaceActionResult[0m
+[35m[1mScanning dependencies of target hoofdprogramma_generate_messages_cpp[0m
+[35m[1mScanning dependencies of target hoofdprogramma_generate_messages_eus[0m
+[ 47%] [34m[1mGenerating C++ code from hoofdprogramma/PickAndPlaceActionGoal.msg[0m
+[ 49%] [34m[1mGenerating EusLisp code from hoofdprogramma/PickAndPlaceActionGoal.msg[0m
+[ 50%] [34m[1mGenerating EusLisp code from hoofdprogramma/PickAndPlaceGoal.msg[0m
+[ 52%] [34m[1mGenerating Python from MSG hoofdprogramma/PickAndPlaceResult[0m
+[ 54%] [34m[1mGenerating EusLisp code from hoofdprogramma/PickAndPlaceAction.msg[0m
+[ 56%] [34m[1mGenerating C++ code from hoofdprogramma/PickAndPlaceGoal.msg[0m
+[ 58%] [34m[1mGenerating EusLisp code from hoofdprogramma/PickAndPlaceActionResult.msg[0m
+[ 60%] [34m[1mGenerating Python from MSG hoofdprogramma/objectDetection[0m
+[ 62%] [34m[1mGenerating EusLisp code from hoofdprogramma/PickAndPlaceResult.msg[0m
+[ 64%] [34m[1mGenerating C++ code from hoofdprogramma/PickAndPlaceAction.msg[0m
+[ 66%] [34m[1mGenerating EusLisp code from hoofdprogramma/objectDetection.msg[0m
+[ 67%] [34m[1mGenerating Python from MSG hoofdprogramma/PickAndPlaceFeedback[0m
+[ 69%] [34m[1mGenerating EusLisp code from hoofdprogramma/PickAndPlaceFeedback.msg[0m
+[ 71%] [34m[1mGenerating C++ code from hoofdprogramma/PickAndPlaceActionResult.msg[0m
+[ 73%] [34m[1mGenerating EusLisp code from hoofdprogramma/PickAndPlaceActionFeedback.msg[0m
+[ 75%] [34m[1mGenerating Python from MSG hoofdprogramma/PickAndPlaceActionFeedback[0m
+[ 77%] [34m[1mGenerating EusLisp code from hoofdprogramma/StartCyclus.srv[0m
+[ 79%] [34m[1mGenerating C++ code from hoofdprogramma/PickAndPlaceResult.msg[0m
+[ 81%] [34m[1mGenerating Python code from SRV hoofdprogramma/StartCyclus[0m
+[ 83%] [34m[1mGenerating EusLisp code from hoofdprogramma/ConveyorControl.srv[0m
+[ 84%] [34m[1mGenerating EusLisp manifest code for hoofdprogramma[0m
+[ 86%] [34m[1mGenerating C++ code from hoofdprogramma/objectDetection.msg[0m
+[ 88%] [34m[1mGenerating Python code from SRV hoofdprogramma/ConveyorControl[0m
+[ 90%] [34m[1mGenerating C++ code from hoofdprogramma/PickAndPlaceFeedback.msg[0m
+[ 92%] [34m[1mGenerating Python msg __init__.py for hoofdprogramma[0m
+[ 94%] [34m[1mGenerating C++ code from hoofdprogramma/PickAndPlaceActionFeedback.msg[0m
+[ 96%] [34m[1mGenerating Python srv __init__.py for hoofdprogramma[0m
+[ 98%] [34m[1mGenerating C++ code from hoofdprogramma/StartCyclus.srv[0m
+[ 98%] Built target hoofdprogramma_generate_messages_py
+[100%] [34m[1mGenerating C++ code from hoofdprogramma/ConveyorControl.srv[0m
+[100%] Built target hoofdprogramma_generate_messages_cpp
+[100%] Built target hoofdprogramma_generate_messages_eus
+[35m[1mScanning dependencies of target hoofdprogramma_generate_messages[0m
 [100%] Built target hoofdprogramma_generate_messages

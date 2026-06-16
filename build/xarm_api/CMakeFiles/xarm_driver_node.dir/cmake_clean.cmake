@@ -1,8 +1,7 @@
 file(REMOVE_RECURSE
-  "/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_api/lib/xarm_api/xarm_driver_node"
-  "/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_api/lib/xarm_api/xarm_driver_node.pdb"
   "CMakeFiles/xarm_driver_node.dir/src/xarm_driver_node.cpp.o"
-  "CMakeFiles/xarm_driver_node.dir/src/xarm_driver_node.cpp.o.d"
+  "/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_api/lib/xarm_api/xarm_driver_node.pdb"
+  "/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_api/lib/xarm_api/xarm_driver_node"
 )
 
 # Per-language clean rules from dependency scanning.

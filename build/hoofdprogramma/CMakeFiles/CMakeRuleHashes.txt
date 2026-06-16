@@ -1,4 +1,5 @@
 # Hashes of file build rules.
+acac5e33afc6e0896f301fa5c6aa269e /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/include/hoofdprogramma/ConveyorControl.h
 033d45ff621302841224b90ec6da962b /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/include/hoofdprogramma/PickAndPlaceAction.h
 ed253e26f092da0121d8b77317ab4a94 /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/include/hoofdprogramma/PickAndPlaceActionFeedback.h
 2d4293675212818ade5d4628e3778d40 /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/include/hoofdprogramma/PickAndPlaceActionGoal.h
@@ -6,7 +7,10 @@ f1fc3c7faeb2e0d19f5d86b3e87d019e /home/student/Git-projects/robotproject-her-fin
 d076028994fe7ba71c51204661b192b2 /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/include/hoofdprogramma/PickAndPlaceFeedback.h
 43dd519b982c7bdbf07065b3b297ad04 /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/include/hoofdprogramma/PickAndPlaceGoal.h
 a4b2f9a86d47183c762913dad26e094b /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/include/hoofdprogramma/PickAndPlaceResult.h
+60f1ff0c1637d40d941d07ab7a9bcb88 /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/include/hoofdprogramma/ResetCyclus.h
+8c39f8aaacc2b5e686774593e8981430 /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/include/hoofdprogramma/SingleStart.h
 2d5af34c4e87974af5fd97cab7d2cb1c /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/include/hoofdprogramma/StartCyclus.h
+fdbc8c08dbd6ad9988d79070fe0fd0d9 /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/include/hoofdprogramma/StopCyclus.h
 854dc323e6f5ff12614846356b0d6d61 /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/include/hoofdprogramma/objectDetection.h
 09887c73789ce6b8adff18b8d9746d5e /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/lib/python2.7/dist-packages/hoofdprogramma/msg/_PickAndPlaceAction.py
 03c189b988cfa536a34e9b4681f021ff /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/lib/python2.7/dist-packages/hoofdprogramma/msg/_PickAndPlaceActionFeedback.py
@@ -17,7 +21,11 @@ a4b2f9a86d47183c762913dad26e094b /home/student/Git-projects/robotproject-her-fin
 b55348595369655496808775e7ce69d7 /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/lib/python2.7/dist-packages/hoofdprogramma/msg/_PickAndPlaceResult.py
 b277073fb2a07bf6dee70c1936a6850e /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/lib/python2.7/dist-packages/hoofdprogramma/msg/__init__.py
 f5b5187985c490f496c47d518bdbd359 /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/lib/python2.7/dist-packages/hoofdprogramma/msg/_objectDetection.py
+8bf500ea6f95dee517913ff4196be954 /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/lib/python2.7/dist-packages/hoofdprogramma/srv/_ConveyorControl.py
+9b2c34c27a1a7682dcda3a961a4bd34a /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/lib/python2.7/dist-packages/hoofdprogramma/srv/_ResetCyclus.py
+fc3a12e47d030c1c04ad70d72866743a /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/lib/python2.7/dist-packages/hoofdprogramma/srv/_SingleStart.py
 b818a599b6c769a183dd3ef108cfe3ac /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/lib/python2.7/dist-packages/hoofdprogramma/srv/_StartCyclus.py
+75b2aa870683bf5870f0e545dc2a98a9 /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/lib/python2.7/dist-packages/hoofdprogramma/srv/_StopCyclus.py
 d3bbd183303168e4aa7172bc207efa1d /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/lib/python2.7/dist-packages/hoofdprogramma/srv/__init__.py
 06f8861736f45cd878b6ad2cb0121eb8 /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/common-lisp/ros/hoofdprogramma/msg/PickAndPlaceAction.lisp
 a09efd2cbd0a494cdecd90782fd52eb1 /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/common-lisp/ros/hoofdprogramma/msg/PickAndPlaceActionFeedback.lisp
@@ -27,7 +35,11 @@ fe388bfc7f50b7a0eab73486a54c644f /home/student/Git-projects/robotproject-her-fin
 dd5a9137bf383ca2a338e7fc9142c1c7 /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/common-lisp/ros/hoofdprogramma/msg/PickAndPlaceGoal.lisp
 d65241bdc328efaf3ad96a282dc92017 /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/common-lisp/ros/hoofdprogramma/msg/PickAndPlaceResult.lisp
 5ff00ff963e766572161c4d82aff54fc /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/common-lisp/ros/hoofdprogramma/msg/objectDetection.lisp
+18da10ff97c9ca525cb71007725a7850 /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/common-lisp/ros/hoofdprogramma/srv/ConveyorControl.lisp
+ade06540c5619f0809c6e3903c6a865d /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/common-lisp/ros/hoofdprogramma/srv/ResetCyclus.lisp
+585d6fe9ef348b4d4e967e32c1d8ef9e /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/common-lisp/ros/hoofdprogramma/srv/SingleStart.lisp
 54ed21d35383172a4dc9cd50e32e7fe0 /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/common-lisp/ros/hoofdprogramma/srv/StartCyclus.lisp
+db9a0e1891243d4c04b6742a8e93c4ef /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/common-lisp/ros/hoofdprogramma/srv/StopCyclus.lisp
 c74005f57e66b68f60a534955e621f8e /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/gennodejs/ros/hoofdprogramma/msg/PickAndPlaceAction.js
 f456a8a78b217df9da9ad8c771d427fc /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/gennodejs/ros/hoofdprogramma/msg/PickAndPlaceActionFeedback.js
 7ed06ce68d722f446a37f171572483f2 /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/gennodejs/ros/hoofdprogramma/msg/PickAndPlaceActionGoal.js
@@ -36,7 +48,11 @@ f456a8a78b217df9da9ad8c771d427fc /home/student/Git-projects/robotproject-her-fin
 a944973ba55f36121aebd9b18fd43eb6 /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/gennodejs/ros/hoofdprogramma/msg/PickAndPlaceGoal.js
 522bcd1e5bb7355c864a4c0999d5d4a9 /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/gennodejs/ros/hoofdprogramma/msg/PickAndPlaceResult.js
 3c2b7265617bea81bea922c0dbf578cd /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/gennodejs/ros/hoofdprogramma/msg/objectDetection.js
+4b08a3fd665a4e23edc5856a86d2cb2a /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/gennodejs/ros/hoofdprogramma/srv/ConveyorControl.js
+b18211710a4aa6f4d20db223b6e73307 /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/gennodejs/ros/hoofdprogramma/srv/ResetCyclus.js
+4ab08546ebb1a0b2519b10d3fbbe427c /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/gennodejs/ros/hoofdprogramma/srv/SingleStart.js
 5a5e713bb8d7b3fc9cf27200bb66b4d4 /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/gennodejs/ros/hoofdprogramma/srv/StartCyclus.js
+1d69b30aea33f493882e5e65545d158d /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/gennodejs/ros/hoofdprogramma/srv/StopCyclus.js
 e660d52a4b3febc0f59c7c0eadd34a27 /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/roseus/ros/hoofdprogramma/manifest.l
 354691b1c74e1de6fb08766ddb7ef95d /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/roseus/ros/hoofdprogramma/msg/PickAndPlaceAction.l
 5bb694d49772751cc725d356d4a0beef /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/roseus/ros/hoofdprogramma/msg/PickAndPlaceActionFeedback.l
@@ -46,7 +62,12 @@ e0440f10c6bcd24b668699759cd7a306 /home/student/Git-projects/robotproject-her-fin
 fde4ccfd7ca04fcad7275fe5952318b9 /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/roseus/ros/hoofdprogramma/msg/PickAndPlaceGoal.l
 1828754bc3f549f7ba92343bc6c89c75 /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/roseus/ros/hoofdprogramma/msg/PickAndPlaceResult.l
 829b4779143a7062de0b7e8a4610f71a /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/roseus/ros/hoofdprogramma/msg/objectDetection.l
+d3939301119a7bcc3e886d4015bb8519 /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/roseus/ros/hoofdprogramma/srv/ConveyorControl.l
+f4c365fbad283aba99368d83919c926b /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/roseus/ros/hoofdprogramma/srv/ResetCyclus.l
+e0a8eaedb6e51b5cb08985ec8e57d9fe /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/roseus/ros/hoofdprogramma/srv/SingleStart.l
 ff61f89bd91faefa92961cff2051377c /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/roseus/ros/hoofdprogramma/srv/StartCyclus.l
+6cdb89bfad982b25fadfacb007220739 /home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/roseus/ros/hoofdprogramma/srv/StopCyclus.l
+0f29bc2933de030f60a3fb7429332ac4 CMakeFiles/_hoofdprogramma_generate_messages_check_deps_ConveyorControl
 7f5195ad815f0ca4fec043597d84cbf7 CMakeFiles/_hoofdprogramma_generate_messages_check_deps_PickAndPlaceAction
 0c0f6dd0790be6cff3323c82a5dcb350 CMakeFiles/_hoofdprogramma_generate_messages_check_deps_PickAndPlaceActionFeedback
 7a383433294d2d281cf0a97aa8443bfe CMakeFiles/_hoofdprogramma_generate_messages_check_deps_PickAndPlaceActionGoal
@@ -54,7 +75,10 @@ dc06214ed9d35251d601c2cbd8739040 CMakeFiles/_hoofdprogramma_generate_messages_ch
 9dbb57a5d8d48e1723af0d63db90ce70 CMakeFiles/_hoofdprogramma_generate_messages_check_deps_PickAndPlaceFeedback
 3f0212d6c982a4c62ea1d16288d5f332 CMakeFiles/_hoofdprogramma_generate_messages_check_deps_PickAndPlaceGoal
 e878f3214970c4ed1cebce20265a4be1 CMakeFiles/_hoofdprogramma_generate_messages_check_deps_PickAndPlaceResult
+87111ee4d4b1ddcd62163ddf79eeda33 CMakeFiles/_hoofdprogramma_generate_messages_check_deps_ResetCyclus
+314b9d403570d9a752c1d65428d31161 CMakeFiles/_hoofdprogramma_generate_messages_check_deps_SingleStart
 28d616c77d615cf64f9b23430e6c101d CMakeFiles/_hoofdprogramma_generate_messages_check_deps_StartCyclus
+a72611ef26e510c6bc22f9980b5640db CMakeFiles/_hoofdprogramma_generate_messages_check_deps_StopCyclus
 dbec66f17b4b8e7bd76b0a01b043416f CMakeFiles/_hoofdprogramma_generate_messages_check_deps_objectDetection
 6909df0033d6a972b2b629e5508b1f73 CMakeFiles/clean_test_results
 2bce43e1cbb9f4eebb19aa54ae735308 CMakeFiles/hoofdprogramma_generate_messages_cpp

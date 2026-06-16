@@ -1,8 +1,7 @@
 file(REMOVE_RECURSE
-  "/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_api/lib/xarm_api/test_xarm_ros_client"
-  "/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_api/lib/xarm_api/test_xarm_ros_client.pdb"
   "CMakeFiles/test_xarm_ros_client.dir/test/test_xarm_ros_client.cpp.o"
-  "CMakeFiles/test_xarm_ros_client.dir/test/test_xarm_ros_client.cpp.o.d"
+  "/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_api/lib/xarm_api/test_xarm_ros_client.pdb"
+  "/home/student/Git-projects/robotproject-her-finn/devel/.private/xarm_api/lib/xarm_api/test_xarm_ros_client"
 )
 
 # Per-language clean rules from dependency scanning.

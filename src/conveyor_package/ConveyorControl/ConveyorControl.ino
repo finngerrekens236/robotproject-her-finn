@@ -67,7 +67,7 @@ void loop()
     // ==========================
     // IDLE → RUNNING
     // ==========================
-    if (state == IDLE && startDetected)
+    if (state == IDLE && startCommand && startDetected)
     {
         state = RUNNING;
 

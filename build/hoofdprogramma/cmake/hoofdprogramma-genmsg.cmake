@@ -1,6 +1,6 @@
 # generated from genmsg/cmake/pkg-genmsg.cmake.em
 
-message(STATUS "hoofdprogramma: 8 messages, 1 services")
+message(STATUS "hoofdprogramma: 8 messages, 5 services")
 
 set(MSG_I_FLAGS "-Ihoofdprogramma:/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/msg;-Ihoofdprogramma:/home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/hoofdprogramma/msg;-Istd_msgs:/opt/ros/melodic/share/std_msgs/cmake/../msg;-Igeometry_msgs:/opt/ros/melodic/share/geometry_msgs/cmake/../msg;-Iactionlib_msgs:/opt/ros/melodic/share/actionlib_msgs/cmake/../msg")
 
@@ -17,6 +17,11 @@ add_custom_target(hoofdprogramma_generate_messages ALL)
 
 
 
+get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/StopCyclus.srv" NAME_WE)
+add_custom_target(_hoofdprogramma_generate_messages_check_deps_${_filename}
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "hoofdprogramma" "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/StopCyclus.srv" ""
+)
+
 get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/hoofdprogramma/msg/PickAndPlaceActionGoal.msg" NAME_WE)
 add_custom_target(_hoofdprogramma_generate_messages_check_deps_${_filename}
   COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "hoofdprogramma" "/home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/hoofdprogramma/msg/PickAndPlaceActionGoal.msg" "actionlib_msgs/GoalID:geometry_msgs/Pose:std_msgs/Header:hoofdprogramma/PickAndPlaceGoal:geometry_msgs/Quaternion:geometry_msgs/PoseStamped:geometry_msgs/Point"
@@ -30,6 +35,11 @@ add_custom_target(_hoofdprogramma_generate_messages_check_deps_${_filename}
 get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/StartCyclus.srv" NAME_WE)
 add_custom_target(_hoofdprogramma_generate_messages_check_deps_${_filename}
   COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "hoofdprogramma" "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/StartCyclus.srv" ""
+)
+
+get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/SingleStart.srv" NAME_WE)
+add_custom_target(_hoofdprogramma_generate_messages_check_deps_${_filename}
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "hoofdprogramma" "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/SingleStart.srv" ""
 )
 
 get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/hoofdprogramma/msg/PickAndPlaceAction.msg" NAME_WE)
@@ -52,6 +62,11 @@ add_custom_target(_hoofdprogramma_generate_messages_check_deps_${_filename}
   COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "hoofdprogramma" "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/msg/objectDetection.msg" "geometry_msgs/Pose:geometry_msgs/Quaternion:geometry_msgs/Point"
 )
 
+get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/ConveyorControl.srv" NAME_WE)
+add_custom_target(_hoofdprogramma_generate_messages_check_deps_${_filename}
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "hoofdprogramma" "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/ConveyorControl.srv" ""
+)
+
 get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/hoofdprogramma/msg/PickAndPlaceActionFeedback.msg" NAME_WE)
 add_custom_target(_hoofdprogramma_generate_messages_check_deps_${_filename}
   COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "hoofdprogramma" "/home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/hoofdprogramma/msg/PickAndPlaceActionFeedback.msg" "hoofdprogramma/PickAndPlaceFeedback:actionlib_msgs/GoalID:actionlib_msgs/GoalStatus:std_msgs/Header"
@@ -60,6 +75,11 @@ add_custom_target(_hoofdprogramma_generate_messages_check_deps_${_filename}
 get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/hoofdprogramma/msg/PickAndPlaceFeedback.msg" NAME_WE)
 add_custom_target(_hoofdprogramma_generate_messages_check_deps_${_filename}
   COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "hoofdprogramma" "/home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/hoofdprogramma/msg/PickAndPlaceFeedback.msg" ""
+)
+
+get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/ResetCyclus.srv" NAME_WE)
+add_custom_target(_hoofdprogramma_generate_messages_check_deps_${_filename}
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "hoofdprogramma" "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/ResetCyclus.srv" ""
 )
 
 #
@@ -124,6 +144,30 @@ _generate_srv_cpp(hoofdprogramma
   ""
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/hoofdprogramma
 )
+_generate_srv_cpp(hoofdprogramma
+  "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/SingleStart.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/hoofdprogramma
+)
+_generate_srv_cpp(hoofdprogramma
+  "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/StopCyclus.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/hoofdprogramma
+)
+_generate_srv_cpp(hoofdprogramma
+  "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/ConveyorControl.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/hoofdprogramma
+)
+_generate_srv_cpp(hoofdprogramma
+  "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/ResetCyclus.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/hoofdprogramma
+)
 
 ### Generating Module File
 _generate_module_cpp(hoofdprogramma
@@ -137,11 +181,15 @@ add_custom_target(hoofdprogramma_generate_messages_cpp
 add_dependencies(hoofdprogramma_generate_messages hoofdprogramma_generate_messages_cpp)
 
 # add dependencies to all check dependencies targets
+get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/StopCyclus.srv" NAME_WE)
+add_dependencies(hoofdprogramma_generate_messages_cpp _hoofdprogramma_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/hoofdprogramma/msg/PickAndPlaceActionGoal.msg" NAME_WE)
 add_dependencies(hoofdprogramma_generate_messages_cpp _hoofdprogramma_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/hoofdprogramma/msg/PickAndPlaceGoal.msg" NAME_WE)
 add_dependencies(hoofdprogramma_generate_messages_cpp _hoofdprogramma_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/StartCyclus.srv" NAME_WE)
+add_dependencies(hoofdprogramma_generate_messages_cpp _hoofdprogramma_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/SingleStart.srv" NAME_WE)
 add_dependencies(hoofdprogramma_generate_messages_cpp _hoofdprogramma_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/hoofdprogramma/msg/PickAndPlaceAction.msg" NAME_WE)
 add_dependencies(hoofdprogramma_generate_messages_cpp _hoofdprogramma_generate_messages_check_deps_${_filename})
@@ -151,9 +199,13 @@ get_filename_component(_filename "/home/student/Git-projects/robotproject-her-fi
 add_dependencies(hoofdprogramma_generate_messages_cpp _hoofdprogramma_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/msg/objectDetection.msg" NAME_WE)
 add_dependencies(hoofdprogramma_generate_messages_cpp _hoofdprogramma_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/ConveyorControl.srv" NAME_WE)
+add_dependencies(hoofdprogramma_generate_messages_cpp _hoofdprogramma_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/hoofdprogramma/msg/PickAndPlaceActionFeedback.msg" NAME_WE)
 add_dependencies(hoofdprogramma_generate_messages_cpp _hoofdprogramma_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/hoofdprogramma/msg/PickAndPlaceFeedback.msg" NAME_WE)
+add_dependencies(hoofdprogramma_generate_messages_cpp _hoofdprogramma_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/ResetCyclus.srv" NAME_WE)
 add_dependencies(hoofdprogramma_generate_messages_cpp _hoofdprogramma_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -221,6 +273,30 @@ _generate_srv_eus(hoofdprogramma
   ""
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/hoofdprogramma
 )
+_generate_srv_eus(hoofdprogramma
+  "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/SingleStart.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/hoofdprogramma
+)
+_generate_srv_eus(hoofdprogramma
+  "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/StopCyclus.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/hoofdprogramma
+)
+_generate_srv_eus(hoofdprogramma
+  "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/ConveyorControl.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/hoofdprogramma
+)
+_generate_srv_eus(hoofdprogramma
+  "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/ResetCyclus.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/hoofdprogramma
+)
 
 ### Generating Module File
 _generate_module_eus(hoofdprogramma
@@ -234,11 +310,15 @@ add_custom_target(hoofdprogramma_generate_messages_eus
 add_dependencies(hoofdprogramma_generate_messages hoofdprogramma_generate_messages_eus)
 
 # add dependencies to all check dependencies targets
+get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/StopCyclus.srv" NAME_WE)
+add_dependencies(hoofdprogramma_generate_messages_eus _hoofdprogramma_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/hoofdprogramma/msg/PickAndPlaceActionGoal.msg" NAME_WE)
 add_dependencies(hoofdprogramma_generate_messages_eus _hoofdprogramma_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/hoofdprogramma/msg/PickAndPlaceGoal.msg" NAME_WE)
 add_dependencies(hoofdprogramma_generate_messages_eus _hoofdprogramma_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/StartCyclus.srv" NAME_WE)
+add_dependencies(hoofdprogramma_generate_messages_eus _hoofdprogramma_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/SingleStart.srv" NAME_WE)
 add_dependencies(hoofdprogramma_generate_messages_eus _hoofdprogramma_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/hoofdprogramma/msg/PickAndPlaceAction.msg" NAME_WE)
 add_dependencies(hoofdprogramma_generate_messages_eus _hoofdprogramma_generate_messages_check_deps_${_filename})
@@ -248,9 +328,13 @@ get_filename_component(_filename "/home/student/Git-projects/robotproject-her-fi
 add_dependencies(hoofdprogramma_generate_messages_eus _hoofdprogramma_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/msg/objectDetection.msg" NAME_WE)
 add_dependencies(hoofdprogramma_generate_messages_eus _hoofdprogramma_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/ConveyorControl.srv" NAME_WE)
+add_dependencies(hoofdprogramma_generate_messages_eus _hoofdprogramma_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/hoofdprogramma/msg/PickAndPlaceActionFeedback.msg" NAME_WE)
 add_dependencies(hoofdprogramma_generate_messages_eus _hoofdprogramma_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/hoofdprogramma/msg/PickAndPlaceFeedback.msg" NAME_WE)
+add_dependencies(hoofdprogramma_generate_messages_eus _hoofdprogramma_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/ResetCyclus.srv" NAME_WE)
 add_dependencies(hoofdprogramma_generate_messages_eus _hoofdprogramma_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -318,6 +402,30 @@ _generate_srv_lisp(hoofdprogramma
   ""
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/hoofdprogramma
 )
+_generate_srv_lisp(hoofdprogramma
+  "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/SingleStart.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/hoofdprogramma
+)
+_generate_srv_lisp(hoofdprogramma
+  "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/StopCyclus.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/hoofdprogramma
+)
+_generate_srv_lisp(hoofdprogramma
+  "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/ConveyorControl.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/hoofdprogramma
+)
+_generate_srv_lisp(hoofdprogramma
+  "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/ResetCyclus.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/hoofdprogramma
+)
 
 ### Generating Module File
 _generate_module_lisp(hoofdprogramma
@@ -331,11 +439,15 @@ add_custom_target(hoofdprogramma_generate_messages_lisp
 add_dependencies(hoofdprogramma_generate_messages hoofdprogramma_generate_messages_lisp)
 
 # add dependencies to all check dependencies targets
+get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/StopCyclus.srv" NAME_WE)
+add_dependencies(hoofdprogramma_generate_messages_lisp _hoofdprogramma_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/hoofdprogramma/msg/PickAndPlaceActionGoal.msg" NAME_WE)
 add_dependencies(hoofdprogramma_generate_messages_lisp _hoofdprogramma_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/hoofdprogramma/msg/PickAndPlaceGoal.msg" NAME_WE)
 add_dependencies(hoofdprogramma_generate_messages_lisp _hoofdprogramma_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/StartCyclus.srv" NAME_WE)
+add_dependencies(hoofdprogramma_generate_messages_lisp _hoofdprogramma_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/SingleStart.srv" NAME_WE)
 add_dependencies(hoofdprogramma_generate_messages_lisp _hoofdprogramma_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/hoofdprogramma/msg/PickAndPlaceAction.msg" NAME_WE)
 add_dependencies(hoofdprogramma_generate_messages_lisp _hoofdprogramma_generate_messages_check_deps_${_filename})
@@ -345,9 +457,13 @@ get_filename_component(_filename "/home/student/Git-projects/robotproject-her-fi
 add_dependencies(hoofdprogramma_generate_messages_lisp _hoofdprogramma_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/msg/objectDetection.msg" NAME_WE)
 add_dependencies(hoofdprogramma_generate_messages_lisp _hoofdprogramma_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/ConveyorControl.srv" NAME_WE)
+add_dependencies(hoofdprogramma_generate_messages_lisp _hoofdprogramma_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/hoofdprogramma/msg/PickAndPlaceActionFeedback.msg" NAME_WE)
 add_dependencies(hoofdprogramma_generate_messages_lisp _hoofdprogramma_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/hoofdprogramma/msg/PickAndPlaceFeedback.msg" NAME_WE)
+add_dependencies(hoofdprogramma_generate_messages_lisp _hoofdprogramma_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/ResetCyclus.srv" NAME_WE)
 add_dependencies(hoofdprogramma_generate_messages_lisp _hoofdprogramma_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -415,6 +531,30 @@ _generate_srv_nodejs(hoofdprogramma
   ""
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/hoofdprogramma
 )
+_generate_srv_nodejs(hoofdprogramma
+  "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/SingleStart.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/hoofdprogramma
+)
+_generate_srv_nodejs(hoofdprogramma
+  "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/StopCyclus.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/hoofdprogramma
+)
+_generate_srv_nodejs(hoofdprogramma
+  "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/ConveyorControl.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/hoofdprogramma
+)
+_generate_srv_nodejs(hoofdprogramma
+  "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/ResetCyclus.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/hoofdprogramma
+)
 
 ### Generating Module File
 _generate_module_nodejs(hoofdprogramma
@@ -428,11 +568,15 @@ add_custom_target(hoofdprogramma_generate_messages_nodejs
 add_dependencies(hoofdprogramma_generate_messages hoofdprogramma_generate_messages_nodejs)
 
 # add dependencies to all check dependencies targets
+get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/StopCyclus.srv" NAME_WE)
+add_dependencies(hoofdprogramma_generate_messages_nodejs _hoofdprogramma_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/hoofdprogramma/msg/PickAndPlaceActionGoal.msg" NAME_WE)
 add_dependencies(hoofdprogramma_generate_messages_nodejs _hoofdprogramma_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/hoofdprogramma/msg/PickAndPlaceGoal.msg" NAME_WE)
 add_dependencies(hoofdprogramma_generate_messages_nodejs _hoofdprogramma_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/StartCyclus.srv" NAME_WE)
+add_dependencies(hoofdprogramma_generate_messages_nodejs _hoofdprogramma_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/SingleStart.srv" NAME_WE)
 add_dependencies(hoofdprogramma_generate_messages_nodejs _hoofdprogramma_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/hoofdprogramma/msg/PickAndPlaceAction.msg" NAME_WE)
 add_dependencies(hoofdprogramma_generate_messages_nodejs _hoofdprogramma_generate_messages_check_deps_${_filename})
@@ -442,9 +586,13 @@ get_filename_component(_filename "/home/student/Git-projects/robotproject-her-fi
 add_dependencies(hoofdprogramma_generate_messages_nodejs _hoofdprogramma_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/msg/objectDetection.msg" NAME_WE)
 add_dependencies(hoofdprogramma_generate_messages_nodejs _hoofdprogramma_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/ConveyorControl.srv" NAME_WE)
+add_dependencies(hoofdprogramma_generate_messages_nodejs _hoofdprogramma_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/hoofdprogramma/msg/PickAndPlaceActionFeedback.msg" NAME_WE)
 add_dependencies(hoofdprogramma_generate_messages_nodejs _hoofdprogramma_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/hoofdprogramma/msg/PickAndPlaceFeedback.msg" NAME_WE)
+add_dependencies(hoofdprogramma_generate_messages_nodejs _hoofdprogramma_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/ResetCyclus.srv" NAME_WE)
 add_dependencies(hoofdprogramma_generate_messages_nodejs _hoofdprogramma_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility
@@ -512,6 +660,30 @@ _generate_srv_py(hoofdprogramma
   ""
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/hoofdprogramma
 )
+_generate_srv_py(hoofdprogramma
+  "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/SingleStart.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/hoofdprogramma
+)
+_generate_srv_py(hoofdprogramma
+  "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/StopCyclus.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/hoofdprogramma
+)
+_generate_srv_py(hoofdprogramma
+  "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/ConveyorControl.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/hoofdprogramma
+)
+_generate_srv_py(hoofdprogramma
+  "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/ResetCyclus.srv"
+  "${MSG_I_FLAGS}"
+  ""
+  ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/hoofdprogramma
+)
 
 ### Generating Module File
 _generate_module_py(hoofdprogramma
@@ -525,11 +697,15 @@ add_custom_target(hoofdprogramma_generate_messages_py
 add_dependencies(hoofdprogramma_generate_messages hoofdprogramma_generate_messages_py)
 
 # add dependencies to all check dependencies targets
+get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/StopCyclus.srv" NAME_WE)
+add_dependencies(hoofdprogramma_generate_messages_py _hoofdprogramma_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/hoofdprogramma/msg/PickAndPlaceActionGoal.msg" NAME_WE)
 add_dependencies(hoofdprogramma_generate_messages_py _hoofdprogramma_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/hoofdprogramma/msg/PickAndPlaceGoal.msg" NAME_WE)
 add_dependencies(hoofdprogramma_generate_messages_py _hoofdprogramma_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/StartCyclus.srv" NAME_WE)
+add_dependencies(hoofdprogramma_generate_messages_py _hoofdprogramma_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/SingleStart.srv" NAME_WE)
 add_dependencies(hoofdprogramma_generate_messages_py _hoofdprogramma_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/hoofdprogramma/msg/PickAndPlaceAction.msg" NAME_WE)
 add_dependencies(hoofdprogramma_generate_messages_py _hoofdprogramma_generate_messages_check_deps_${_filename})
@@ -539,9 +715,13 @@ get_filename_component(_filename "/home/student/Git-projects/robotproject-her-fi
 add_dependencies(hoofdprogramma_generate_messages_py _hoofdprogramma_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/msg/objectDetection.msg" NAME_WE)
 add_dependencies(hoofdprogramma_generate_messages_py _hoofdprogramma_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/ConveyorControl.srv" NAME_WE)
+add_dependencies(hoofdprogramma_generate_messages_py _hoofdprogramma_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/hoofdprogramma/msg/PickAndPlaceActionFeedback.msg" NAME_WE)
 add_dependencies(hoofdprogramma_generate_messages_py _hoofdprogramma_generate_messages_check_deps_${_filename})
 get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/devel/.private/hoofdprogramma/share/hoofdprogramma/msg/PickAndPlaceFeedback.msg" NAME_WE)
+add_dependencies(hoofdprogramma_generate_messages_py _hoofdprogramma_generate_messages_check_deps_${_filename})
+get_filename_component(_filename "/home/student/Git-projects/robotproject-her-finn/src/hoofdprogramma/hoofdprogramma/srv/ResetCyclus.srv" NAME_WE)
 add_dependencies(hoofdprogramma_generate_messages_py _hoofdprogramma_generate_messages_check_deps_${_filename})
 
 # target for backward compatibility

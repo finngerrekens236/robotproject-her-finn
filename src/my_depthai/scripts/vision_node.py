@@ -1,15 +1,6 @@
 #!/usr/bin/env python3
 """
 ROS vision node voor de sorting pick-and-place robotcel.
-
-Start:  roslaunch my_depthai vision.launch
-Service: /vision/detect_object  (my_depthai/DetectObject)
-
-De node:
-  1. Opent de OAK-D als pure RGB camera
-  2. Laadt het YOLOv5 .pt model via PyTorch
-  3. Wacht op service calls van het hoofdprogramma
-  4. Bij een call: detecteer + lokaliseer -> geef PoseStamped terug
 """
 
 import json
@@ -26,7 +17,7 @@ import yaml
 
 import rospy
 from std_msgs.msg import Header
-from geometry_msgs.msg import PoseStamped, Quaternion
+from geometry_msgs.msg import PoseStamped, Quaternion, Pose
 
 from my_depthai.srv import DetectObject, DetectObjectResponse
 
@@ -34,14 +25,11 @@ _pkg_dir  = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 _scripts_dir = os.path.dirname(os.path.abspath(__file__))
 if _scripts_dir not in sys.path:
     sys.path.insert(0, _scripts_dir)
-from lokalisatie import lokaliseer  # noqa: E402
 
-# ──────────────────────────────────────────────
-# Hulpfuncties
-# ──────────────────────────────────────────────
+from lokalisatie import lokaliseer
+
 
 def euler_z_to_quaternion(rz_rad):
-    """Rotatie om Z-as (in radialen) -> geometry_msgs/Quaternion."""
     return Quaternion(
         x=0.0,
         y=0.0,
@@ -51,303 +39,175 @@ def euler_z_to_quaternion(rz_rad):
 
 
 def pixel_to_robot(px, py, H, z_conveyor):
-    """
-    Transformeer pixel (px, py) naar robot XYZ via homografie matrix H.
-    Z is de vaste hoogte van de conveyor belt.
-    """
     pt = np.array([px, py, 1.0], dtype=np.float64)
     robot_h = H @ pt
-    robot_h /= robot_h[2]  # homogene deling
+    robot_h /= robot_h[2]
     return float(robot_h[0]), float(robot_h[1]), float(z_conveyor)
 
-
-def get_pose_in_bbox(frame, x1, y1, x2, y2):
-    """
-    Bereken precieze positie (cx, cy in pixels) en rotatie (graden)
-    binnen de bounding box via contour analysis en minAreaRect.
-    """
-    crop = frame[y1:y2, x1:x2]
-    if crop.size == 0:
-        return (x1 + x2) // 2, (y1 + y2) // 2, 0.0
-
-    gray    = cv2.cvtColor(crop, cv2.COLOR_BGR2GRAY)
-    blurred = cv2.GaussianBlur(gray, (5, 5), 0)
-    binary  = cv2.adaptiveThreshold(
-        blurred, 255,
-        cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY_INV,
-        blockSize=21, C=4,
-    )
-    kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
-    binary = cv2.morphologyEx(binary, cv2.MORPH_CLOSE, kernel, iterations=2)
-
-    contours, _ = cv2.findContours(binary, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-    if not contours:
-        return (x1 + x2) // 2, (y1 + y2) // 2, 0.0
-
-    largest = max(contours, key=cv2.contourArea)
-    if cv2.contourArea(largest) < 100:
-        return (x1 + x2) // 2, (y1 + y2) // 2, 0.0
-
-    rect = cv2.minAreaRect(largest)
-    (cx_crop, cy_crop), (w_rect, h_rect), angle = rect
-
-    cx = int(x1 + cx_crop)
-    cy = int(y1 + cy_crop)
-
-    if w_rect < h_rect:
-        angle += 90
-
-    return cx, cy, angle
-
-
-# ──────────────────────────────────────────────
-# VisionNode klasse
-# ──────────────────────────────────────────────
 
 class VisionNode:
 
     def __init__(self):
         rospy.init_node("vision_node", anonymous=False)
 
-        # Config laden
-        pkg_dir   = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        cfg_path  = rospy.get_param("~config", os.path.join(pkg_dir, "config", "vision_config.yaml"))
+        pkg_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        cfg_path = rospy.get_param("~config", os.path.join(pkg_dir, "config", "vision_config.yaml"))
+
         with open(cfg_path, "r") as f:
             self.cfg = yaml.safe_load(f)
 
-        self.classes    = self.cfg["classes"]
+        self.classes = self.cfg["classes"]
         self.conf_thresh = self.cfg["model"]["confidence_threshold"]
 
-        # Laad calibration.json als die bestaat, anders gebruik config homografie
         cal_path = os.path.join(pkg_dir, "config", "calibration.json")
+
         if os.path.exists(cal_path):
             with open(cal_path, "r") as f:
                 cal = json.load(f)
-            M = np.array(cal["affine_matrix"], dtype=np.float64)  # 2x3
-            self.H = np.vstack([M, [0.0, 0.0, 1.0]])              # 3x3 homografie
+
+            M = np.array(cal["affine_matrix"], dtype=np.float64)
+            self.H = np.vstack([M, [0.0, 0.0, 1.0]])
             self.z_conveyor = cal["z_conveyor"]
             self.rotation_offset_deg = cal["rotation_offset_deg"]
-            # Negatieve determinant betekent as-spiegeling -> draaizin omdraaien
+
             det = M[0, 0] * M[1, 1] - M[0, 1] * M[1, 0]
             self.angle_sign = -1.0 if det < 0 else 1.0
-            rospy.loginfo(f"[vision_node] Calibratie geladen uit {cal_path} "
-                          f"(rot_offset={self.rotation_offset_deg:.1f}deg, "
-                          f"spiegeling={'ja' if self.angle_sign < 0 else 'nee'})")
         else:
             self.z_conveyor = self.cfg["calibration"]["z_conveyor"]
             self.H = np.array(self.cfg["calibration"]["homography"], dtype=np.float64)
             self.rotation_offset_deg = 0.0
             self.angle_sign = 1.0
-            rospy.logwarn("[vision_node] Geen calibration.json gevonden, gebruik config homografie")
 
-        # Model laden
         model_path = os.path.join(pkg_dir, self.cfg["model"]["path"])
-        rospy.loginfo(f"[vision_node] Model laden: {model_path}")
         self.model = torch.hub.load(
-            "ultralytics/yolov5", "custom",
-            path=model_path, force_reload=False, verbose=False,
+            "ultralytics/yolov5",
+            "custom",
+            path=model_path,
+            force_reload=False,
+            verbose=False,
         )
+
         self.model.conf = self.conf_thresh
         self.model.eval()
-        rospy.loginfo("[vision_node] Model geladen.")
 
-        # Camera initialiseren (OAK-D als pure RGB)
         self._init_camera()
 
-        pkg_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        self.debug_dir = os.path.join(pkg_root, "debug")
+        self.debug_dir = os.path.join(pkg_dir, "debug")
         os.makedirs(self.debug_dir, exist_ok=True)
-        rospy.loginfo(f"[vision_node] Debug images -> {self.debug_dir}")
 
         self.service = rospy.Service(
             self.cfg["ros"]["service_name"],
             DetectObject,
             self._handle_detect,
         )
-        rospy.loginfo(f"[vision_node] Service klaar: {self.cfg['ros']['service_name']}")
-
-    # ── Camera ──────────────────────────────────
 
     def _init_camera(self):
         import depthai as dai
-        import time
 
         pipeline = dai.Pipeline()
-        cam_rgb  = pipeline.create(dai.node.ColorCamera)
-        xout     = pipeline.create(dai.node.XLinkOut)
+        cam_rgb = pipeline.create(dai.node.ColorCamera)
+        xout = pipeline.create(dai.node.XLinkOut)
         xout.setStreamName("rgb")
 
         w = self.cfg["camera"]["width"]
         h = self.cfg["camera"]["height"]
+
         cam_rgb.setPreviewSize(w, h)
         cam_rgb.setResolution(dai.ColorCameraProperties.SensorResolution.THE_1080_P)
         cam_rgb.setInterleaved(False)
         cam_rgb.setFps(self.cfg["camera"]["fps"])
         cam_rgb.preview.link(xout.input)
 
-        device_id = self.cfg["camera"].get("device_id", "")
+        self.device = dai.Device(pipeline)
+        self.q_rgb = self.device.getOutputQueue("rgb", maxSize=4, blocking=False)
 
-        # Probeer camera te verbinden met retry
-        max_retries = 5
-        for attempt in range(max_retries):
-            try:
-                if device_id:
-                    self.device = dai.Device(pipeline, dai.DeviceInfo(device_id))
-                else:
-                    self.device = dai.Device(pipeline)
-                self.q_rgb = self.device.getOutputQueue(name="rgb", maxSize=4, blocking=False)
-                self._latest_frame = None
-                self._frame_lock = threading.Lock()
-                self._new_frame_event = threading.Event()
-                # Achtergrond-thread: blijft continu lezen zodat XLink niet vastloopt
-                self._reader_thread = threading.Thread(target=self._frame_reader, daemon=True)
-                self._reader_thread.start()
-                # Warmup: wacht tot auto-exposure/focus/WB gesetteld is
-                rospy.loginfo("[vision_node] Camera warmup (30 frames)...")
-                deadline = time.time() + 10
-                count = 0
-                while count < 30 and time.time() < deadline:
-                    with self._frame_lock:
-                        if self._latest_frame is not None:
-                            count += 1
-                    time.sleep(0.05)
-                rospy.loginfo("[vision_node] OAK-D camera geïnitialiseerd.")
-                return
-            except RuntimeError as e:
-                rospy.logwarn(f"[vision_node] Camera niet gevonden (poging {attempt+1}/{max_retries}): {e}")
-                if attempt < max_retries - 1:
-                    time.sleep(2)
+        self._latest_frame = None
+        self._lock = threading.Lock()
+        self._event = threading.Event()
 
-        rospy.logerr("[vision_node] Camera kon niet geïnitialiseerd worden na {0} pogingen".format(max_retries))
-        raise RuntimeError("OAK-D camera niet beschikbaar")
+        threading.Thread(target=self._reader, daemon=True).start()
 
-    def _frame_reader(self):
-        """Achtergrond-thread: leest continu frames zodat XLink niet vastloopt."""
+    def _reader(self):
         while not rospy.is_shutdown():
             pkt = self.q_rgb.get()
-            if pkt is not None:
-                with self._frame_lock:
-                    self._latest_frame = pkt.getCvFrame()
-                self._new_frame_event.set()
+            with self._lock:
+                self._latest_frame = pkt.getCvFrame()
+            self._event.set()
 
     def _get_frame(self):
-        """Wacht op een vers frame dat ná deze aanroep binnenkomt."""
-        self._new_frame_event.clear()
-        if not self._new_frame_event.wait(timeout=5.0):
-            raise RuntimeError("Timeout: geen frame ontvangen binnen 5 seconden")
-        with self._frame_lock:
+        self._event.clear()
+        self._event.wait(timeout=5)
+        with self._lock:
             return self._latest_frame.copy()
 
-    # ── Detectie ────────────────────────────────
-
     def _detect(self, frame):
-        rgb     = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         results = self.model(rgb)
         return results.pandas().xyxy[0]
 
-    def _best_detection(self, detections):
-        """Geeft de detectie met de hoogste confidence terug (of None)."""
-        if len(detections) == 0:
+    def _best_detection(self, det):
+        if len(det) == 0:
             return None
-        return detections.loc[detections["confidence"].idxmax()]
-
-    # ── Debug image logging ──────────────────────
-
-    def _save_debug_images(self, frame, best, cx, cy, angle_deg, label, annotated_crop=None):
-        ts = time.strftime("%Y%m%d_%H%M%S")
-
-        # 1. Raw frame
-        cv2.imwrite(os.path.join(self.debug_dir, f"{ts}_1_raw.jpg"), frame)
-
-        # 2. Bounding box
-        bbox_frame = frame.copy()
-        x1, y1 = int(best.xmin), int(best.ymin)
-        x2, y2 = int(best.xmax), int(best.ymax)
-        cv2.rectangle(bbox_frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
-        cv2.circle(bbox_frame, (cx, cy), 7, (0, 200, 0), -1)
-        cv2.putText(bbox_frame, f"{label} {best['confidence']:.2f}",
-                    (x1, max(y1 - 8, 12)), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
-        cv2.imwrite(os.path.join(self.debug_dir, f"{ts}_2_bbox.jpg"), bbox_frame)
-
-        # 3. Annotated crop van lokaliseer (as-lijn + oppakpunt)
-        if annotated_crop is not None:
-            cv2.imwrite(os.path.join(self.debug_dir, f"{ts}_3_lokaliseer.jpg"), annotated_crop)
-
-        rospy.loginfo(f"[vision_node] Debug images opgeslagen: {ts}_*.jpg")
-
-    # ── Service handler ──────────────────────────
+        return det.loc[det["confidence"].idxmax()]
 
     def _handle_detect(self, _req):
         resp = DetectObjectResponse()
 
         try:
             frame = self._get_frame()
-            detections = self._detect(frame)
-            best       = self._best_detection(detections)
+            det = self._detect(frame)
+            best = self._best_detection(det)
 
             if best is None:
-                ts = time.strftime("%Y%m%d_%H%M%S")
-                cv2.imwrite(os.path.join(self.debug_dir, f"{ts}_1_raw_geen_detectie.jpg"), frame)
-                rospy.loginfo(f"[vision_node] Debug raw opgeslagen (geen detectie): {ts}_1_raw_geen_detectie.jpg")
-                resp.success      = False
-                resp.message      = "Geen object gevonden"
-                resp.object_class = ""
+                resp.success = False
+                resp.message = "Geen object"
                 return resp
 
-            x1, y1, x2, y2 = (int(best.xmin), int(best.ymin),
-                               int(best.xmax), int(best.ymax))
-            cls_id  = int(best["class"])
-            label   = self.classes[cls_id] if cls_id < len(self.classes) else best["name"]
+            x1, y1, x2, y2 = int(best.xmin), int(best.ymin), int(best.xmax), int(best.ymax)
 
             crop = frame[y1:y2, x1:x2]
-            _, _, angle_deg, pick_x_crop, pick_y_crop, annotated_crop = lokaliseer(crop, label)
-            cx = x1 + pick_x_crop
-            cy = y1 + pick_y_crop
+            _, _, angle_deg, px, py, _ = lokaliseer(crop, best["name"])
 
-            rx, ry, rz_height = pixel_to_robot(cx, cy, self.H, self.z_conveyor)
-            robot_angle_deg   = self.angle_sign * angle_deg + self.rotation_offset_deg
-            rz_rad            = math.radians(robot_angle_deg)
+            cx = x1 + px
+            cy = y1 + py
 
-            self._save_debug_images(frame, best, cx, cy, angle_deg, label, annotated_crop)
+            rx, ry, rz = pixel_to_robot(cx, cy, self.H, self.z_conveyor)
 
-            # PoseStamped opbouwen
-            pose           = PoseStamped()
-            pose.header    = Header(stamp=rospy.Time.now(), frame_id="base_link")
-            pose.pose.position.x    = rx
-            pose.pose.position.y    = ry
-            pose.pose.position.z    = rz_height
-            pose.pose.orientation   = euler_z_to_quaternion(rz_rad)
+            robot_angle = self.angle_sign * angle_deg + self.rotation_offset_deg
+            rz_rad = math.radians(robot_angle)
 
-            resp.success      = True
-            resp.object_class = label
-            resp.message      = (f"Gevonden: {label} conf={best['confidence']:.2f} "
-                                 f"pos=({rx:.4f},{ry:.4f},{rz_height:.4f}) "
-                                 f"rz={robot_angle_deg:.1f}deg (pixel={angle_deg:.1f}deg)")
-            resp.pick_pose    = pose
+            rx /= 1000.0
+            ry /= 1000.0
+            rz = 0.165
 
-            rospy.loginfo(f"[vision_node] {resp.message}")
+            pose = PoseStamped()
+            pose.header = Header(stamp=rospy.Time.now(), frame_id="link_base")
+
+            pose.pose.position.x = rx
+            pose.pose.position.y = ry
+            pose.pose.position.z = rz
+
+            quat = euler_z_to_quaternion(rz_rad)
+            pose.pose.orientation = quat
+
+            rospy.loginfo(
+                "pos=(%.4f, %.4f, %.4f) quat=(%.6f, %.6f, %.6f, %.6f)" %
+                (rx, ry, rz, quat.x, quat.y, quat.z, quat.w)
+            )
+
+            resp.success = True
+            resp.pick_pose = pose
+            resp.object_class = best["name"]
 
         except Exception as e:
-            rospy.logerr(f"[vision_node] Fout: {e}")
-            resp.success  = False
-            resp.message  = str(e)
+            resp.success = False
+            resp.message = str(e)
 
         return resp
 
-    # ── Spin ────────────────────────────────────
-
     def spin(self):
-        rospy.loginfo("[vision_node] Klaar, wacht op service calls...")
         rospy.spin()
 
 
-# ──────────────────────────────────────────────
-# Main
-# ──────────────────────────────────────────────
-
 if __name__ == "__main__":
-    try:
-        node = VisionNode()
-        node.spin()
-    except rospy.ROSInterruptException:
-        pass
+    VisionNode().spin()

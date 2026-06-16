@@ -8,14 +8,13 @@ import struct
 
 
 class StartCyclusRequest(genpy.Message):
-  _md5sum = "60875a7ea2b59bdae48f81a727cbffcb"
+  _md5sum = "676aa7bfb3ec2071e814f2368dfd5fb5"
   _type = "hoofdprogramma/StartCyclusRequest"
   _has_header = False  # flag to mark the presence of a Header object
-  _full_text = """string object_type
-bool reset
+  _full_text = """bool start
 """
-  __slots__ = ['object_type','reset']
-  _slot_types = ['string','bool']
+  __slots__ = ['start']
+  _slot_types = ['bool']
 
   def __init__(self, *args, **kwds):
     """
@@ -25,7 +24,7 @@ bool reset
     changes.  You cannot mix in-order arguments and keyword arguments.
 
     The available fields are:
-       object_type,reset
+       start
 
     :param args: complete set of field values, in .msg order
     :param kwds: use keyword arguments corresponding to message field names
@@ -34,13 +33,10 @@ bool reset
     if args or kwds:
       super(StartCyclusRequest, self).__init__(*args, **kwds)
       # message fields cannot be None, assign default values for those that are
-      if self.object_type is None:
-        self.object_type = ''
-      if self.reset is None:
-        self.reset = False
+      if self.start is None:
+        self.start = False
     else:
-      self.object_type = ''
-      self.reset = False
+      self.start = False
 
   def _get_types(self):
     """
@@ -54,13 +50,7 @@ bool reset
     :param buff: buffer, ``StringIO``
     """
     try:
-      _x = self.object_type
-      length = len(_x)
-      if python3 or type(_x) == unicode:
-        _x = _x.encode('utf-8')
-        length = len(_x)
-      buff.write(struct.Struct('<I%ss'%length).pack(length, _x))
-      _x = self.reset
+      _x = self.start
       buff.write(_get_struct_B().pack(_x))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
@@ -75,18 +65,9 @@ bool reset
     try:
       end = 0
       start = end
-      end += 4
-      (length,) = _struct_I.unpack(str[start:end])
-      start = end
-      end += length
-      if python3:
-        self.object_type = str[start:end].decode('utf-8', 'rosmsg')
-      else:
-        self.object_type = str[start:end]
-      start = end
       end += 1
-      (self.reset,) = _get_struct_B().unpack(str[start:end])
-      self.reset = bool(self.reset)
+      (self.start,) = _get_struct_B().unpack(str[start:end])
+      self.start = bool(self.start)
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e)  # most likely buffer underfill
@@ -99,13 +80,7 @@ bool reset
     :param numpy: numpy python module
     """
     try:
-      _x = self.object_type
-      length = len(_x)
-      if python3 or type(_x) == unicode:
-        _x = _x.encode('utf-8')
-        length = len(_x)
-      buff.write(struct.Struct('<I%ss'%length).pack(length, _x))
-      _x = self.reset
+      _x = self.start
       buff.write(_get_struct_B().pack(_x))
     except struct.error as se: self._check_types(struct.error("%s: '%s' when writing '%s'" % (type(se), str(se), str(locals().get('_x', self)))))
     except TypeError as te: self._check_types(ValueError("%s: '%s' when writing '%s'" % (type(te), str(te), str(locals().get('_x', self)))))
@@ -121,18 +96,9 @@ bool reset
     try:
       end = 0
       start = end
-      end += 4
-      (length,) = _struct_I.unpack(str[start:end])
-      start = end
-      end += length
-      if python3:
-        self.object_type = str[start:end].decode('utf-8', 'rosmsg')
-      else:
-        self.object_type = str[start:end]
-      start = end
       end += 1
-      (self.reset,) = _get_struct_B().unpack(str[start:end])
-      self.reset = bool(self.reset)
+      (self.start,) = _get_struct_B().unpack(str[start:end])
+      self.start = bool(self.start)
       return self
     except struct.error as e:
       raise genpy.DeserializationError(e)  # most likely buffer underfill
@@ -299,6 +265,6 @@ def _get_struct_B():
     return _struct_B
 class StartCyclus(object):
   _type          = 'hoofdprogramma/StartCyclus'
-  _md5sum = '51224950c96b81351ba7f238527c827f'
+  _md5sum = '570b7d04f9d3b17893f17c4fdcf5ca06'
   _request_class  = StartCyclusRequest
   _response_class = StartCyclusResponse

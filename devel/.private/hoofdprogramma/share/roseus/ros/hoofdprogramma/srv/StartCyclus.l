@@ -20,48 +20,37 @@
 
 (defclass hoofdprogramma::StartCyclusRequest
   :super ros::object
-  :slots (_object_type _reset ))
+  :slots (_start ))
 
 (defmethod hoofdprogramma::StartCyclusRequest
   (:init
    (&key
-    ((:object_type __object_type) "")
-    ((:reset __reset) nil)
+    ((:start __start) nil)
     )
    (send-super :init)
-   (setq _object_type (string __object_type))
-   (setq _reset __reset)
+   (setq _start __start)
    self)
-  (:object_type
-   (&optional __object_type)
-   (if __object_type (setq _object_type __object_type)) _object_type)
-  (:reset
-   (&optional __reset)
-   (if __reset (setq _reset __reset)) _reset)
+  (:start
+   (&optional __start)
+   (if __start (setq _start __start)) _start)
   (:serialization-length
    ()
    (+
-    ;; string _object_type
-    4 (length _object_type)
-    ;; bool _reset
+    ;; bool _start
     1
     ))
   (:serialize
    (&optional strm)
    (let ((s (if strm strm
               (make-string-output-stream (send self :serialization-length)))))
-     ;; string _object_type
-       (write-long (length _object_type) s) (princ _object_type s)
-     ;; bool _reset
-       (if _reset (write-byte -1 s) (write-byte 0 s))
+     ;; bool _start
+       (if _start (write-byte -1 s) (write-byte 0 s))
      ;;
      (if (null strm) (get-output-stream-string s))))
   (:deserialize
    (buf &optional (ptr- 0))
-   ;; string _object_type
-     (let (n) (setq n (sys::peek buf ptr- :integer)) (incf ptr- 4) (setq _object_type (subseq buf ptr- (+ ptr- n))) (incf ptr- n))
-   ;; bool _reset
-     (setq _reset (not (= 0 (sys::peek buf ptr- :char)))) (incf ptr- 1)
+   ;; bool _start
+     (setq _start (not (= 0 (sys::peek buf ptr- :char)))) (incf ptr- 1)
    ;;
    self)
   )
@@ -118,7 +107,7 @@
   :super ros::object
   :slots ())
 
-(setf (get hoofdprogramma::StartCyclus :md5sum-) "51224950c96b81351ba7f238527c827f")
+(setf (get hoofdprogramma::StartCyclus :md5sum-) "570b7d04f9d3b17893f17c4fdcf5ca06")
 (setf (get hoofdprogramma::StartCyclus :datatype-) "hoofdprogramma/StartCyclus")
 (setf (get hoofdprogramma::StartCyclus :request) hoofdprogramma::StartCyclusRequest)
 (setf (get hoofdprogramma::StartCyclus :response) hoofdprogramma::StartCyclusResponse)
@@ -126,22 +115,20 @@
 (defmethod hoofdprogramma::StartCyclusRequest
   (:response () (instance hoofdprogramma::StartCyclusResponse :init)))
 
-(setf (get hoofdprogramma::StartCyclusRequest :md5sum-) "51224950c96b81351ba7f238527c827f")
+(setf (get hoofdprogramma::StartCyclusRequest :md5sum-) "570b7d04f9d3b17893f17c4fdcf5ca06")
 (setf (get hoofdprogramma::StartCyclusRequest :datatype-) "hoofdprogramma/StartCyclusRequest")
 (setf (get hoofdprogramma::StartCyclusRequest :definition-)
-      "string object_type
-bool reset
+      "bool start
 ---
 bool success
 string message
 
 ")
 
-(setf (get hoofdprogramma::StartCyclusResponse :md5sum-) "51224950c96b81351ba7f238527c827f")
+(setf (get hoofdprogramma::StartCyclusResponse :md5sum-) "570b7d04f9d3b17893f17c4fdcf5ca06")
 (setf (get hoofdprogramma::StartCyclusResponse :datatype-) "hoofdprogramma/StartCyclusResponse")
 (setf (get hoofdprogramma::StartCyclusResponse :definition-)
-      "string object_type
-bool reset
+      "bool start
 ---
 bool success
 string message
@@ -150,6 +137,6 @@ string message
 
 
 
-(provide :hoofdprogramma/StartCyclus "51224950c96b81351ba7f238527c827f")
+(provide :hoofdprogramma/StartCyclus "570b7d04f9d3b17893f17c4fdcf5ca06")
 
 

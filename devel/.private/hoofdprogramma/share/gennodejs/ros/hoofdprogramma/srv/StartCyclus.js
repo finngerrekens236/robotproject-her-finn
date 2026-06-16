@@ -21,31 +21,22 @@ class StartCyclusRequest {
   constructor(initObj={}) {
     if (initObj === null) {
       // initObj === null is a special case for deserialization where we don't initialize fields
-      this.object_type = null;
-      this.reset = null;
+      this.start = null;
     }
     else {
-      if (initObj.hasOwnProperty('object_type')) {
-        this.object_type = initObj.object_type
+      if (initObj.hasOwnProperty('start')) {
+        this.start = initObj.start
       }
       else {
-        this.object_type = '';
-      }
-      if (initObj.hasOwnProperty('reset')) {
-        this.reset = initObj.reset
-      }
-      else {
-        this.reset = false;
+        this.start = false;
       }
     }
   }
 
   static serialize(obj, buffer, bufferOffset) {
     // Serializes a message object of type StartCyclusRequest
-    // Serialize message field [object_type]
-    bufferOffset = _serializer.string(obj.object_type, buffer, bufferOffset);
-    // Serialize message field [reset]
-    bufferOffset = _serializer.bool(obj.reset, buffer, bufferOffset);
+    // Serialize message field [start]
+    bufferOffset = _serializer.bool(obj.start, buffer, bufferOffset);
     return bufferOffset;
   }
 
@@ -53,17 +44,13 @@ class StartCyclusRequest {
     //deserializes a message object of type StartCyclusRequest
     let len;
     let data = new StartCyclusRequest(null);
-    // Deserialize message field [object_type]
-    data.object_type = _deserializer.string(buffer, bufferOffset);
-    // Deserialize message field [reset]
-    data.reset = _deserializer.bool(buffer, bufferOffset);
+    // Deserialize message field [start]
+    data.start = _deserializer.bool(buffer, bufferOffset);
     return data;
   }
 
   static getMessageSize(object) {
-    let length = 0;
-    length += object.object_type.length;
-    return length + 5;
+    return 1;
   }
 
   static datatype() {
@@ -73,14 +60,13 @@ class StartCyclusRequest {
 
   static md5sum() {
     //Returns md5sum for a message object
-    return '60875a7ea2b59bdae48f81a727cbffcb';
+    return '676aa7bfb3ec2071e814f2368dfd5fb5';
   }
 
   static messageDefinition() {
     // Returns full string definition for message
     return `
-    string object_type
-    bool reset
+    bool start
     
     `;
   }
@@ -91,18 +77,11 @@ class StartCyclusRequest {
       msg = {};
     }
     const resolved = new StartCyclusRequest(null);
-    if (msg.object_type !== undefined) {
-      resolved.object_type = msg.object_type;
+    if (msg.start !== undefined) {
+      resolved.start = msg.start;
     }
     else {
-      resolved.object_type = ''
-    }
-
-    if (msg.reset !== undefined) {
-      resolved.reset = msg.reset;
-    }
-    else {
-      resolved.reset = false
+      resolved.start = false
     }
 
     return resolved;
@@ -205,6 +184,6 @@ class StartCyclusResponse {
 module.exports = {
   Request: StartCyclusRequest,
   Response: StartCyclusResponse,
-  md5sum() { return '51224950c96b81351ba7f238527c827f'; },
+  md5sum() { return '570b7d04f9d3b17893f17c4fdcf5ca06'; },
   datatype() { return 'hoofdprogramma/StartCyclus'; }
 };

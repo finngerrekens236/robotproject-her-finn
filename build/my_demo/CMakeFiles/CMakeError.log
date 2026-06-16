@@ -1,66 +1,55 @@
-Performing C SOURCE FILE Test CMAKE_HAVE_LIBC_PTHREAD failed with the following output:
-Change Dir: /home/student/Git-projects/robotproject-her-finn/build/my_demo/CMakeFiles/CMakeScratch/TryCompile-82kEkx
+Determining if the pthread_create exist failed with the following output:
+Change Dir: /home/student/Git-projects/robotproject-her-finn/build/my_demo/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_8c812/fast && /usr/bin/make  -f CMakeFiles/cmTC_8c812.dir/build.make CMakeFiles/cmTC_8c812.dir/build
-make[1]: Entering directory '/home/student/Git-projects/robotproject-her-finn/build/my_demo/CMakeFiles/CMakeScratch/TryCompile-82kEkx'
-Building C object CMakeFiles/cmTC_8c812.dir/src.c.o
-/usr/bin/cc -DCMAKE_HAVE_LIBC_PTHREAD   -o CMakeFiles/cmTC_8c812.dir/src.c.o -c /home/student/Git-projects/robotproject-her-finn/build/my_demo/CMakeFiles/CMakeScratch/TryCompile-82kEkx/src.c
-Linking C executable cmTC_8c812
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_8c812.dir/link.txt --verbose=1
-/usr/bin/cc -rdynamic CMakeFiles/cmTC_8c812.dir/src.c.o -o cmTC_8c812 
-CMakeFiles/cmTC_8c812.dir/src.c.o: In function `main':
-src.c:(.text+0x3e): undefined reference to `pthread_create'
-src.c:(.text+0x4a): undefined reference to `pthread_detach'
-src.c:(.text+0x56): undefined reference to `pthread_cancel'
-src.c:(.text+0x67): undefined reference to `pthread_join'
-src.c:(.text+0x7b): undefined reference to `pthread_atfork'
+Run Build Command:"/usr/bin/make" "cmTC_96522/fast"
+/usr/bin/make -f CMakeFiles/cmTC_96522.dir/build.make CMakeFiles/cmTC_96522.dir/build
+make[1]: Entering directory '/home/student/Git-projects/robotproject-her-finn/build/my_demo/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_96522.dir/CheckSymbolExists.c.o
+/usr/bin/cc    -o CMakeFiles/cmTC_96522.dir/CheckSymbolExists.c.o   -c /home/student/Git-projects/robotproject-her-finn/build/my_demo/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+Linking C executable cmTC_96522
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_96522.dir/link.txt --verbose=1
+/usr/bin/cc      -rdynamic CMakeFiles/cmTC_96522.dir/CheckSymbolExists.c.o  -o cmTC_96522 
+CMakeFiles/cmTC_96522.dir/CheckSymbolExists.c.o: In function `main':
+CheckSymbolExists.c:(.text+0x1b): undefined reference to `pthread_create'
 collect2: error: ld returned 1 exit status
-CMakeFiles/cmTC_8c812.dir/build.make:98: recipe for target 'cmTC_8c812' failed
-make[1]: *** [cmTC_8c812] Error 1
-make[1]: Leaving directory '/home/student/Git-projects/robotproject-her-finn/build/my_demo/CMakeFiles/CMakeScratch/TryCompile-82kEkx'
-Makefile:127: recipe for target 'cmTC_8c812/fast' failed
-make: *** [cmTC_8c812/fast] Error 2
+CMakeFiles/cmTC_96522.dir/build.make:97: recipe for target 'cmTC_96522' failed
+make[1]: *** [cmTC_96522] Error 1
+make[1]: Leaving directory '/home/student/Git-projects/robotproject-her-finn/build/my_demo/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_96522/fast' failed
+make: *** [cmTC_96522/fast] Error 2
 
-
-Source file was:
+File /home/student/Git-projects/robotproject-her-finn/build/my_demo/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
 #include <pthread.h>
 
-static void* test_func(void* data)
+int main(int argc, char** argv)
 {
-  return data;
-}
-
-int main(void)
-{
-  pthread_t thread;
-  pthread_create(&thread, NULL, test_func, NULL);
-  pthread_detach(thread);
-  pthread_cancel(thread);
-  pthread_join(thread, NULL);
-  pthread_atfork(NULL, NULL, NULL);
-  pthread_exit(NULL);
-
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
   return 0;
+#endif
 }
-
 
 Determining if the function pthread_create exists in the pthreads failed with the following output:
-Change Dir: /home/student/Git-projects/robotproject-her-finn/build/my_demo/CMakeFiles/CMakeScratch/TryCompile-y5gVEz
+Change Dir: /home/student/Git-projects/robotproject-her-finn/build/my_demo/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/make -f Makefile cmTC_d4eae/fast && /usr/bin/make  -f CMakeFiles/cmTC_d4eae.dir/build.make CMakeFiles/cmTC_d4eae.dir/build
-make[1]: Entering directory '/home/student/Git-projects/robotproject-her-finn/build/my_demo/CMakeFiles/CMakeScratch/TryCompile-y5gVEz'
-Building C object CMakeFiles/cmTC_d4eae.dir/CheckFunctionExists.c.o
-/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create -o CMakeFiles/cmTC_d4eae.dir/CheckFunctionExists.c.o -c /home/student/Git-projects/robotproject-her-finn/build/my_demo/CMakeFiles/CMakeScratch/TryCompile-y5gVEz/CheckFunctionExists.c
-Linking C executable cmTC_d4eae
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d4eae.dir/link.txt --verbose=1
-/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=pthread_create -rdynamic CMakeFiles/cmTC_d4eae.dir/CheckFunctionExists.c.o -o cmTC_d4eae  -lpthreads 
+Run Build Command:"/usr/bin/make" "cmTC_075bc/fast"
+/usr/bin/make -f CMakeFiles/cmTC_075bc.dir/build.make CMakeFiles/cmTC_075bc.dir/build
+make[1]: Entering directory '/home/student/Git-projects/robotproject-her-finn/build/my_demo/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_075bc.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_075bc.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.10/Modules/CheckFunctionExists.c
+Linking C executable cmTC_075bc
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_075bc.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=pthread_create    -rdynamic CMakeFiles/cmTC_075bc.dir/CheckFunctionExists.c.o  -o cmTC_075bc -lpthreads 
 /usr/bin/ld: cannot find -lpthreads
 collect2: error: ld returned 1 exit status
-CMakeFiles/cmTC_d4eae.dir/build.make:98: recipe for target 'cmTC_d4eae' failed
-make[1]: *** [cmTC_d4eae] Error 1
-make[1]: Leaving directory '/home/student/Git-projects/robotproject-her-finn/build/my_demo/CMakeFiles/CMakeScratch/TryCompile-y5gVEz'
-Makefile:127: recipe for target 'cmTC_d4eae/fast' failed
-make: *** [cmTC_d4eae/fast] Error 2
-
+CMakeFiles/cmTC_075bc.dir/build.make:97: recipe for target 'cmTC_075bc' failed
+make[1]: *** [cmTC_075bc] Error 1
+make[1]: Leaving directory '/home/student/Git-projects/robotproject-her-finn/build/my_demo/CMakeFiles/CMakeTmp'
+Makefile:126: recipe for target 'cmTC_075bc/fast' failed
+make: *** [cmTC_075bc/fast] Error 2
 
 

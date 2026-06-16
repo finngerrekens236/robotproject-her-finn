@@ -40,7 +40,7 @@ template<>
 struct MD5Sum< ::hoofdprogramma::StartCyclus > {
   static const char* value()
   {
-    return "51224950c96b81351ba7f238527c827f";
+    return "570b7d04f9d3b17893f17c4fdcf5ca06";
   }
 
   static const char* value(const ::hoofdprogramma::StartCyclus&) { return value(); }

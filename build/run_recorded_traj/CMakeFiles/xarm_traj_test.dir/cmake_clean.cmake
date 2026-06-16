@@ -1,8 +1,7 @@
 file(REMOVE_RECURSE
-  "/home/student/Git-projects/robotproject-her-finn/devel/.private/run_recorded_traj/lib/run_recorded_traj/xarm_traj_test"
-  "/home/student/Git-projects/robotproject-her-finn/devel/.private/run_recorded_traj/lib/run_recorded_traj/xarm_traj_test.pdb"
   "CMakeFiles/xarm_traj_test.dir/src/xarm_traj_test.cpp.o"
-  "CMakeFiles/xarm_traj_test.dir/src/xarm_traj_test.cpp.o.d"
+  "/home/student/Git-projects/robotproject-her-finn/devel/.private/run_recorded_traj/lib/run_recorded_traj/xarm_traj_test.pdb"
+  "/home/student/Git-projects/robotproject-her-finn/devel/.private/run_recorded_traj/lib/run_recorded_traj/xarm_traj_test"
 )
 
 # Per-language clean rules from dependency scanning.
