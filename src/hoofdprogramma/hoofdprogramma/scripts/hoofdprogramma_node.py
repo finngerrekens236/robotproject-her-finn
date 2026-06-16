@@ -1,11 +1,13 @@
 #!/usr/bin/env python
 
+import math
 import rospy
 import threading
 
 from std_msgs.msg import String
 from geometry_msgs.msg import PoseStamped
 from geometry_msgs.msg import Pose
+from tf.transformations import quaternion_from_euler, euler_from_quaternion
 
 from moveit_commander import MoveGroupCommander
 
@@ -87,8 +89,9 @@ class Hoofdprogramma(object):
 
         # MOVEIT
         self.group = MoveGroupCommander("arm")
-	self.group.set_pose_reference_frame("link_base") #nieuw 
-
+        self.group.set_pose_reference_frame("link_base")
+        self.group.set_max_velocity_scaling_factor(0.2)
+        self.group.set_max_acceleration_scaling_factor(0.2)
 
         rospy.loginfo("Wachten op MoveIt...")
         rospy.sleep(2)
@@ -207,41 +210,47 @@ class Hoofdprogramma(object):
     # =========================
     # MOVEIT FUNCTIE
     # =========================
-    def _move_robot(self, pose_stamped): #was eerst pose
+    def _move_robot(self, pose_stamped):
 
         rospy.loginfo("ROBOT BEWEGING START")
 
-	pose = Pose()
+        pose = Pose()
+        pose.position = pose_stamped.pose.position
 
-	pose.position = pose_stamped.pose.position
-	pose.orientation = pose_stamped.pose.orientation
-
-        #pose.header.frame_id = "world"
-        #pose.header.frame_id = "link_base"----------------------------------------
-        #pose.header.stamp = rospy.Time.now()
+        # Yaw uit vision halen, roll=180° toevoegen zodat grijper naar beneden wijst
+        camera_q = [
+            pose_stamped.pose.orientation.x,
+            pose_stamped.pose.orientation.y,
+            pose_stamped.pose.orientation.z,
+            pose_stamped.pose.orientation.w,
+        ]
+        _, _, camera_yaw = euler_from_quaternion(camera_q)
+        q = quaternion_from_euler(math.radians(180), 0.0, camera_yaw)
+        pose.orientation.x = q[0]
+        pose.orientation.y = q[1]
+        pose.orientation.z = q[2]
+        pose.orientation.w = q[3]
 
         self.group.set_pose_target(pose)
 
-	plan = self.group.plan()
+        plan = self.group.plan()
 
-	if isinstance(plan, tuple):
-    	    success = plan[0]
-   	    trajectory = plan[1]
-	else:
-    	    trajectory = plan
-    	    success = True
+        if isinstance(plan, tuple):
+            success = plan[0]
+            trajectory = plan[1]
+        else:
+            trajectory = plan
+            success = True
 
-
-	if success and trajectory.joint_trajectory.points:
-   	    self.group.execute(trajectory, wait=True)
-    	    self.group.stop()
-    	    self.group.clear_pose_targets()
-
-	    rospy.logwarn("Robot klaar")
-	else:
-    	    rospy.logwarn("Planning mislukt")
+        if success and trajectory.joint_trajectory.points:
+            self.group.execute(trajectory, wait=True)
+            self.group.stop()
             self.group.clear_pose_targets()
-	
+            rospy.loginfo("Robot klaar")
+        else:
+            rospy.logwarn("Planning mislukt")
+            self.group.clear_pose_targets()
+
 
 if __name__ == '__main__':
     Hoofdprogramma()
