@@ -220,6 +220,20 @@ class Hoofdprogramma(object):
         #pose.header.frame_id = "link_base"----------------------------------------
         #pose.header.stamp = rospy.Time.now()
 
+	rospy.logwarn("TARGET")
+	rospy.logwarn("X = %.4f", pose.position.x)
+	rospy.logwarn("Y = %.4f", pose.position.y)
+	rospy.logwarn("Z = %.4f", pose.position.z)
+
+	rospy.logwarn(
+    	    "Q = %.4f %.4f %.4f %.4f",
+   	    pose.orientation.x,
+    	    pose.orientation.y,
+    	    pose.orientation.z,
+    	    pose.orientation.w
+	)
+
+
         self.group.set_pose_target(pose)
 
 	plan = self.group.plan()
