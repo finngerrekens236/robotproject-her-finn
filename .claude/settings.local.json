@@ -3,7 +3,9 @@
     "allow": [
       "Bash(New-Item -ItemType Directory -Force \"c:\\\\Users\\\\fgerr\\\\ufactory_ws\\\\src\\\\my_depthai\\\\test_detection_input\")",
       "Bash(New-Item -ItemType Directory -Force \"c:\\\\Users\\\\fgerr\\\\ufactory_ws\\\\src\\\\my_depthai\\\\test_detection_output\")",
-      "Bash(python \"main met aruco.py\" --test-aruco --image test_main_met_arucu_input/ma.jpeg)"
+      "Bash(python \"main met aruco.py\" --test-aruco --image test_main_met_arucu_input/ma.jpeg)",
+      "Bash(git config *)",
+      "Bash(git checkout *)"
     ]
   }
 }
