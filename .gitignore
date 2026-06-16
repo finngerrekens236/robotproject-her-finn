@@ -1,0 +1,17 @@
+# ROS build artifacts
+build/
+devel/
+logs/
+install/
+
+# Zone.Identifier files (Windows metadata, not real files)
+*:Zone.Identifier
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Editor
+.vscode/
+*.swp
