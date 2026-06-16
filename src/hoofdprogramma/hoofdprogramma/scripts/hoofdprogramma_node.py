@@ -218,7 +218,7 @@ class Hoofdprogramma(object):
         pose = Pose()
         pose.position = pose_stamped.pose.position
 
-        # Yaw uit vision halen, roll=180° toevoegen zodat grijper naar beneden wijst
+        # Yaw uit vision halen, roll=180 toevoegen zodat grijper naar beneden wijst
         camera_q = [
             pose_stamped.pose.orientation.x,
             pose_stamped.pose.orientation.y,
