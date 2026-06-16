@@ -23,9 +23,9 @@ def main():
     target_pose = Pose()
     
     # 1. Vul de exacte XYZ coördinaten in voor de HOME-positie
-    target_pose.position.x = 0.03
+    target_pose.position.x = 0.02
     target_pose.position.y = 0.1485
-    target_pose.position.z = 0.3
+    target_pose.position.z = 0.275
     
     # 2. Vul de exacte Quaternion oriëntatie in (qx, qy, qz, qw)
     target_pose.orientation.x = 1.000

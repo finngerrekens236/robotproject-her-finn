@@ -4,7 +4,7 @@
 import math
 import rospy
 import threading
-
+import subprocess
 from std_msgs.msg import String
 from geometry_msgs.msg import PoseStamped
 from geometry_msgs.msg import Pose
@@ -90,7 +90,7 @@ class Hoofdprogramma(object):
 
         # MOVEIT
         self.group = MoveGroupCommander("arm")
-        self.group.set_pose_reference_frame("link_base")
+        self.group.set_pose_reference_frame("world")  # link_base
         self.group.set_max_velocity_scaling_factor(0.2)
         self.group.set_max_acceleration_scaling_factor(0.2)
 
@@ -170,7 +170,7 @@ class Hoofdprogramma(object):
             if self.state != "cyclus_running":
                 return
 
-            rospy.sleep(0.2)
+            rospy.sleep(1.2)
 
         rospy.loginfo("VISION START")
 
@@ -195,7 +195,7 @@ class Hoofdprogramma(object):
             if self.state != "single_running":
                 return
 
-            rospy.sleep(0.2)
+            rospy.sleep(1.2)
 
         rospy.loginfo("VISION START")
 
@@ -215,18 +215,43 @@ class Hoofdprogramma(object):
 
         rospy.loginfo("ROBOT BEWEGING START")
 
+        # =========================
+        # GRIPPER START OPEN
+        # =========================
+        subprocess.call(['rosservice', 'call', '/ufactory/vacuum_gripper_set', '1'])
+
         pose = Pose()
         pose.position = pose_stamped.pose.position
 
-        # Yaw uit vision halen, roll=180 toevoegen zodat grijper naar beneden wijst
+        rospy.loginfo(
+            "INCOMING POSITION -> X: %.4f, Y: %.4f, Z: %.4f",
+            pose.position.x,
+            pose.position.y,
+            pose.position.z
+        )
+
+        incoming_z = pose_stamped.pose.orientation.z
+        incoming_w = pose_stamped.pose.orientation.w
+
+        rospy.loginfo(
+            "INCOMING VALUES -> z: %.6f, w: %.6f",
+            incoming_z,
+            incoming_w
+        )
+
+        # OPMERKING: Als je de Vision Node hebt aangepast om de Z en W om te draaien,
+        # kun je deze regels zo laten staan of vervangen door: pose.orientation = pose_stamped.pose.orientation
         camera_q = [
             pose_stamped.pose.orientation.x,
             pose_stamped.pose.orientation.y,
             pose_stamped.pose.orientation.z,
             pose_stamped.pose.orientation.w,
         ]
+
         _, _, camera_yaw = euler_from_quaternion(camera_q)
+
         q = quaternion_from_euler(math.radians(180), 0.0, camera_yaw)
+
         pose.orientation.x = q[0]
         pose.orientation.y = q[1]
         pose.orientation.z = q[2]
@@ -250,6 +275,82 @@ class Hoofdprogramma(object):
             rospy.loginfo("Robot klaar")
         else:
             rospy.logwarn("Planning mislukt")
+            self.group.clear_pose_targets()
+            return
+
+        # =========================
+        # GRIPPER DICHT (PICK)
+        # =========================
+        subprocess.call(['rosservice', 'call', '/ufactory/vacuum_gripper_set', '0'])
+        rospy.sleep(0.5)
+
+        # =========================
+        # SAFE POSITIE
+        # =========================
+        rospy.loginfo("GA NAAR SAFE POSITIE")
+
+        safe_pose = Pose()
+        safe_pose.position.x = 0.0065
+        safe_pose.position.y = 0.1484
+        safe_pose.position.z = 0.2657
+        safe_pose.orientation = pose.orientation
+
+        self.group.set_pose_target(safe_pose)
+
+        plan2 = self.group.plan()
+
+        if isinstance(plan2, tuple):
+            success2 = plan2[0]
+            trajectory2 = plan2[1]
+        else:
+            trajectory2 = plan2
+            success2 = True
+
+        if success2 and trajectory2.joint_trajectory.points:
+            self.group.execute(trajectory2, wait=True)
+            self.group.stop()
+            self.group.clear_pose_targets()
+            rospy.loginfo("Safe positie bereikt")
+        else:
+            rospy.logwarn("Safe positie planning mislukt")
+            self.group.clear_pose_targets()
+            return
+
+        # =========================
+        # GRIPPER OPEN (PLACE)
+        # =========================
+        subprocess.call(['rosservice', 'call', '/ufactory/vacuum_gripper_set', '1'])
+        rospy.sleep(0.5)
+
+        # =========================
+        # HOME POSITIE
+        # =========================
+        rospy.loginfo("GA NAAR HOME POSITIE")
+
+        home_pose = Pose()
+        home_pose.position.x = -0.0573
+        home_pose.position.y = -0.0000
+        home_pose.position.z = 0.4730
+        home_pose.orientation = pose.orientation
+
+        self.group.set_pose_target(home_pose)
+
+        plan3 = self.group.plan()
+
+        if isinstance(plan3, tuple):
+            success3 = plan3[0]
+            trajectory3 = plan3[1]
+        else:
+            trajectory3 = plan3
+            success3 = True
+
+        if success3 and trajectory3.joint_trajectory.points:
+            self.group.execute(trajectory3, wait=True)
+            self.group.stop()
+            self.group.clear_pose_targets()
+            rospy.loginfo("HOME bereikt")
+        else:
+            rospy.logwarn("HOME planning mislukt")
             self.group.clear_pose_targets()
 
 

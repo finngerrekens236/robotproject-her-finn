@@ -181,7 +181,7 @@ class VisionNode:
             rz = 0.165
 
             pose = PoseStamped()
-            pose.header = Header(stamp=rospy.Time.now(), frame_id="link_base")
+            pose.header = Header(stamp=rospy.Time.now(), frame_id="world") #link_base
 
             pose.pose.position.x = rx
             pose.pose.position.y = ry
