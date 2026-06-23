@@ -116,7 +116,8 @@ def lokaliseer(crop, label=""):
         crop  : BGR afbeelding van de bounding box
         label : objectklasse (bv. "vork") — bepaalt strategie uit STRATEGIEEN
 
-    Geeft (cx, cy, angle_deg, pick_x, pick_y, annotated_frame) terug.
+    Geeft (cx, cy, angle_deg, pick_x, pick_y, annotated_frame, debug_stappen) terug.
+    debug_stappen is een lijst van (naam, afbeelding) tuples met tussenstappen.
     """
     strategie       = STRATEGIEEN.get(label, {})
     method          = strategie.get("method",       "canny")
@@ -132,15 +133,21 @@ def lokaliseer(crop, label=""):
     cx, cy = w // 2, h // 2
 
     kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
+    debug_stappen = [("originele_crop", crop.copy())]
 
     if method == "value_otsu":
         v = cv2.cvtColor(crop, cv2.COLOR_BGR2HSV)[:, :, 2]
+        debug_stappen.append(("hsv_helderheid", cv2.cvtColor(v, cv2.COLOR_GRAY2BGR)))
         _, mask = cv2.threshold(v, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
         mask     = cv2.medianBlur(mask, 5)
+        debug_stappen.append(("otsu_masker", cv2.cvtColor(mask, cv2.COLOR_GRAY2BGR)))
         cnts, _  = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
         contours = [c for c in cnts if cv2.contourArea(c) >= min_area]
     else:
         gray = cv2.cvtColor(crop, cv2.COLOR_BGR2GRAY)
+        debug_stappen.append(("grijswaarden", cv2.cvtColor(gray, cv2.COLOR_GRAY2BGR)))
+
+        _debug_edges = [None]
 
         def _run_canny(g):
             if use_denoise:
@@ -148,19 +155,29 @@ def lokaliseer(crop, label=""):
             blurred = cv2.GaussianBlur(g, (5, 5), 0)
             edges   = cv2.Canny(blurred, canny_low, canny_high)
             edges   = cv2.morphologyEx(edges, cv2.MORPH_CLOSE, kernel, iterations=2)
+            _debug_edges[0] = edges
             cnts, _ = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
             return [c for c in cnts if cv2.contourArea(c) >= min_area]
 
         contours = _run_canny(gray)
         if not contours and use_clahe:
             clahe    = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
-            contours = _run_canny(clahe.apply(gray))
+            clahe_gray = clahe.apply(gray)
+            debug_stappen.append(("clahe_verbetering", cv2.cvtColor(clahe_gray, cv2.COLOR_GRAY2BGR)))
+            contours = _run_canny(clahe_gray)
+
+        if _debug_edges[0] is not None:
+            debug_stappen.append(("canny_randen", cv2.cvtColor(_debug_edges[0], cv2.COLOR_GRAY2BGR)))
 
     if not contours:
         annotated = crop.copy()
         cv2.putText(annotated, "Geen contour", (10, 30),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), 2)
-        return cx, cy, 0.0, cx, cy, annotated
+        return cx, cy, 0.0, cx, cy, annotated, debug_stappen
+
+    contour_img = crop.copy()
+    cv2.drawContours(contour_img, contours, -1, (0, 255, 255), 2)
+    debug_stappen.append(("contouren", contour_img))
 
     groups = _group_touching_contours(contours)
     largest_group = max(groups, key=lambda g: sum(len(contours[i]) for i in g))
@@ -246,4 +263,5 @@ def lokaliseer(crop, label=""):
     cv2.putText(annotated, f"oppak: ({pick_x},{pick_y})  {int(pick_percent*100)}%", (10, 65),
                 cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 200, 0), 2)
 
-    return cx, cy, angle, pick_x, pick_y, annotated
+    debug_stappen.append(("oppakpunt", annotated))
+    return cx, cy, angle, pick_x, pick_y, annotated, debug_stappen

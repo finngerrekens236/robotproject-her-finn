@@ -253,7 +253,7 @@ class VisionNode:
 
     # ── Debug image logging ──────────────────────
 
-    def _save_debug_images(self, frame, best, cx, cy, angle_deg, label, annotated_crop=None):
+    def _save_debug_images(self, frame, best, cx, cy, angle_deg, label, annotated_crop=None, debug_stappen=None):
         ts = time.strftime("%Y%m%d_%H%M%S")
 
         # 1. Raw frame
@@ -269,9 +269,10 @@ class VisionNode:
                     (x1, max(y1 - 8, 12)), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 0), 2)
         cv2.imwrite(os.path.join(self.debug_dir, f"{ts}_2_bbox.jpg"), bbox_frame)
 
-        # 3. Annotated crop van lokaliseer (as-lijn + oppakpunt)
-        if annotated_crop is not None:
-            cv2.imwrite(os.path.join(self.debug_dir, f"{ts}_3_lokaliseer.jpg"), annotated_crop)
+        # 3. Tussenstappen van lokaliseer (één bestand per stap)
+        if debug_stappen:
+            for i, (naam, img) in enumerate(debug_stappen, start=3):
+                cv2.imwrite(os.path.join(self.debug_dir, f"{ts}_{i}_{label}_{naam}.jpg"), img)
 
         rospy.loginfo(f"[vision_node] Debug images opgeslagen: {ts}_*.jpg")
 
@@ -300,7 +301,7 @@ class VisionNode:
             label   = self.classes[cls_id] if cls_id < len(self.classes) else best["name"]
 
             crop = frame[y1:y2, x1:x2]
-            _, _, angle_deg, pick_x_crop, pick_y_crop, annotated_crop = lokaliseer(crop, label)
+            _, _, angle_deg, pick_x_crop, pick_y_crop, annotated_crop, debug_stappen = lokaliseer(crop, label)
             cx = x1 + pick_x_crop
             cy = y1 + pick_y_crop
 
@@ -308,7 +309,7 @@ class VisionNode:
             robot_angle_deg   = self.angle_sign * angle_deg + self.rotation_offset_deg
             rz_rad            = math.radians(robot_angle_deg)
 
-            self._save_debug_images(frame, best, cx, cy, angle_deg, label, annotated_crop)
+            self._save_debug_images(frame, best, cx, cy, angle_deg, label, annotated_crop, debug_stappen)
 
             # PoseStamped opbouwen
             pose           = PoseStamped()
