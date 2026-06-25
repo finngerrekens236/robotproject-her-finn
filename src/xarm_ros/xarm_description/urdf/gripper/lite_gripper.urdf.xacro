@@ -25,8 +25,8 @@
         material_name="${prefix}White" />
       <xacro:common_link_collision 
         mesh_filename="gripper/lite/collision/gripper_lite"  
-        origin_xyz="0 0 0" 
-        origin_rpy="0 0 0" />
+        origin_xyz="-0.095 0.0075 0.0811" 
+        origin_rpy="${pi} 0 0" />
     </link>
 
     <link name="${prefix}link_tcp" />

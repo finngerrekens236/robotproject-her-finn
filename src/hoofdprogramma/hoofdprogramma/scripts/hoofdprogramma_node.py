@@ -27,6 +27,25 @@ from hoofdprogramma.srv import (
 from my_depthai.srv import DetectObject
 
 
+# =========================
+# SORTEERBAK COORDINATEN
+# Per object class een eigen afzetpositie.
+# Pas de x/y/z waarden aan naar jouw opstelling.
+# =========================
+SORT_POSES = {
+    "spoon":       {"x": -0.1053, "y": 0.1424, "z": 0.1257},
+    "tootbrush":   {"x": -0.0128, "y": 0.1466, "z": 0.2177},
+    "fork":        {"x": -0.0071, "y": 0.2587, "z": 0.2179},
+    "screwdriver": {"x": -0.1231, "y": 0.2553, "z": 0.1259},
+}
+
+# Fallback als het gedetecteerde object niet in de lijst staat
+DEFAULT_SORT_POSE = {"x": -0.0128, "y": 0.1466, "z": 0.2177}
+
+# Hoogte van de lift tussenstap na pick (in meters)
+LIFT_HEIGHT = 0.10
+
+
 class Hoofdprogramma(object):
 
     def __init__(self):
@@ -50,47 +69,24 @@ class Hoofdprogramma(object):
         )
 
         # SERVICES
-        rospy.Service(
-            '/start_cyclus',
-            StartCyclus,
-            self.start_callback
-        )
-
-        rospy.Service(
-            '/single_start',
-            SingleStart,
-            self.single_callback
-        )
-
-        rospy.Service(
-            '/stop_cyclus',
-            StopCyclus,
-            self.stop_callback
-        )
-
-        rospy.Service(
-            '/reset_cyclus',
-            ResetCyclus,
-            self.reset_callback
-        )
+        rospy.Service('/start_cyclus',  StartCyclus,  self.start_callback)
+        rospy.Service('/single_start',  SingleStart,  self.single_callback)
+        rospy.Service('/stop_cyclus',   StopCyclus,   self.stop_callback)
+        rospy.Service('/reset_cyclus',  ResetCyclus,  self.reset_callback)
 
         rospy.loginfo("Services geregistreerd")
 
         # CONVEYOR
-        self.conveyor_srv = rospy.ServiceProxy(
-            '/conveyor_control',
-            ConveyorControl
-        )
+        self.conveyor_srv = rospy.ServiceProxy('/conveyor_control', ConveyorControl)
 
         # VISION
-        self.vision_srv = rospy.ServiceProxy(
-            '/vision/detect_object',
-            DetectObject
-        )
+        self.vision_srv = rospy.ServiceProxy('/vision/detect_object', DetectObject)
 
         # MOVEIT
         self.group = MoveGroupCommander("arm")
-        self.group.set_pose_reference_frame("world")  # link_base
+        self.group.set_pose_reference_frame("world")
+        self.group.set_planning_time(5.0)
+        self.group.set_num_planning_attempts(50)
         self.group.set_max_velocity_scaling_factor(0.2)
         self.group.set_max_acceleration_scaling_factor(0.2)
 
@@ -104,10 +100,8 @@ class Hoofdprogramma(object):
     # STATUS CALLBACK
     # =========================
     def status_callback(self, msg):
-
         if msg.data == "conveyor_ready":
             self.conveyor_ready = True
-
         elif msg.data == "conveyor_running":
             self.conveyor_ready = False
 
@@ -156,68 +150,133 @@ class Hoofdprogramma(object):
         self.state = "idle"
         self.conveyor_srv(False)
 
-        return ResetCyclusResponse(True, "reset")
+        # Gripper open zodat er niets vastzit
+        subprocess.call(['rosservice', 'call', '/ufactory/vacuum_gripper_set', '1'])
+
+        # Rij naar home in een aparte thread zodat de service direct terugkeert
+        threading.Thread(target=self._go_home).start()
+
+        return ResetCyclusResponse(True, "reset: robot gaat naar home")
 
     # =========================
-    # CYCLUS LOGICA
+    # PLAN EN UITVOER HELPER
+    # Voorkomt herhaalde if/isinstance blokken
+    # =========================
+    def _plan_and_execute(self, label):
+        """Plan vanuit de huidige pose target en voer uit. Geeft True/False terug."""
+
+        plan = self.group.plan()
+
+        if isinstance(plan, tuple):
+            success    = plan[0]
+            trajectory = plan[1]
+        else:
+            trajectory = plan
+            success    = True
+
+        if success and trajectory.joint_trajectory.points:
+            self.group.execute(trajectory, wait=True)
+            self.group.stop()
+            self.group.clear_pose_targets()
+            rospy.loginfo("%s bereikt", label)
+            return True
+        else:
+            rospy.logwarn("%s planning mislukt", label)
+            self.group.clear_pose_targets()
+            return False
+
+    # =========================
+    # HOME BEWEGING (herbruikbaar)
+    # =========================
+    def _go_home(self):
+
+        rospy.loginfo("GA NAAR HOME POSITIE")
+
+        self.group.stop()
+        self.group.clear_pose_targets()
+
+        home_pose = Pose()
+        home_pose.position.x =  -0.0575
+        home_pose.position.y =  -0.0000
+        home_pose.position.z =   0.4731
+        home_pose.orientation.x = -1.000
+        home_pose.orientation.y =  0.001
+        home_pose.orientation.z =  0.000
+        home_pose.orientation.w =  0.000
+
+        self.group.set_pose_target(home_pose)
+        self._plan_and_execute("HOME")
+
+    # =========================
+    # CYCLUS LOGICA  ← herhalend
     # =========================
     def _run_cyclus(self):
 
-        self.conveyor_srv(True)
+        rospy.loginfo("CYCLUS GESTART - druk Stop om te stoppen")
 
-        while not self.conveyor_ready:
+        while self.state == "cyclus_running":
 
-            if self.state != "cyclus_running":
-                return
+            # --- Stap 1: conveyor aan ---
+            self.conveyor_ready = False
+            self.conveyor_srv(True)
+            rospy.loginfo("Wachten op object bij startsensor...")
 
-            rospy.sleep(1.2)
+            # --- Stap 2: wacht op READY van conveyor ---
+            while not self.conveyor_ready:
+                if self.state != "cyclus_running":
+                    rospy.loginfo("Cyclus onderbroken tijdens conveyor wachten")
+                    self.conveyor_srv(False)
+                    return
+                rospy.sleep(0.1)
 
-        rospy.loginfo("VISION START")
+            rospy.loginfo("CONVEYOR READY - VISION START")
 
-        vision = self.vision_srv()
+            # --- Stap 3: vision ---
+            vision = self.vision_srv()
 
-        if vision and vision.success:
+            if not (vision and vision.success):
+                rospy.logwarn("Geen object gedetecteerd, volgende ronde...")
+                rospy.sleep(1.0)
+                continue
 
-            pose = vision.pick_pose
-            self._move_robot(pose)
+            # --- Stap 4: robot beweegt ---
+            self._move_robot(vision.pick_pose, vision.object_class)
 
-        self.state = "idle"
+            rospy.loginfo("Ronde klaar - volgende ronde start...")
+
+        rospy.loginfo("CYCLUS GESTOPT")
 
     # =========================
-    # SINGLE LOGICA
+    # SINGLE LOGICA  ← één ronde
     # =========================
     def _run_single(self):
 
+        self.conveyor_ready = False
         self.conveyor_srv(True)
 
         while not self.conveyor_ready:
-
             if self.state != "single_running":
+                self.conveyor_srv(False)
                 return
-
-            rospy.sleep(1.2)
+            rospy.sleep(0.1)
 
         rospy.loginfo("VISION START")
 
         vision = self.vision_srv()
 
         if vision and vision.success:
-
-            pose = vision.pick_pose
-            self._move_robot(pose)
+            self._move_robot(vision.pick_pose, vision.object_class)
 
         self.state = "idle"
 
     # =========================
     # MOVEIT FUNCTIE
     # =========================
-    def _move_robot(self, pose_stamped):
+    def _move_robot(self, pose_stamped, object_class):
 
-        rospy.loginfo("ROBOT BEWEGING START")
+        rospy.loginfo("ROBOT BEWEGING START voor object: %s", object_class)
 
-        # =========================
-        # GRIPPER START OPEN
-        # =========================
+        # --- Gripper open (zuig uit) ---
         subprocess.call(['rosservice', 'call', '/ufactory/vacuum_gripper_set', '1'])
 
         pose = Pose()
@@ -225,22 +284,14 @@ class Hoofdprogramma(object):
 
         rospy.loginfo(
             "INCOMING POSITION -> X: %.4f, Y: %.4f, Z: %.4f",
-            pose.position.x,
-            pose.position.y,
-            pose.position.z
+            pose.position.x, pose.position.y, pose.position.z
         )
-
-        incoming_z = pose_stamped.pose.orientation.z
-        incoming_w = pose_stamped.pose.orientation.w
-
         rospy.loginfo(
             "INCOMING VALUES -> z: %.6f, w: %.6f",
-            incoming_z,
-            incoming_w
+            pose_stamped.pose.orientation.z,
+            pose_stamped.pose.orientation.w
         )
 
-        # OPMERKING: Als je de Vision Node hebt aangepast om de Z en W om te draaien,
-        # kun je deze regels zo laten staan of vervangen door: pose.orientation = pose_stamped.pose.orientation
         camera_q = [
             pose_stamped.pose.orientation.x,
             pose_stamped.pose.orientation.y,
@@ -249,7 +300,6 @@ class Hoofdprogramma(object):
         ]
 
         _, _, camera_yaw = euler_from_quaternion(camera_q)
-
         q = quaternion_from_euler(math.radians(180), 0.0, camera_yaw)
 
         pose.orientation.x = q[0]
@@ -257,101 +307,69 @@ class Hoofdprogramma(object):
         pose.orientation.z = q[2]
         pose.orientation.w = q[3]
 
+        # =========================
+        # STAP 1: PICK POSITIE
+        # =========================
         self.group.set_pose_target(pose)
-
-        plan = self.group.plan()
-
-        if isinstance(plan, tuple):
-            success = plan[0]
-            trajectory = plan[1]
-        else:
-            trajectory = plan
-            success = True
-
-        if success and trajectory.joint_trajectory.points:
-            self.group.execute(trajectory, wait=True)
-            self.group.stop()
-            self.group.clear_pose_targets()
-            rospy.loginfo("Robot klaar")
-        else:
-            rospy.logwarn("Planning mislukt")
-            self.group.clear_pose_targets()
+        if not self._plan_and_execute("Pick positie"):
             return
 
-        # =========================
-        # GRIPPER DICHT (PICK)
-        # =========================
+        # --- Gripper dicht (vast zuigen) ---
         subprocess.call(['rosservice', 'call', '/ufactory/vacuum_gripper_set', '0'])
         rospy.sleep(0.5)
 
         # =========================
-        # SAFE POSITIE
+        # STAP 2: LIFT OMHOOG
+        # Recht omhoog vanuit pick positie zodat MoveIt een
+        # makkelijk vertrekpunt heeft naar de sorteerbak.
         # =========================
-        rospy.loginfo("GA NAAR SAFE POSITIE")
+        lift_pose = Pose()
+        lift_pose.position.x = pose.position.x
+        lift_pose.position.y = pose.position.y
+        lift_pose.position.z = pose.position.z + LIFT_HEIGHT
+        lift_pose.orientation = pose.orientation   # zelfde yaw behouden
+
+        rospy.loginfo("LIFT OMHOOG naar z=%.4f", lift_pose.position.z)
+
+        self.group.set_pose_target(lift_pose)
+        if not self._plan_and_execute("Lift"):
+            # Lift mislukt: probeer toch door te gaan naar sorteerbak
+            rospy.logwarn("Lift mislukt, direct naar sorteerbak proberen")
+
+        # =========================
+        # STAP 3: SORTEERBAK
+        # Vaste oriëntatie zodat de arm altijd op dezelfde
+        # manier aankomt, ongeacht de pick-yaw.
+        # =========================
+        coords = SORT_POSES.get(object_class, DEFAULT_SORT_POSE)
+        rospy.loginfo(
+            "GA NAAR SORTEERBAK voor '%s' -> x=%.4f, y=%.4f, z=%.4f",
+            object_class, coords["x"], coords["y"], coords["z"]
+        )
 
         safe_pose = Pose()
-        safe_pose.position.x = 0.0065
-        safe_pose.position.y = 0.1484
-        safe_pose.position.z = 0.2657
-        safe_pose.orientation = pose.orientation
+        safe_pose.position.x  = coords["x"]
+        safe_pose.position.y  = coords["y"]
+        safe_pose.position.z  = coords["z"]
+
+        # Vaste oriëntatie voor de sorteerbak (geen variabele yaw)
+        safe_pose.orientation.x = -1.000
+        safe_pose.orientation.y =  0.001
+        safe_pose.orientation.z =  0.000
+        safe_pose.orientation.w =  0.000
 
         self.group.set_pose_target(safe_pose)
-
-        plan2 = self.group.plan()
-
-        if isinstance(plan2, tuple):
-            success2 = plan2[0]
-            trajectory2 = plan2[1]
-        else:
-            trajectory2 = plan2
-            success2 = True
-
-        if success2 and trajectory2.joint_trajectory.points:
-            self.group.execute(trajectory2, wait=True)
-            self.group.stop()
-            self.group.clear_pose_targets()
-            rospy.loginfo("Safe positie bereikt")
-        else:
-            rospy.logwarn("Safe positie planning mislukt")
-            self.group.clear_pose_targets()
+        if not self._plan_and_execute("Sorteerbak"):
             return
 
-        # =========================
-        # GRIPPER OPEN (PLACE)
-        # =========================
+        # --- Gripper open (loslaten) ---
         subprocess.call(['rosservice', 'call', '/ufactory/vacuum_gripper_set', '1'])
         rospy.sleep(0.5)
 
         # =========================
-        # HOME POSITIE
+        # STAP 4: HOME
         # =========================
-        rospy.loginfo("GA NAAR HOME POSITIE")
-
-        home_pose = Pose()
-        home_pose.position.x = -0.0573
-        home_pose.position.y = -0.0000
-        home_pose.position.z = 0.4730
-        home_pose.orientation = pose.orientation
-
-        self.group.set_pose_target(home_pose)
-
-        plan3 = self.group.plan()
-
-        if isinstance(plan3, tuple):
-            success3 = plan3[0]
-            trajectory3 = plan3[1]
-        else:
-            trajectory3 = plan3
-            success3 = True
-
-        if success3 and trajectory3.joint_trajectory.points:
-            self.group.execute(trajectory3, wait=True)
-            self.group.stop()
-            self.group.clear_pose_targets()
-            rospy.loginfo("HOME bereikt")
-        else:
-            rospy.logwarn("HOME planning mislukt")
-            self.group.clear_pose_targets()
+        self._go_home()
 
 
 if __name__ == '__main__':

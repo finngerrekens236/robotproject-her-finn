@@ -22,9 +22,9 @@ def main():
     target_pose = Pose()
     
     # 1. Vul de exacte XYZ coördinaten in die je hebt uitgelezen
-    target_pose.position.x = -0.044
-    target_pose.position.y = -0.090
-    target_pose.position.z = 0.205
+    target_pose.position.x = -0.1508
+    target_pose.position.y = -0.2554
+    target_pose.position.z = 0.169
     
     # 2. Vul de exacte Quaternion oriëntatie in (qx, qy, qz, qw)
     target_pose.orientation.x = 1.0

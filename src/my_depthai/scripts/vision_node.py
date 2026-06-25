@@ -178,7 +178,7 @@ class VisionNode:
 
             rx /= 1000.0
             ry /= 1000.0
-            rz = 0.165
+            rz = 0.1685
 
             pose = PoseStamped()
             pose.header = Header(stamp=rospy.Time.now(), frame_id="world") #link_base
@@ -190,9 +190,13 @@ class VisionNode:
             quat = euler_z_to_quaternion(rz_rad)
             pose.pose.orientation = quat
 
+
+# Haal de naam van het gedetecteerde item op
+            item_name = best["name"]
+
             rospy.loginfo(
-                "pos=(%.4f, %.4f, %.4f) quat=(%.6f, %.6f, %.6f, %.6f)" %
-                (rx, ry, rz, quat.x, quat.y, quat.z, quat.w)
+                "[VISION] %s detected -> pos=(%.4f, %.4f, %.4f) quat=(%.6f, %.6f, %.6f, %.6f)" %  
+                (item_name, rx, ry, rz, quat.x, quat.y, quat.z, quat.w)
             )
 
             resp.success = True
