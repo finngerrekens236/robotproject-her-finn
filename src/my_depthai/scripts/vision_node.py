@@ -166,10 +166,22 @@ class VisionNode:
             x1, y1, x2, y2 = int(best.xmin), int(best.ymin), int(best.xmax), int(best.ymax)
 
             crop = frame[y1:y2, x1:x2]
-            _, _, angle_deg, px, py, _ = lokaliseer(crop, best["name"])
+            _, _, angle_deg, px, py, annotated_crop = lokaliseer(crop, best["name"])
 
             cx = x1 + px
             cy = y1 + py
+
+            # Debug image: plak annotated crop (met oriëntatielijnen) terug in de volledige frame
+            debug = frame.copy()
+            debug[y1:y2, x1:x2] = annotated_crop
+            cv2.rectangle(debug, (x1, y1), (x2, y2), (0, 255, 0), 2)
+            cv2.circle(debug, (int(cx), int(cy)), 10, (0, 0, 255), -1)
+            cv2.circle(debug, (int(cx), int(cy)), 10, (255, 255, 255), 2)
+            lbl = "%s  %.0fdeg" % (best["name"], angle_deg)
+            cv2.putText(debug, lbl, (x1, max(y1 - 8, 16)), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (0, 255, 0), 2)
+            debug_path = os.path.join(self.debug_dir, "pickup_debug.jpg")
+            cv2.imwrite(debug_path, debug)
+            rospy.loginfo("[VISION] Debug image opgeslagen: %s", debug_path)
 
             rx, ry, rz = pixel_to_robot(cx, cy, self.H, self.z_conveyor)
 
