@@ -236,7 +236,7 @@ class Hoofdprogramma(object):
 
             if not (vision and vision.success):
                 rospy.logwarn("Geen object gedetecteerd, volgende ronde...")
-                rospy.sleep(1.0)
+                rospy.sleep(3.0)
                 continue
 
             # --- Stap 4: robot beweegt ---

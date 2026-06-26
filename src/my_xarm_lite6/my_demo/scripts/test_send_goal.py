@@ -29,9 +29,9 @@ def main():
     goal = PickPlaceGoal()
     
     # Vul de test-coördinaten in (het doel waar de robot heen moet)
-    goal.target_pose.position.x = -0.0909
-    goal.target_pose.position.y = -0.2775
-    goal.target_pose.position.z = 0.165  # (De server overschrijft deze momenteel naar 0.165, maar we vullen hem netjes in)
+    goal.target_pose.position.x = -0.1638
+    goal.target_pose.position.y = -0.280
+    goal.target_pose.position.z = 0.4  # (De server overschrijft deze momenteel naar 0.165, maar we vullen hem netjes in)
     
     # Vul de quaternion oriëntatie in die uit de camera kwam
     goal.target_pose.orientation.x = 0.0

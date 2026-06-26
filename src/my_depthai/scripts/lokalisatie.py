@@ -8,7 +8,7 @@ import numpy as np
 
 # ── Per-object strategieën ─────────────────────────────────────────────────────
 
-PICK_PERCENT = 0.35
+PICK_PERCENT = 0.50#0.35
 
 STRATEGIEEN = {
     "Vork": {
