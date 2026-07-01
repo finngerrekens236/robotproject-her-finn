@@ -174,6 +174,8 @@ class HMIApp:
             self.orange_light.config(bg="orange")
         elif status == "conveyor_running":
             self.orange_light.config(bg="orange")
+	elif status == "conveyor_ready":
+            self.orange_light.config(bg="orange")
         elif status == "idle":
             self.green_light.config(bg="green")
         elif status == "fout":

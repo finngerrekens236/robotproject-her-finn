@@ -53,8 +53,8 @@ void loop()
     float startDistance = readDistance(trigStart, echoStart);
     float endDistance   = readDistance(trigEnd,   echoEnd);
 
-    bool startDetected = startDistance < 8.0;
-    bool endDetected   = endDistance   < 8.0;
+    bool startDetected = startDistance < 10.0;
+    bool endDetected   = endDistance   < 10.0;
 
     // ==========================
     // READY → IDLE

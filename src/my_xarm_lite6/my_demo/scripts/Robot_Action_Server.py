@@ -6,14 +6,13 @@ import rospy
 import actionlib
 import moveit_commander
 from geometry_msgs.msg import Pose
-from std_msgs.msg import String  # Voor het /robot/status topic
+from std_msgs.msg import String  
 import subprocess
 import math
 from tf.transformations import quaternion_from_euler, euler_from_quaternion
 
 # =========================================================================
 # IMPORT ACTION BERICHTEN
-# Vervang 'jouw_package' door de naam van de package waar de .action file in zit
 # =========================================================================
 from my_demo.msg import PickPlaceAction, PickPlaceFeedback, PickPlaceResult
 
@@ -55,11 +54,6 @@ class RobotPickPlaceActionServer(object):
         rospy.loginfo("Nieuw Pick & Place doel ontvangen!")
         self.publish_status("BUSY_PICKING")
 
-        # Voorbeeld feedback sturen (voortgang % of status)
-        # Pas dit aan op basis van wat er in je PickPlaceFeedback.action staat
-        # self._feedback.progress = 10
-        # self._as.publish_feedback(self._feedback)
-
         # ==========================================
         # STAP 1: GRIPPER OPENEN VÓÓR VERPLAATSING
         # ==========================================
@@ -71,11 +65,10 @@ class RobotPickPlaceActionServer(object):
         # ==========================================
         target_pose = Pose()
         
-        # We halen de coördinaten en oriëntatie nu UIT het ontvangen goal!
-        # (Ik neem hier aan dat het hoofdprogramma een complete geometry_msgs/Pose meestuurt in het goal)
+        # coördinaten en oriëntatie nu UIT het ontvangen goal halen
         target_pose.position.x = goal.target_pose.position.x
         target_pose.position.y = goal.target_pose.position.y
-        target_pose.position.z = 0.165  # Vaste veilige pakhoogte
+        target_pose.position.z = 0.163  # Vaste veilige pakhoogte
         
         # Pak de quaternion uit het goal van de camera/hoofdprogramma
         camera_q = [
@@ -85,7 +78,7 @@ class RobotPickPlaceActionServer(object):
             goal.target_pose.orientation.w
         ]
         
-        # De vertrouwde oriëntatie-fix toepassen
+        # oriëntatie-fix toepassen
         _, _, camera_yaw = euler_from_quaternion(camera_q)
         roll = math.radians(180) 
         pitch = math.radians(0)
@@ -110,7 +103,7 @@ class RobotPickPlaceActionServer(object):
         if not success:
             print("\n!!! Planning naar product mislukt. !!!")
             self.publish_status("ERROR_PLANNING_FAILED")
-            self._result.success = False  # Pas dit aan op basis van je .action result definities
+            self._result.success = False  
             self._as.set_aborted(self._result)
             return
 
@@ -139,7 +132,7 @@ class RobotPickPlaceActionServer(object):
         if success_lift:
             print("\n=== Product succesvol gegrepen en opgetild! ===")
             self.publish_status("IDLE")
-            self._result.success = True  # Of wat er ook in je action result staat
+            self._result.success = True  
             self._as.set_succeeded(self._result)
         else:
             print("\n!!! Optillen mislukt. !!!")
@@ -151,7 +144,6 @@ def main():
     moveit_commander.roscpp_initialize(sys.argv)
     rospy.init_node('robot_action_server_node')
 
-    # Start de klasse en noem de action server '/robot/pick_place'
     server = RobotPickPlaceActionServer('/robot/pick_place')
     
     rospy.spin()

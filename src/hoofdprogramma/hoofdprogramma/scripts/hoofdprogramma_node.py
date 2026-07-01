@@ -227,6 +227,7 @@ class Hoofdprogramma(object):
             return StartCyclusResponse(False, "Systeem bezig")
 
         self.state = "cyclus_running"
+	self.status_pub.publish("cyclus_running")
         self.conveyor_ready = False
 
         threading.Thread(target=self._run_cyclus).start()
@@ -242,6 +243,7 @@ class Hoofdprogramma(object):
             return SingleStartResponse(False, "Systeem bezig")
 
         self.state = "single_running"
+	self.status_pub.publish("single_running")
         self.conveyor_ready = False
 
         threading.Thread(target=self._run_single).start()
@@ -254,6 +256,7 @@ class Hoofdprogramma(object):
     def stop_callback(self, req):
 
         self.state = "idle"
+	self.status_pub.publish("idle")
         self.conveyor_srv(False)
 
         return StopCyclusResponse(True, "gestopt")
@@ -261,6 +264,7 @@ class Hoofdprogramma(object):
     def reset_callback(self, req):
 
         self.state = "idle"
+	self.status_pub.publish("idle")
         self.conveyor_srv(False)
 
         # Gripper open zodat er niets vastzit
@@ -419,6 +423,7 @@ class Hoofdprogramma(object):
 
         if not self._wait_for_conveyor("single_running"):
             self.state = "idle"
+	    self.status_pub.publish("idle")
             return
 
         rospy.loginfo("CONVEYOR READY - wachten %.1f sec voor foto...", VISION_DELAY)
@@ -434,7 +439,7 @@ class Hoofdprogramma(object):
             rospy.logwarn("Geen object gedetecteerd, reset")
 
         self.state = "idle"
-
+	self.status_pub.publish("idle")
     # =========================
     # MOVEIT FUNCTIE
     # =========================
